@@ -130,6 +130,8 @@
   .btn-ghost:hover{background:var(--bronte);color:var(--cream)}
   .btn-wa{background:#25D366;color:#08321c}
   .btn-wa:hover{transform:translateY(-3px);box-shadow:0 16px 30px -12px #1ea952}
+  .btn-wa-outline{background:transparent;color:#0e7a45;border:1.5px solid #25D366}
+  .btn-wa-outline:hover{background:#25D366;color:#08321c;transform:translateY(-3px)}
   .stage{position:relative;height:min(60vh,460px);cursor:grab;display:grid;place-items:center;perspective:1400px}
   .stage:active{cursor:grabbing}
   .logo-shadow{position:absolute;bottom:8%;width:60%;height:40px;border-radius:50%;background:radial-gradient(closest-side,rgba(36,31,26,.28),transparent 75%)}
@@ -141,6 +143,14 @@
   .logo-face img{width:100%;height:auto;display:block}
   .logo-face.back{transform:rotateY(180deg)}
   .stage-hint{position:absolute;bottom:4px;left:50%;transform:translateX(-50%);color:#8a7d6b;pointer-events:none;opacity:0;animation:fadeUp .8s 1.4s forwards;z-index:3}
+
+  /* ---------- TRUST BAR ---------- */
+  .trustbar{display:flex;align-items:center;flex-wrap:wrap;gap:18px 32px;padding:26px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .trustbar-label{color:#5b6785;flex:none}
+  .trustbar-marks{display:flex;flex-wrap:wrap;gap:14px 28px;align-items:center}
+  .trustmark{font-family:'Fraunces',serif;font-weight:500;font-size:1.05rem;color:var(--bronte);letter-spacing:-.01em;display:inline-flex;align-items:baseline;gap:8px}
+  .trustmark small{font-family:'Space Mono',monospace;font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;color:#5b6785;font-weight:400}
+  .trustmark-cert{color:var(--teal);font-family:'Space Mono',monospace;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;font-weight:700;padding:5px 12px;border:1px solid rgba(14,124,102,.35);border-radius:100px;background:rgba(14,124,102,.07)}
 
   /* ---------- HEADINGS COMUNI ---------- */
   .sec-head{text-align:center;padding:100px 0 20px;max-width:760px;margin:0 auto}
@@ -389,6 +399,7 @@
     .hero p.lead{margin-left:auto;margin-right:auto}
     .hero-actions,.hero-clients{justify-content:center}
     .stage{height:56vh;order:-1;margin-top:10px}
+    .trustbar{flex-direction:column;align-items:flex-start}
     .prod{grid-template-columns:1fr;gap:34px;text-align:center}
     .prod:nth-child(even) .prod-media{order:0}
     .prod-copy p{margin-left:auto;margin-right:auto}
@@ -441,7 +452,7 @@
     <p class="lead">Dalle budella di mio nonno alla carta certificata di oggi: forniamo macellerie, panifici, pizzerie, bar e ristoranti in tutta la Sicilia con packaging di qualità, personalizzabile con il tuo logo e consegnato in fretta.</p>
     <div class="hero-actions">
       <a href="#prodotti" class="btn btn-primary">Scopri i nostri prodotti →</a>
-      <a href="https://wa.me/393407996635?text=Ciao%20SDF%2C%20vorrei%20un%20preventivo" target="_blank" rel="noopener" class="btn btn-wa">
+      <a href="https://wa.me/393407996635?text=Ciao%20SDF%2C%20vorrei%20un%20preventivo" target="_blank" rel="noopener" class="btn btn-wa-outline">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2Zm5.8 14.2c-.2.7-1.4 1.3-2 1.4-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.6-.6-2.9-1.2-4.7-4.1-4.9-4.3-.1-.2-1.1-1.5-1.1-2.8s.7-2 .9-2.3c.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2 0 .4-.1.5l-.4.5c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.2.1.4.1.5-.1l.7-.8c.2-.2.4-.2.6-.1l1.9.9c.2.1.4.2.4.3.1.2.1.6-.1 1.3Z"/></svg>
         Contattaci su WhatsApp
       </a>
@@ -461,6 +472,16 @@
     <div class="stage-hint mono">↻ trascina per ruotare</div>
   </div>
 </header>
+
+<!-- TRUST BAR -->
+<div class="trustbar wrap">
+  <span class="trustbar-label mono">Distribuiamo marchi selezionati</span>
+  <div class="trustbar-marks">
+    <span class="trustmark">Fratelli Pagani</span>
+    <span class="trustmark">Esseoquattro <small>SO4 · Ideabrill</small></span>
+    <span class="trustmark trustmark-cert">Carta PFAS free</span>
+  </div>
+</div>
 
 <!-- LA NOSTRA STORIA -->
 <section class="storia wrap" id="storia">
