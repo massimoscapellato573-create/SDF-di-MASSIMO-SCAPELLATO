@@ -47,15 +47,34 @@
   :root{
     --bg:#F5F8FC;           /* sfondo principale, chiaro e professionale */
     --board:#E4D8BE;        /* kraft/cartone — solo per illustrazioni prodotto */
-    --ink:#12203D;          /* testo scuro, blu-antracite */
+    --ink:#12203D;          /* testo primario, blu-antracite */
+    --ink-soft:#4C5875;     /* testo secondario, stessa famiglia fredda dell'ink */
+    --ink-faint:#7C86A3;    /* didascalie, hint, testo terziario */
     --bronte:#10399A;       /* blu royal del logo — colore primario */
     --bronte-2:#2E5CD6;     /* blu royal chiaro, accento */
     --gold:#C9902E;         /* oro caldo — cta, calore della storia di famiglia */
     --gold-2:#D69224;       /* oro/zafferano chiaro — dettagli, illustrazione spezie */
     --teal:#0E7C66;         /* verde smeraldo — qualita certificata, fiducia */
     --cream:#FFFFFF;
+    --on-royal-soft:#C7D3F2; /* testo secondario su sfondo blu royal */
+    --on-ink-soft:#9AA6C2;   /* testo secondario su sfondo scuro (footer) */
     --line:rgba(18,32,61,.12);
     --shadow:22px 30px 60px -30px rgba(16,27,51,.35);
+
+    /* scala tipografica */
+    --text-hero:clamp(2.6rem,6vw,5rem);
+    --text-h2:clamp(2rem,4.5vw,3.4rem);
+    --text-h3:clamp(1.8rem,3.6vw,2.8rem);
+    --text-h4:clamp(1.4rem,2.2vw,1.7rem);
+
+    /* scala di spaziatura (ritmo 8px) */
+    --space-1:8px;
+    --space-2:16px;
+    --space-3:24px;
+    --space-4:32px;
+    --space-5:48px;
+    --space-6:64px;
+    --space-7:96px;
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -110,14 +129,14 @@
     max-width:1200px;margin:0 auto;padding:120px clamp(20px,5vw,64px) 60px;z-index:2}
   .hero-eyebrow{color:var(--gold);margin-bottom:22px;display:flex;align-items:center;gap:12px}
   .hero-eyebrow::before{content:"";width:40px;height:1px;background:var(--gold)}
-  .hero h1{font-family:'Fraunces',serif;font-weight:500;font-size:clamp(2.6rem,6vw,5rem);line-height:.98;letter-spacing:-.02em;color:var(--bronte)}
+  .hero h1{font-family:'Fraunces',serif;font-weight:500;font-size:var(--text-hero);line-height:.98;letter-spacing:-.02em;color:var(--bronte)}
   .hero h1 em{font-style:italic;color:var(--gold)}
   .hero h1 .ln{display:block;overflow:hidden}
   .hero h1 .ln span{display:block;transform:translateY(110%);animation:rise .9s cubic-bezier(.19,1,.22,1) forwards}
   .hero h1 .ln:nth-child(2) span{animation-delay:.12s}
   .hero h1 .ln:nth-child(3) span{animation-delay:.24s}
   @keyframes rise{to{transform:translateY(0)}}
-  .hero p.lead{margin:26px 0 32px;font-size:1.12rem;max-width:46ch;color:#4a4038;opacity:0;animation:fadeUp .8s .5s forwards}
+  .hero p.lead{margin:26px 0 32px;font-size:1.12rem;max-width:46ch;color:var(--ink-soft);opacity:0;animation:fadeUp .8s .5s forwards}
   @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
   .hero-actions{display:flex;gap:14px;flex-wrap:wrap;opacity:0;animation:fadeUp .8s .65s forwards}
   .hero-clients{margin-top:34px;display:flex;gap:10px;flex-wrap:wrap;opacity:0;animation:fadeUp .8s .8s forwards}
@@ -134,7 +153,7 @@
   .btn-wa-outline:hover{background:#25D366;color:#08321c;transform:translateY(-3px)}
   .stage{position:relative;height:min(60vh,460px);cursor:grab;display:grid;place-items:center;perspective:1400px}
   .stage:active{cursor:grabbing}
-  .logo-shadow{position:absolute;bottom:8%;width:60%;height:40px;border-radius:50%;background:radial-gradient(closest-side,rgba(36,31,26,.28),transparent 75%)}
+  .logo-shadow{position:absolute;bottom:8%;width:60%;height:40px;border-radius:50%;background:radial-gradient(closest-side,rgba(16,27,51,.28),transparent 75%)}
   .logo-float{animation:floatY 5s ease-in-out infinite}
   @keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
   .logo-spin{position:relative;width:clamp(220px,26vw,320px);aspect-ratio:1/1;transform-style:preserve-3d;will-change:transform}
@@ -142,32 +161,32 @@
     backface-visibility:hidden;overflow:hidden;border:1px solid var(--line);padding:9%}
   .logo-face img{width:100%;height:auto;display:block}
   .logo-face.back{transform:rotateY(180deg)}
-  .stage-hint{position:absolute;bottom:4px;left:50%;transform:translateX(-50%);color:#8a7d6b;pointer-events:none;opacity:0;animation:fadeUp .8s 1.4s forwards;z-index:3}
+  .stage-hint{position:absolute;bottom:4px;left:50%;transform:translateX(-50%);color:var(--ink-faint);pointer-events:none;opacity:0;animation:fadeUp .8s 1.4s forwards;z-index:3}
 
   /* ---------- TRUST BAR ---------- */
-  .trustbar{display:flex;align-items:center;flex-wrap:wrap;gap:18px 32px;padding:26px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-  .trustbar-label{color:#5b6785;flex:none}
-  .trustbar-marks{display:flex;flex-wrap:wrap;gap:14px 28px;align-items:center}
+  .trustbar{display:flex;align-items:center;flex-wrap:wrap;gap:var(--space-2) var(--space-4);padding:var(--space-3) 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .trustbar-label{color:var(--ink-faint);flex:none}
+  .trustbar-marks{display:flex;flex-wrap:wrap;gap:var(--space-2) var(--space-3);align-items:center}
   .trustmark{font-family:'Fraunces',serif;font-weight:500;font-size:1.05rem;color:var(--bronte);letter-spacing:-.01em;display:inline-flex;align-items:baseline;gap:8px}
-  .trustmark small{font-family:'Space Mono',monospace;font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;color:#5b6785;font-weight:400}
+  .trustmark small{font-family:'Space Mono',monospace;font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);font-weight:400}
   .trustmark-cert{color:var(--teal);font-family:'Space Mono',monospace;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;font-weight:700;padding:5px 12px;border:1px solid rgba(14,124,102,.35);border-radius:100px;background:rgba(14,124,102,.07)}
 
   /* ---------- HEADINGS COMUNI ---------- */
-  .sec-head{text-align:center;padding:100px 0 20px;max-width:760px;margin:0 auto}
+  .sec-head{text-align:center;padding:var(--space-7) 0 var(--space-2);max-width:760px;margin:0 auto}
   .sec-head.tight{padding-bottom:0}
   .sec-head .mono{color:var(--gold)}
-  .sec-head h2{font-family:'Fraunces',serif;font-weight:500;font-size:clamp(2rem,4.5vw,3.4rem);line-height:1.02;letter-spacing:-.02em;color:var(--bronte);margin:14px 0 16px}
-  .sec-head p{color:#54493f;font-size:1.05rem}
+  .sec-head h2{font-family:'Fraunces',serif;font-weight:500;font-size:var(--text-h2);line-height:1.02;letter-spacing:-.02em;color:var(--bronte);margin:14px 0 16px}
+  .sec-head p{color:var(--ink-soft);font-size:1.05rem}
 
   /* ---------- STORIA / TIMELINE ---------- */
-  .storia{padding:20px 0 60px}
+  .storia{padding:var(--space-2) 0 var(--space-6)}
   .timeline{display:grid;grid-template-columns:repeat(3,1fr);gap:34px;margin-top:60px;position:relative}
   .timeline::before{content:"";position:absolute;top:26px;left:8%;right:8%;height:1px;background:var(--line)}
   .tl-item{position:relative;padding-top:56px}
   .tl-dot{position:absolute;top:0;left:0;width:52px;height:52px;border-radius:50%;background:var(--cream);border:1.5px solid var(--bronte);display:grid;place-items:center;font-family:'Fraunces',serif;font-weight:600;color:var(--bronte);z-index:2}
   .tl-item .mono{color:var(--gold);display:block;margin-bottom:8px}
   .tl-item h3{font-family:'Fraunces',serif;font-weight:500;font-size:1.4rem;color:var(--bronte);margin-bottom:10px;letter-spacing:-.01em}
-  .tl-item p{color:#4c4238;font-size:.98rem;max-width:38ch}
+  .tl-item p{color:var(--ink-soft);font-size:.98rem;max-width:38ch}
 
   .founder{margin-top:80px;display:grid;grid-template-columns:.7fr 1.3fr;gap:50px;align-items:center;
     background:var(--cream);border:1px solid var(--line);border-radius:26px;padding:clamp(28px,4vw,50px);box-shadow:var(--shadow)}
@@ -176,24 +195,24 @@
   .founder-portrait span{font-family:'Fraunces',serif;font-size:4rem;font-weight:600;color:var(--cream)}
   .founder-portrait .ring{position:absolute;inset:10px;border:1.5px solid rgba(246,239,224,.35);border-radius:14px}
   .founder-copy .mono{color:var(--gold)}
-  .founder-copy h3{font-family:'Fraunces',serif;font-weight:500;font-size:1.7rem;color:var(--bronte);margin:10px 0 14px;letter-spacing:-.01em}
-  .founder-copy p{color:#4c4238;font-size:1.02rem;max-width:56ch;margin-bottom:10px}
+  .founder-copy h3{font-family:'Fraunces',serif;font-weight:500;font-size:var(--text-h4);color:var(--bronte);margin:10px 0 14px;letter-spacing:-.01em}
+  .founder-copy p{color:var(--ink-soft);font-size:1.02rem;max-width:56ch;margin-bottom:10px}
   .founder-copy .role{font-family:'Space Mono',monospace;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--bronte-2);margin-top:14px;display:block}
 
   .stats{margin-top:56px;display:grid;grid-template-columns:repeat(3,1fr);gap:24px;text-align:center}
   .stat{padding:20px 10px;border-left:1px solid var(--line)}
   .stat:first-child{border-left:none}
   .stat-n,.stat-txt{display:block;font-family:'Fraunces',serif;font-weight:600;font-size:clamp(2.2rem,4vw,3rem);color:var(--gold);line-height:1}
-  .stat-l{display:block;margin-top:8px;font-family:'Space Mono',monospace;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:#6b6053}
+  .stat-l{display:block;margin-top:8px;font-family:'Space Mono',monospace;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint)}
 
   /* ---------- PRODOTTI (card 3D) ---------- */
-  .products{padding:40px 0 20px}
+  .products{padding:var(--space-4) 0 var(--space-2)}
   .prod{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:clamp(30px,6vw,90px);
     padding:70px 0;border-top:1px solid var(--line);position:relative}
   .prod:nth-child(even) .prod-media{order:2}
   .prod-copy .eyebrow{color:var(--gold);margin-bottom:16px}
-  .prod-copy h3{font-family:'Fraunces',serif;font-weight:500;font-size:clamp(1.8rem,3.6vw,2.8rem);color:var(--bronte);line-height:1.02;letter-spacing:-.01em;margin-bottom:16px}
-  .prod-copy p{color:#4c4238;font-size:1.05rem;max-width:46ch;margin-bottom:20px}
+  .prod-copy h3{font-family:'Fraunces',serif;font-weight:500;font-size:var(--text-h3);color:var(--bronte);line-height:1.02;letter-spacing:-.01em;margin-bottom:16px}
+  .prod-copy p{color:var(--ink-soft);font-size:1.05rem;max-width:46ch;margin-bottom:20px}
   .tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
   .tag{font-family:'Space Mono',monospace;font-size:.72rem;letter-spacing:.04em;padding:6px 12px;border:1px solid var(--line);border-radius:100px;color:var(--ink);background:rgba(255,255,255,.6)}
   .tag-cert{color:var(--teal);border-color:rgba(14,124,102,.35);background:rgba(14,124,102,.08);font-weight:700}
@@ -211,7 +230,7 @@
 
   .coil{width:70%;height:70%;transform:translateZ(40px);animation:spin3d 14s linear infinite}
   @keyframes spin3d{to{transform:translateZ(40px) rotateY(360deg)}}
-  .coil svg{width:100%;height:100%;overflow:visible;filter:drop-shadow(0 12px 18px rgba(36,31,26,.25))}
+  .coil svg{width:100%;height:100%;overflow:visible;filter:drop-shadow(0 12px 18px rgba(16,27,51,.25))}
   .coil path{fill:none;stroke-linecap:round}
 
   .jar{position:relative;width:44%;height:56%;transform:translateZ(50px)}
@@ -225,7 +244,7 @@
 
   .nut{width:52%;transform:translateZ(46px);animation:bob 5s ease-in-out infinite}
   @keyframes bob{0%,100%{transform:translateZ(46px) rotate(-6deg) translateY(0)}50%{transform:translateZ(46px) rotate(6deg) translateY(-14px)}}
-  .nut svg{width:100%;filter:drop-shadow(0 14px 16px rgba(36,31,26,.28))}
+  .nut svg{width:100%;filter:drop-shadow(0 14px 16px rgba(16,27,51,.28))}
 
   .box-scene{width:46%;height:46%;transform-style:preserve-3d;transform:translateZ(30px) rotateX(-22deg) rotateY(-32deg);animation:turn 16s linear infinite}
   @keyframes turn{to{transform:translateZ(30px) rotateX(-22deg) rotateY(328deg)}}
@@ -252,21 +271,21 @@
   .prod-cta{text-align:center;margin:20px 0 20px}
 
   /* ---------- PERSONALIZZAZIONI ---------- */
-  .custom{padding:70px 0 40px;border-top:1px solid var(--line)}
+  .custom{padding:var(--space-6) 0 var(--space-4);border-top:1px solid var(--line)}
   .custom-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,6vw,90px);align-items:center}
   .custom-copy .eyebrow{color:var(--gold);margin-bottom:16px}
-  .custom-copy h3{font-family:'Fraunces',serif;font-weight:500;font-size:clamp(1.8rem,3.6vw,2.6rem);color:var(--bronte);line-height:1.05;letter-spacing:-.01em;margin-bottom:18px}
-  .custom-copy>p{color:#4c4238;font-size:1.05rem;max-width:50ch;margin-bottom:26px}
+  .custom-copy h3{font-family:'Fraunces',serif;font-weight:500;font-size:var(--text-h3);color:var(--bronte);line-height:1.05;letter-spacing:-.01em;margin-bottom:18px}
+  .custom-copy>p{color:var(--ink-soft);font-size:1.05rem;max-width:50ch;margin-bottom:26px}
   .steps-mini{display:grid;gap:16px}
   .step-mini{display:flex;gap:16px;align-items:flex-start}
   .step-mini .num{font-family:'Space Mono',monospace;font-weight:700;color:var(--gold);font-size:.9rem;min-width:28px}
   .step-mini strong{display:block;color:var(--bronte);font-size:1.02rem;margin-bottom:2px}
-  .step-mini span{color:#54493f;font-size:.95rem}
+  .step-mini span{color:var(--ink-soft);font-size:.95rem}
   .custom-visual{display:grid;place-items:center}
   .custom-visual .card3d{max-width:380px;width:100%}
 
   /* ---------- PERCHÉ SCEGLIERE SDF ---------- */
-  .why{padding:20px 0 60px}
+  .why{padding:var(--space-2) 0 var(--space-6)}
   .why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin-top:56px}
   .why-card{background:var(--cream);border:1px solid var(--line);border-radius:20px;padding:32px 28px;transition:transform .3s,box-shadow .3s}
   .why-card:hover{transform:translateY(-6px);box-shadow:var(--shadow)}
@@ -275,28 +294,28 @@
   .why-card:hover .icon{transform:scale(1.12) rotate(-8deg)}
   .why-card .icon svg{width:24px;height:24px;stroke:var(--cream);fill:none;stroke-width:1.7}
   .why-card h3{font-family:'Fraunces',serif;font-weight:500;font-size:1.2rem;color:var(--bronte);margin-bottom:8px;letter-spacing:-.01em}
-  .why-card p{color:#54493f;font-size:.95rem}
+  .why-card p{color:var(--ink-soft);font-size:.95rem}
 
   /* ---------- TESTIMONIAL ---------- */
-  .testi{padding:20px 0 60px;border-top:1px solid var(--line)}
+  .testi{padding:var(--space-2) 0 var(--space-6);border-top:1px solid var(--line)}
   .testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:56px}
   .testi-card{border:1.5px dashed var(--line);border-radius:20px;padding:26px 24px;background:rgba(255,255,255,.3)}
-  .testi-stars{color:var(--gold-2);letter-spacing:3px;font-size:1rem;margin-bottom:14px}
+  .testi-pending{display:inline-block;color:var(--ink-faint);border:1px solid var(--line);border-radius:100px;padding:4px 12px;margin-bottom:14px}
   .testi-card .type{font-family:'Space Mono',monospace;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;display:block}
-  .testi-card p{color:#7a6f61;font-style:italic;font-size:.95rem}
-  .testi-cta{text-align:center;margin-top:40px;color:#54493f}
+  .testi-card p{color:var(--ink-faint);font-style:italic;font-size:.95rem}
+  .testi-cta{text-align:center;margin-top:40px;color:var(--ink-soft)}
   .testi-cta a{color:var(--bronte);font-weight:600;text-decoration:underline}
 
   /* ---------- COME ORDINARE ---------- */
-  .order{padding:20px 0 60px;border-top:1px solid var(--line)}
+  .order{padding:var(--space-2) 0 var(--space-6);border-top:1px solid var(--line)}
   .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:56px;position:relative}
   .steps::before{content:"";position:absolute;top:30px;left:6%;right:6%;height:1px;background:var(--line);z-index:0}
   .step{position:relative;text-align:center;z-index:1}
   .step .n{width:60px;height:60px;border-radius:50%;background:var(--bronte);color:var(--cream);display:grid;place-items:center;
     font-family:'Fraunces',serif;font-weight:600;font-size:1.3rem;margin:0 auto 18px}
   .step h3{font-family:'Fraunces',serif;font-weight:500;font-size:1.15rem;color:var(--bronte);margin-bottom:8px}
-  .step p{color:#54493f;font-size:.92rem;max-width:26ch;margin:0 auto}
-  .order-note{text-align:center;margin-top:44px;color:#54493f;font-size:1rem}
+  .step p{color:var(--ink-soft);font-size:.92rem;max-width:26ch;margin:0 auto}
+  .order-note{text-align:center;margin-top:44px;color:var(--ink-soft);font-size:1rem}
   .order-note strong{color:var(--gold)}
 
   /* ---------- CONTATTI ---------- */
@@ -305,17 +324,20 @@
   .contact .wrap{position:relative;padding:80px clamp(20px,5vw,64px) 40px;display:grid;grid-template-columns:.9fr 1.1fr;gap:60px}
   .contact .wrap>div{min-width:0}
   .contact h2{font-family:'Fraunces',serif;font-weight:500;font-size:clamp(2rem,4vw,3rem);line-height:1.02;margin-bottom:18px}
-  .contact>.wrap>div:first-child>p{color:#d8e2cd;max-width:42ch;margin-bottom:28px}
+  .contact>.wrap>div:first-child>p{color:var(--on-royal-soft);max-width:42ch;margin-bottom:28px}
   .cinfo{display:grid;gap:18px;margin-top:34px}
   .cinfo>a,.cinfo>div{display:flex;gap:14px;align-items:flex-start;color:var(--cream);text-decoration:none}
-  .cinfo .mono{color:var(--bronte-2);min-width:70px}
+  .cinfo .mono{color:var(--gold-2);min-width:70px}
   .cinfo strong{font-weight:600;font-size:1.05rem}
   .cinfo a:hover strong{color:#f0d9a0}
+  .cinfo-legal{display:flex;flex-wrap:wrap;gap:4px var(--space-3);margin-top:var(--space-3);padding-top:var(--space-2);border-top:1px solid rgba(255,255,255,.12)}
+  .cinfo-legal a,.cinfo-legal span{color:var(--on-royal-soft);font-size:.82rem;text-decoration:none}
+  .cinfo-legal a:hover{color:var(--cream)}
   .wa{display:inline-flex;align-items:center;gap:10px;background:#25D366;color:#093;font-weight:700;padding:13px 24px;border-radius:100px;text-decoration:none;margin-top:8px}
 
   .contact-channels{min-width:0;background:var(--cream);border-radius:22px;padding:clamp(24px,3vw,38px);color:var(--ink);box-shadow:var(--shadow)}
   .contact-channels h3{font-family:'Fraunces',serif;font-weight:500;font-size:1.3rem;color:var(--bronte);margin-bottom:6px}
-  .contact-channels>p{color:#54493f;font-size:.9rem;margin-bottom:22px}
+  .contact-channels>p{color:var(--ink-soft);font-size:.9rem;margin-bottom:22px}
   .channel-card{display:flex;align-items:center;gap:16px;padding:18px 20px;border-radius:16px;border:1px solid var(--line);
     background:#fff;text-decoration:none;color:var(--ink);margin-bottom:14px;transition:transform .25s,box-shadow .25s,border-color .25s}
   .channel-card:hover{transform:translateY(-3px) translateX(2px);box-shadow:var(--shadow);border-color:var(--bronte-2)}
@@ -324,22 +346,22 @@
   .channel-wa .channel-icon{background:#25D366;color:#08321c}
   .channel-copy{display:flex;flex-direction:column;gap:2px;flex:1;min-width:0}
   .channel-copy strong{font-size:1.02rem;color:var(--bronte)}
-  .channel-copy span{font-size:.86rem;color:#6b6053;overflow-wrap:anywhere}
+  .channel-copy span{font-size:.86rem;color:var(--ink-faint);overflow-wrap:anywhere}
   .channel-go{font-size:1.2rem;color:var(--gold);transition:transform .25s}
   .channel-card:hover .channel-go{transform:translateX(4px)}
-  .form-note{font-size:.78rem;color:#8a7d6b;margin-top:8px;text-align:center}
+  .form-note{font-size:.78rem;color:var(--ink-faint);margin-top:8px;text-align:center}
 
   .map-wrap{margin-top:50px;border-radius:20px;overflow:hidden;border:1px solid rgba(255,255,255,.15);position:relative}
-  .map-wrap iframe{width:100%;height:280px;border:0;display:block;filter:grayscale(.15) sepia(.1)}
+  .map-wrap iframe{width:100%;height:280px;border:0;display:block;filter:grayscale(.25) saturate(.9)}
 
   /* ---------- FOOTER ---------- */
-  footer{background:var(--ink);color:#b7ab99;padding:60px clamp(20px,5vw,64px) 0}
+  footer{background:var(--ink);color:var(--on-ink-soft);padding:60px clamp(20px,5vw,64px) 0}
   .footer-grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:40px;padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,.08)}
   .footer-grid h4{font-family:'Space Mono',monospace;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-2);margin-bottom:16px}
   .footer-brand{font-family:'Fraunces',serif;font-weight:600;font-size:1.3rem;color:var(--cream);margin-bottom:10px;display:block}
   .footer-grid p{font-size:.88rem;line-height:1.7;max-width:34ch}
   .footer-grid ul{list-style:none;display:grid;gap:10px}
-  .footer-grid a{color:#b7ab99;text-decoration:none;font-size:.9rem}
+  .footer-grid a{color:var(--on-ink-soft);text-decoration:none;font-size:.9rem}
   .footer-grid a:hover{color:var(--cream)}
   .footer-bottom{max-width:1200px;margin:0 auto;padding:22px 0;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:.8rem}
   footer strong{color:var(--cream)}
@@ -757,17 +779,17 @@
   </div>
   <div class="testi-grid">
     <div class="testi-card reveal">
-      <div class="testi-stars">★★★★★</div>
+      <div class="testi-pending mono">In arrivo</div>
       <span class="type">Macelleria</span>
       <p>Testimonianza in arrivo — presto racconteremo qui l'esperienza dei nostri clienti macellai.</p>
     </div>
     <div class="testi-card reveal">
-      <div class="testi-stars">★★★★★</div>
+      <div class="testi-pending mono">In arrivo</div>
       <span class="type">Panificio / Pizzeria</span>
       <p>Testimonianza in arrivo — presto racconteremo qui l'esperienza dei nostri clienti fornai e pizzaioli.</p>
     </div>
     <div class="testi-card reveal">
-      <div class="testi-stars">★★★★★</div>
+      <div class="testi-pending mono">In arrivo</div>
       <span class="type">Bar / Ristorante</span>
       <p>Testimonianza in arrivo — presto racconteremo qui l'esperienza dei nostri clienti del settore ristorazione.</p>
     </div>
@@ -821,8 +843,10 @@
         <div><span class="mono">Dove</span><div><strong>Via S. Antonio Eremita 2/c</strong><br>95030 San Pietro Clarenza (CT), Sicilia</div></div>
         <a href="tel:+393407996635"><span class="mono">Tel</span><strong>340 799 6635</strong></a>
         <a href="mailto:sdfdimassimoscapellato@gmail.com"><span class="mono">Mail</span><strong>sdfdimassimoscapellato@gmail.com</strong></a>
-        <a href="mailto:sdf2011@pec.it"><span class="mono">Pec</span><strong>sdf2011@pec.it</strong></a>
-        <div><span class="mono">P.IVA</span><div><strong>04868410871</strong></div></div>
+      </div>
+      <div class="cinfo-legal">
+        <a href="mailto:sdf2011@pec.it">PEC sdf2011@pec.it</a>
+        <span>P.IVA 04868410871</span>
       </div>
       <div class="map-wrap">
         <iframe title="Mappa sede SDF di Massimo Scapellato" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
