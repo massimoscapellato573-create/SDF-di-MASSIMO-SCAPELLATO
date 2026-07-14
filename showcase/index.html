@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Northline - Design and Motion Studio (Skill Demo)</title>
+<meta name="description" content="Demo page built with the taste-skill and impeccable Claude Code skills. Not affiliated with SDF di Massimo Scapellato.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230C0C0E'/%3E%3Cpath d='M16 44 L48 20 M16 20 L16 44 M48 20 L48 44' stroke='%234A66E6' stroke-width='4' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0C0C0E;
+    --bg-raised:#151519;
+    --bg-raised-2:#1C1C21;
+    --ink:#F4F3EF;
+    --ink-dim:#A3A29D;
+    --ink-faint:#6B6A67;
+    --line:rgba(244,243,239,.12);
+    --line-strong:rgba(244,243,239,.22);
+    --accent:#4A66E6;
+    --accent-deep:#3850C2;
+    --accent-soft:#8CA2FF;
+    --on-accent:#F4F3EF;
+    --radius-card:20px;
+    --radius-pill:999px;
+    --max:1320px;
+    --ease:cubic-bezier(.16,1,.3,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Instrument Sans',system-ui,sans-serif;
+    font-size:16px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{display:block;max-width:100%;height:auto}
+  a{color:inherit;text-decoration:none}
+  h1,h2,h3{
+    font-family:'Space Grotesk',system-ui,sans-serif;
+    font-weight:600;
+    letter-spacing:-0.02em;
+    line-height:1.08;
+  }
+  .wrap{max-width:var(--max);margin-inline:auto;padding-inline:24px}
+  @media(min-width:768px){.wrap{padding-inline:40px}}
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;
+    gap:8px;height:48px;padding:0 24px;
+    border-radius:var(--radius-pill);
+    font-family:'Instrument Sans',sans-serif;font-weight:600;font-size:15px;
+    white-space:nowrap;
+    transition:transform .2s var(--ease),background-color .2s var(--ease);
+    border:1.5px solid transparent;
+  }
+  .btn:active{transform:scale(.97)}
+  .btn-primary{background:var(--ink);color:var(--bg)}
+  .btn-primary:hover{background:var(--ink-dim)}
+  .btn-ghost{border-color:var(--accent-soft);color:var(--accent-soft)}
+  .btn-ghost:hover{background:rgba(140,162,255,.1)}
+  .btn-sm{height:40px;padding:0 18px;font-size:14px}
+
+  /* nav */
+  header{
+    position:sticky;top:0;z-index:40;
+    height:72px;display:flex;align-items:center;
+    background:rgba(12,12,14,.78);
+    backdrop-filter:blur(14px) saturate(140%);
+    -webkit-backdrop-filter:blur(14px) saturate(140%);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-row{width:100%;display:flex;align-items:center;justify-content:space-between;gap:24px}
+  .brand{display:flex;align-items:center;gap:10px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:17px}
+  .brand svg{flex:none}
+  .nav-links{display:none;align-items:center;gap:32px;font-size:14.5px;color:var(--ink-dim)}
+  .nav-links a{transition:color .2s var(--ease)}
+  .nav-links a:hover{color:var(--ink)}
+  @media(min-width:820px){.nav-links{display:flex}}
+  .nav-cta{display:none}
+  @media(min-width:560px){.nav-cta{display:inline-flex}}
+
+  /* reveal */
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+  .reveal.in{opacity:1;transform:translateY(0)}
+  @media(prefers-reduced-motion:reduce){
+    .reveal{opacity:1;transform:none;transition:none}
+  }
+
+  /* hero */
+  .hero{padding:64px 0 96px}
+  @media(min-width:768px){.hero{padding:96px 0 128px}}
+  .hero-grid{display:grid;gap:48px;align-items:center}
+  @media(min-width:900px){.hero-grid{grid-template-columns:1.05fr .95fr;gap:64px}}
+  .hero h1{font-size:clamp(2.4rem,6vw,3.6rem)}
+  .hero p{margin-top:22px;max-width:46ch;color:var(--ink-dim);font-size:17px}
+  .hero-ctas{margin-top:34px;display:flex;flex-wrap:wrap;gap:14px}
+  .hero-media{
+    position:relative;border-radius:var(--radius-card);overflow:hidden;
+    aspect-ratio:4/5;background:var(--bg-raised);
+  }
+  .hero-media img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.08) brightness(.85)}
+  .hero-media::after{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(160deg,rgba(74,102,230,.38),rgba(12,12,14,.55) 65%);
+    mix-blend-mode:multiply;
+  }
+  .hero-media::before{
+    content:"";position:absolute;inset:0;z-index:1;
+    border:1px solid var(--line-strong);border-radius:inherit;pointer-events:none;
+  }
+
+  /* logo wall */
+  .clients{padding:8px 0 72px}
+  .clients-label{color:var(--ink-faint);font-size:14px;margin-bottom:28px}
+  .marquee{position:relative;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+  .marquee-track{display:flex;gap:64px;width:max-content;animation:scroll-x 32s linear infinite}
+  .marquee:hover .marquee-track{animation-play-state:paused}
+  @keyframes scroll-x{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  @media(prefers-reduced-motion:reduce){
+    .marquee-track{animation:none;flex-wrap:wrap;width:100%}
+  }
+  .client-logo{display:flex;align-items:center;gap:10px;color:var(--ink-faint);white-space:nowrap;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;transition:color .2s var(--ease)}
+  .client-logo:hover{color:var(--ink-dim)}
+  .client-logo svg{flex:none;opacity:.85}
+
+  /* section shell */
+  section{padding:88px 0}
+  .section-head{max-width:640px;margin-bottom:48px}
+  .section-head h2{font-size:clamp(1.9rem,3.6vw,2.6rem)}
+  .section-head p{margin-top:14px;color:var(--ink-dim);font-size:16px;max-width:56ch}
+
+  /* bento */
+  .bento{display:grid;gap:16px;grid-template-columns:1fr}
+  @media(min-width:760px){
+    .bento{grid-template-columns:repeat(3,1fr);grid-auto-rows:220px}
+    .b-1{grid-column:span 2;grid-row:span 2}
+    .b-2{grid-column:span 1;grid-row:span 1}
+    .b-3{grid-column:span 1;grid-row:span 1}
+    .b-4{grid-column:span 1;grid-row:span 1}
+    .b-5{grid-column:span 2;grid-row:span 1}
+  }
+  .tile{
+    position:relative;border-radius:var(--radius-card);padding:26px;
+    display:flex;flex-direction:column;justify-content:flex-end;gap:8px;
+    border:1px solid var(--line);overflow:hidden;min-height:220px;
+  }
+  .tile h3{font-size:20px}
+  .tile p{color:var(--ink-dim);font-size:14.5px;max-width:42ch}
+  .tile-plain{background:var(--bg-raised)}
+  .tile-accent{background:var(--accent-deep);border-color:transparent}
+  .tile-accent p{color:rgba(244,243,239,.92)}
+  .tile-media{color:#fff}
+  .tile-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(1) brightness(.55)}
+  .tile-media::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.72),rgba(0,0,0,0) 60%)}
+  .tile-media h3,.tile-media p{position:relative;z-index:1}
+  .tile-media p{color:rgba(255,255,255,.78)}
+
+  /* work stack */
+  .work-list{display:flex;flex-direction:column;gap:0}
+  .work-card{
+    position:sticky;top:88px;
+    background:var(--bg-raised);border:1px solid var(--line);
+    border-radius:var(--radius-card);overflow:hidden;
+    display:grid;grid-template-columns:1fr;
+    box-shadow:0 30px 60px -30px rgba(0,0,0,.6);
+  }
+  .work-card:nth-child(1){top:88px}
+  .work-card:nth-child(2){top:120px;margin-top:-56px}
+  .work-card:nth-child(3){top:152px;margin-top:-56px}
+  @media(min-width:760px){.work-card{grid-template-columns:1fr 1fr}}
+  .work-media{aspect-ratio:16/10;background:var(--bg-raised-2)}
+  .work-media img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.05)}
+  .work-body{padding:32px;display:flex;flex-direction:column;justify-content:center;gap:14px}
+  .work-body h3{font-size:24px}
+  .work-body p{color:var(--ink-dim);font-size:15px;max-width:46ch}
+  .work-link{color:var(--accent-soft);font-weight:600;font-size:14.5px;display:inline-flex;align-items:center;gap:6px;width:fit-content}
+  .work-link svg{transition:transform .2s var(--ease)}
+  .work-link:hover svg{transform:translateX(3px)}
+
+  /* process */
+  .process{display:grid;gap:32px;grid-template-columns:1fr}
+  @media(min-width:760px){.process{grid-template-columns:repeat(4,1fr);gap:24px}}
+  .step{padding-top:20px;border-top:1px solid var(--line-strong)}
+  @media(min-width:760px){
+    .step:nth-child(2){margin-top:28px}
+    .step:nth-child(4){margin-top:28px}
+  }
+  .step h3{font-size:19px;margin-bottom:10px}
+  .step p{color:var(--ink-dim);font-size:14.5px}
+
+  /* testimonial */
+  .testimonial{text-align:left}
+  .testimonial blockquote{
+    font-family:'Space Grotesk',sans-serif;font-weight:500;
+    font-size:clamp(1.6rem,3.4vw,2.3rem);line-height:1.28;
+    letter-spacing:-0.01em;max-width:760px;
+  }
+  .testimonial figcaption{margin-top:28px;color:var(--ink-dim);font-size:15px}
+  .testimonial figcaption span{color:var(--ink);font-weight:600}
+
+  /* final cta */
+  .cta-band{background:var(--bg-raised);border-radius:28px;padding:56px 32px;text-align:left}
+  @media(min-width:768px){.cta-band{padding:72px 64px;display:flex;align-items:center;justify-content:space-between;gap:40px}}
+  .cta-band h2{font-size:clamp(1.9rem,4vw,2.6rem);max-width:14ch}
+  .cta-band p{margin-top:14px;color:var(--ink-dim);max-width:42ch}
+  .cta-band .btn{margin-top:28px}
+  @media(min-width:768px){.cta-band .btn{margin-top:0;flex:none}}
+
+  /* footer */
+  footer{border-top:1px solid var(--line);padding:64px 0 40px}
+  .foot-grid{display:grid;gap:40px;grid-template-columns:1fr}
+  @media(min-width:760px){.foot-grid{grid-template-columns:1.4fr 1fr 1fr}}
+  .foot-brand p{margin-top:14px;color:var(--ink-dim);font-size:14.5px;max-width:36ch}
+  .foot-col h4{font-size:13.5px;color:var(--ink-faint);font-weight:600;margin-bottom:16px}
+  .foot-col ul{list-style:none;display:flex;flex-direction:column;gap:12px}
+  .foot-col a{color:var(--ink-dim);font-size:14.5px;transition:color .2s var(--ease)}
+  .foot-col a:hover{color:var(--ink)}
+  .foot-bottom{
+    margin-top:56px;padding-top:24px;border-top:1px solid var(--line);
+    display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;
+    color:var(--ink-faint);font-size:13.5px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav-row">
+    <a class="brand" href="#top">
+      <svg width="26" height="26" viewBox="0 0 64 64" fill="none"><rect width="64" height="64" rx="14" fill="#151519"/><path d="M16 44 L48 20 M16 20 L16 44 M48 20 L48 44" stroke="#8CA2FF" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Northline
+    </a>
+    <nav class="nav-links">
+      <a href="#work">Work</a>
+      <a href="#capabilities">Studio</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="btn btn-primary btn-sm nav-cta" href="#contact">Start a project</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="reveal">
+        <h1>Interfaces built to hold attention.</h1>
+        <p>Northline is an independent studio designing web products, brand systems, and motion for teams who care about craft.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-primary" href="#contact">Start a project</a>
+          <a class="btn btn-ghost" href="#work">View work</a>
+        </div>
+      </div>
+      <div class="hero-media reveal">
+        <img src="https://picsum.photos/seed/northline-studio-desk/900/1125?grayscale" alt="Northline studio workspace, monitors showing an in-progress interface design" loading="eager">
+      </div>
+    </div>
+  </section>
+
+  <!-- CLIENTS -->
+  <section class="clients">
+    <div class="wrap">
+      <p class="clients-label reveal">Selected clients</p>
+      <div class="marquee reveal">
+        <div class="marquee-track">
+          <span class="client-logo"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M8 12h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Halcyon</span>
+          <span class="client-logo"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="3" stroke="currentColor" stroke-width="2"/><path d="M4 14h16" stroke="currentColor" stroke-width="2"/></svg>Salt Union</span>
+          <span class="client-logo"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 4v16M4 12h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Continuum</span>
+          <span class="client-logo"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 18 12 4l8 14z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>Fenwick &amp; Rae</span>
+          <span class="client-logo"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 3l7 4v10l-7 4-7-4V7z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>Obelisk</span>
+          <span class="client-logo"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 15c3-6 6-6 8 0s5 6 8 0" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>Greywing</span>
+          <span class="client-logo" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M8 12h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Halcyon</span>
+          <span class="client-logo" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="3" stroke="currentColor" stroke-width="2"/><path d="M4 14h16" stroke="currentColor" stroke-width="2"/></svg>Salt Union</span>
+          <span class="client-logo" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 4v16M4 12h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Continuum</span>
+          <span class="client-logo" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 18 12 4l8 14z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>Fenwick &amp; Rae</span>
+          <span class="client-logo" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 3l7 4v10l-7 4-7-4V7z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>Obelisk</span>
+          <span class="client-logo" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 15c3-6 6-6 8 0s5 6 8 0" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>Greywing</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CAPABILITIES -->
+  <section id="capabilities">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2>What we build</h2>
+        <p>Five disciplines working as one team, from the first sketch to a shipped, maintained product.</p>
+      </div>
+      <div class="bento">
+        <div class="tile tile-accent b-1 reveal">
+          <h3>Product design</h3>
+          <p>Interfaces that are fast, clear, and easy to use, backed by research and real usage data.</p>
+        </div>
+        <div class="tile tile-media b-2 reveal">
+          <img src="https://picsum.photos/seed/northline-brand/500/440?grayscale" alt="Brand identity moodboard with type samples and printed materials">
+          <h3>Brand identity</h3>
+          <p>Naming and identity systems that hold up across every surface a brand touches.</p>
+        </div>
+        <div class="tile tile-media b-3 reveal">
+          <img src="https://picsum.photos/seed/northline-motion/500/440?grayscale" alt="Film set with camera equipment for a product launch film">
+          <h3>Motion &amp; film</h3>
+          <p>Title sequences, product films, and interface micro interactions.</p>
+        </div>
+        <div class="tile tile-plain b-4 reveal">
+          <h3>Front-end build</h3>
+          <p>Production code in React and native web platforms, built to ship, not just to demo.</p>
+        </div>
+        <div class="tile tile-plain b-5 reveal">
+          <h3>Design systems</h3>
+          <p>Component libraries and tokens that keep design and engineering in sync as teams grow.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SELECTED WORK -->
+  <section id="work">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2>Selected work</h2>
+        <p>Three recent projects, from first workshop to shipped release.</p>
+      </div>
+      <div class="work-list">
+        <article class="work-card reveal">
+          <div class="work-media"><img src="https://picsum.photos/seed/halcyon-case/800/500?grayscale" alt="Halcyon product interface shown on a laptop screen"></div>
+          <div class="work-body">
+            <h3>Halcyon: brand identity and product site</h3>
+            <p>A full rebrand and new marketing site for a climate data platform, shipped in six weeks.</p>
+            <a class="work-link" href="#contact">View project <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </div>
+        </article>
+        <article class="work-card reveal">
+          <div class="work-media"><img src="https://picsum.photos/seed/salt-union-case/800/500?grayscale" alt="Salt Union hardware product photographed on a plain background"></div>
+          <div class="work-body">
+            <h3>Salt Union: launch film and site</h3>
+            <p>Product launch film, landing page, and pre-order flow for a direct-to-consumer hardware brand.</p>
+            <a class="work-link" href="#contact">View project <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </div>
+        </article>
+        <article class="work-card reveal">
+          <div class="work-media"><img src="https://picsum.photos/seed/continuum-case/800/500?grayscale" alt="Continuum design system components displayed in a style guide"></div>
+          <div class="work-body">
+            <h3>Continuum: design system and app</h3>
+            <p>A shared design system and redesigned core app used by every product team at Continuum.</p>
+            <a class="work-link" href="#contact">View project <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section>
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2>How we work</h2>
+        <p>Four stretches of work, repeated on every project regardless of size.</p>
+      </div>
+      <div class="process">
+        <div class="step reveal">
+          <h3>Discover</h3>
+          <p>We start with research: interviews, audits, and a clear brief everyone agrees on.</p>
+        </div>
+        <div class="step reveal">
+          <h3>Shape</h3>
+          <p>Concepts and prototypes get tested early, before a single line of production code is written.</p>
+        </div>
+        <div class="step reveal">
+          <h3>Build</h3>
+          <p>Design and engineering work in the same sprint, so nothing gets lost in translation.</p>
+        </div>
+        <div class="step reveal">
+          <h3>Launch</h3>
+          <p>We ship, measure, and keep refining after launch, not just before it.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIAL -->
+  <section class="testimonial">
+    <div class="wrap">
+      <figure class="reveal">
+        <blockquote>"Northline rebuilt our product site in six weeks, and it still feels ahead of the market."</blockquote>
+        <figcaption><span>Priya Anand</span>, Head of Brand, Continuum</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section>
+    <div class="wrap">
+      <div class="cta-band reveal">
+        <div>
+          <h2>Have a brief? Let's talk.</h2>
+          <p>Tell us about the project and we will reply within two working days.</p>
+        </div>
+        <a class="btn btn-primary" href="#contact">Start a project</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a class="brand" href="#top">
+          <svg width="26" height="26" viewBox="0 0 64 64" fill="none"><rect width="64" height="64" rx="14" fill="#151519"/><path d="M16 44 L48 20 M16 20 L16 44 M48 20 L48 44" stroke="#8CA2FF" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Northline
+        </a>
+        <p>An independent design and motion studio. Available for new projects starting next quarter.</p>
+        <a class="btn btn-primary btn-sm" style="margin-top:20px" href="mailto:hello@northline.studio">Start a project</a>
+      </div>
+      <div class="foot-col">
+        <h4>Studio</h4>
+        <ul>
+          <li><a href="#work">Work</a></li>
+          <li><a href="#capabilities">Studio</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:hello@northline.studio">hello@northline.studio</a></li>
+          <li><span>Northline Studio, Rotterdam</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Northline Studio.</span>
+      <span>Fictional brand, built to demo frontend design skills.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  var els = document.querySelectorAll('.reveal');
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) {
+    els.forEach(function(el){ el.classList.add('in'); });
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+    els.forEach(function(el){ io.observe(el); });
+  }
+</script>
+
+</body>
+</html>
