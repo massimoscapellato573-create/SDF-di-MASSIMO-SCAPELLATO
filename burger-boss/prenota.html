@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prenota — Burger Boss</title>
+<meta name="description" content="Prenota il tuo tavolo da Burger Boss: compila il form e ricevi conferma direttamente su WhatsApp.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231b1e25'/%3E%3Ccircle cx='32' cy='24' r='9' fill='none' stroke='%23f2a93b' stroke-width='3'/%3E%3Crect x='16' y='30' width='32' height='6' rx='3' fill='%23f2a93b'/%3E%3Cpath d='M16 40h32c0 6-7 9-16 9s-16-3-16-9z' fill='%23f2a93b'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<div class="demo-banner">🚧 <b>Anteprima / Bozza</b> — sito dimostrativo per Burger Boss. Indirizzo, telefono, orari, recensioni e Instagram sono contenuti di esempio da sostituire con i dati reali.</div>
+
+<header>
+  <div class="wrap nav">
+    <a href="index.html" class="brand"><img src="assets/img/logo.webp" alt="Burger Boss"> BURGER BOSS</a>
+    <nav class="navlinks" id="navlinks">
+      <a href="index.html">Home</a>
+      <a href="menu.html">Menu</a>
+      <a href="prenota.html" class="active">Prenota</a>
+      <a href="dove-siamo.html">Dove Siamo</a>
+      <a href="recensioni.html">Recensioni</a>
+      <a href="instagram.html">Instagram</a>
+    </nav>
+    <div class="navcta">
+      <a href="prenota.html" class="btn btn-primary btn-sm">Prenota ora</a>
+      <button class="burger-toggle" id="burgerToggle" aria-label="Apri il menu di navigazione">☰</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="prenota">
+    <div class="wrap prenota-grid">
+      <div class="prenota-info reveal in">
+        <span class="eyebrow">Prenotazioni</span>
+        <h1 class="display" style="margin-top:10px;font-size:clamp(2.4rem,5vw,3.2rem);text-transform:uppercase">Prenota ora<br>il tuo tavolo</h1>
+        <p>Compila il form: riceverai conferma direttamente su WhatsApp. Niente attese, niente file — solo un tavolo pronto per te.</p>
+        <ul class="info-list">
+          <li><span class="info-ico">📍</span><div><b>Via Esempio 123, Catania (CT)</b><span>indirizzo di esempio — da confermare</span></div></li>
+          <li><span class="info-ico">🕒</span><div><b>12:00 – 15:00 · 19:00 – 23:30</b><span>tutti i giorni (orari di esempio)</span></div></li>
+          <li><span class="info-ico">📞</span><div><b>+39 095 000 0000</b><span>numero di esempio — da aggiornare</span></div></li>
+        </ul>
+      </div>
+      <form class="book reveal in" id="bookForm">
+        <div class="form-row">
+          <div class="field"><label for="bName">Nome e cognome</label><input type="text" id="bName" required placeholder="Il tuo nome"></div>
+          <div class="field"><label for="bPhone">Telefono</label><input type="tel" id="bPhone" required placeholder="333 1234567"></div>
+        </div>
+        <div class="form-row">
+          <div class="field"><label for="bDate">Data</label><input type="date" id="bDate" required></div>
+          <div class="field"><label for="bTime">Ora</label><input type="time" id="bTime" required></div>
+        </div>
+        <div class="form-row">
+          <div class="field"><label for="bGuests">Persone</label>
+            <select id="bGuests">
+              <option>1 persona</option><option selected>2 persone</option><option>3 persone</option>
+              <option>4 persone</option><option>5 persone</option><option>6+ persone</option>
+            </select>
+          </div>
+          <div class="field"><label for="bNote">Note (opzionale)</label><input type="text" id="bNote" placeholder="Allergie, seggiolone..."></div>
+        </div>
+        <button type="submit" class="btn btn-primary">📲 Invia prenotazione via WhatsApp</button>
+        <p class="form-note">Il pulsante apre WhatsApp con i dati precompilati — pronto per essere collegato al numero reale del locale.</p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand"><img src="assets/img/logo.webp" alt="Burger Boss"> BURGER BOSS</div>
+        <p>Burger d'autore, patatine leggendarie e un servizio che non lascia scampo alla fame. Il gusto che comanda, ogni giorno.</p>
+        <div class="social-row">
+          <a href="instagram.html" aria-label="Instagram">📷</a>
+          <a href="#" aria-label="Facebook">📘</a>
+          <a href="prenota.html" aria-label="WhatsApp">💬</a>
+        </div>
+      </div>
+      <div>
+        <h4>Naviga</h4>
+        <ul>
+          <li><a href="menu.html">Menu</a></li>
+          <li><a href="prenota.html">Prenota</a></li>
+          <li><a href="dove-siamo.html">Dove siamo</a></li>
+          <li><a href="recensioni.html">Recensioni</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contatti</h4>
+        <ul>
+          <li>Via Esempio 123, Catania (CT)</li>
+          <li>+39 095 000 0000</li>
+          <li>info@burgerboss.example</li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© <span id="year"></span> Burger Boss — sito dimostrativo, bozza in fase di validazione.</span>
+      <span>Realizzato con 🧡 per presentare l'idea al cliente</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+<script>
+/* ---------------- BOOKING FORM -> WHATSAPP ---------------- */
+const WHATSAPP_NUMBER = '390950000000'; // ⚠️ placeholder — sostituire con il numero reale del locale
+document.getElementById('bookForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  const name = document.getElementById('bName').value;
+  const phone = document.getElementById('bPhone').value;
+  const date = document.getElementById('bDate').value;
+  const time = document.getElementById('bTime').value;
+  const guests = document.getElementById('bGuests').value;
+  const note = document.getElementById('bNote').value;
+  const msg = `Ciao Burger Boss! Vorrei prenotare un tavolo 🍔%0A%0A👤 Nome: ${encodeURIComponent(name)}%0A📞 Telefono: ${encodeURIComponent(phone)}%0A📅 Data: ${encodeURIComponent(date)}%0A🕒 Ora: ${encodeURIComponent(time)}%0A👥 Persone: ${encodeURIComponent(guests)}${note ? '%0A📝 Note: '+encodeURIComponent(note) : ''}`;
+  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, '_blank');
+});
+</script>
+</body>
+</html>

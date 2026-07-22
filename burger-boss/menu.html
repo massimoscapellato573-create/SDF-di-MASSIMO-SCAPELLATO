@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Menu — Burger Boss</title>
+<meta name="description" content="Il menu interattivo di Burger Boss: filtra per categoria, cerca un piatto e scopri tutti gli ingredienti di ogni burger.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231b1e25'/%3E%3Ccircle cx='32' cy='24' r='9' fill='none' stroke='%23f2a93b' stroke-width='3'/%3E%3Crect x='16' y='30' width='32' height='6' rx='3' fill='%23f2a93b'/%3E%3Cpath d='M16 40h32c0 6-7 9-16 9s-16-3-16-9z' fill='%23f2a93b'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<div class="demo-banner">🚧 <b>Anteprima / Bozza</b> — sito dimostrativo per Burger Boss. Indirizzo, telefono, orari, recensioni e Instagram sono contenuti di esempio da sostituire con i dati reali.</div>
+
+<header>
+  <div class="wrap nav">
+    <a href="index.html" class="brand"><img src="assets/img/logo.webp" alt="Burger Boss"> BURGER BOSS</a>
+    <nav class="navlinks" id="navlinks">
+      <a href="index.html">Home</a>
+      <a href="menu.html" class="active">Menu</a>
+      <a href="prenota.html">Prenota</a>
+      <a href="dove-siamo.html">Dove Siamo</a>
+      <a href="recensioni.html">Recensioni</a>
+      <a href="instagram.html">Instagram</a>
+    </nav>
+    <div class="navcta">
+      <a href="prenota.html" class="btn btn-primary btn-sm">Prenota ora</a>
+      <button class="burger-toggle" id="burgerToggle" aria-label="Apri il menu di navigazione">☰</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="page-hero">
+    <div class="wrap">
+      <span class="eyebrow reveal in">Il menu</span>
+      <h1 class="display reveal in">Non è un PDF.<br>È un'esperienza.</h1>
+      <p class="reveal in">Filtra per categoria, cerca il tuo burger preferito e tocca una card per vedere tutti gli ingredienti, come se fossi al tavolo.</p>
+    </div>
+  </section>
+
+  <section class="menu-section">
+    <div class="wrap">
+      <div class="menu-search">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" id="menuSearch" placeholder="Cerca un piatto... es. bacon">
+      </div>
+
+      <div class="menu-filters" id="menuFilters"></div>
+      <div class="menu-grid" id="menuGrid"></div>
+      <div class="empty-state" id="emptyState">😕 Nessun piatto trovato. Prova un'altra ricerca.</div>
+    </div>
+  </section>
+</main>
+
+<a href="prenota.html" class="float-cta">📅 <span>Prenota ora</span></a>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <div class="modal-photo">
+      <img id="modalImg" src="" alt="">
+      <button class="modal-close" id="modalClose">✕</button>
+    </div>
+    <div class="modal-body">
+      <h3 id="modalName"></h3>
+      <div class="modal-price" id="modalPrice"></div>
+      <p class="item-desc" id="modalDesc" style="margin-top:10px"></p>
+      <ul class="modal-ingredients" id="modalIngredients"></ul>
+      <div class="modal-tags" id="modalTags"></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand"><img src="assets/img/logo.webp" alt="Burger Boss"> BURGER BOSS</div>
+        <p>Burger d'autore, patatine leggendarie e un servizio che non lascia scampo alla fame. Il gusto che comanda, ogni giorno.</p>
+        <div class="social-row">
+          <a href="instagram.html" aria-label="Instagram">📷</a>
+          <a href="#" aria-label="Facebook">📘</a>
+          <a href="prenota.html" aria-label="WhatsApp">💬</a>
+        </div>
+      </div>
+      <div>
+        <h4>Naviga</h4>
+        <ul>
+          <li><a href="menu.html">Menu</a></li>
+          <li><a href="prenota.html">Prenota</a></li>
+          <li><a href="dove-siamo.html">Dove siamo</a></li>
+          <li><a href="recensioni.html">Recensioni</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contatti</h4>
+        <ul>
+          <li>Via Esempio 123, Catania (CT)</li>
+          <li>+39 095 000 0000</li>
+          <li>info@burgerboss.example</li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© <span id="year"></span> Burger Boss — sito dimostrativo, bozza in fase di validazione.</span>
+      <span>Realizzato con 🧡 per presentare l'idea al cliente</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+<script>
+/* ---------------- MENU DATA ---------------- */
+const menuItems = [
+  {
+    id:'tony-montana', name:'Tony Montana', cat:'Burger', price:11.90,
+    img:'assets/img/burger-tonymontana.webp', badge:'MUST HAVE',
+    desc:'Manzo succulento, doppio bacon croccante, uovo fritto e la nostra salsa sweet chilly mayo. Il classico che non delude mai.',
+    tags:['Manzo · Beef','GF disponibile'],
+    ingredients:['Hamburger di manzo ripieno di cheddar e salsa mayo dolce piccante (200g)','Uovo fritto','Doppio bacon croccante','Cheddar','Insalata iceberg','Erba cipollina','Salsa sweet chilly mayo']
+  },
+  {
+    id:'frank-lucas', name:'Frank Lucas', cat:'Burger', price:11.90,
+    img:'assets/img/burger-franklucas.webp', badge:'MUST HAVE',
+    desc:'Petto di pollo croccante in panatura ai corn flakes, miele e stracciatella di bufala: dolce, sfizioso, indimenticabile.',
+    tags:['Pollo · Chicken','GF disponibile'],
+    ingredients:['Fettina di pollo con panatura ai corn flakes (150g)','Cipolla croccante','Bacon croccante','Pomodoro a fette','Miele','Stracciatella di bufala']
+  },
+  {
+    id:'rafael', name:'Rafael Caro Quintero', cat:'Burger', price:11.90,
+    img:'assets/img/burger-rafael.webp', badge:'MUST HAVE',
+    desc:"Hamburger ripieno di mortadella e provolone dolce, anelli di cipolla croccanti e uovo fritto che cola su tutto.",
+    tags:['Cavallo · Horse','GF disponibile'],
+    ingredients:['Hamburger ripieno con mortadella e provolone dolce (200g)','Anelli di cipolla','Uovo fritto','Bacon croccante','Provolone dolce','Salsa wanted','Pomodoro a fette']
+  },
+  {
+    id:'al-capone', name:'Al Capone', cat:'Burger', price:12.90,
+    img:'assets/img/burger-alcapone.webp', badge:'MUST HAVE',
+    desc:'Il bun ricoperto di crema e granella di pistacchio incontra un hamburger ripieno di pistacchio e provolone. Un boss assoluto.',
+    tags:['Asina · Donkey','GF disponibile'],
+    ingredients:['Hamburger ripieno con crema di pistacchio e provolone (200g)','Bun ricoperto di crema e granella di pistacchio','Cipolla caramellata','Insalata valeriana','Salsa mayo','Bacon croccante']
+  },
+  {
+    id:'churros-capone', name:'Churros Al Capone', cat:'Chicken Churros', price:4.90,
+    img:'assets/img/churros-plate.webp',
+    desc:'Ripieno di crema di pistacchio, avvolto nel bacon e cheddar, croccante panatura cornflakes.',
+    tags:[], ingredients:['Chicken churros ripieno di crema di pistacchio','Avvolto nel bacon e cheddar','Panatura croccante ai cornflakes']
+  },
+  {
+    id:'churros-montana', name:'Churros Tony Montana', cat:'Chicken Churros', price:4.90,
+    img:'assets/img/churros-plate.webp',
+    desc:'Ripieno di cheddar e sweet chilly mayo, avvolto nel bacon e cheddar con croccante panatura cornflakes.',
+    tags:[], ingredients:['Chicken churros ripieno di cheddar e sweet chilly mayo','Avvolto nel bacon e cheddar','Panatura croccante ai cornflakes']
+  },
+  {
+    id:'churros-vito', name:'Churros Vito Genovese', cat:'Chicken Churros', price:4.90,
+    img:'assets/img/churros-plate.webp',
+    desc:'Ripieno di cheddar e salsa BBQ, avvolto nel bacon e cheddar con croccante panatura cornflakes.',
+    tags:[], ingredients:['Chicken churros ripieno di cheddar e salsa BBQ','Avvolto nel bacon e cheddar','Panatura croccante ai cornflakes']
+  },
+  {
+    id:'churros-bacon', name:'Churros Bacon & Cheddar', cat:'Chicken Churros', price:2.90,
+    img:'assets/img/churros-plate.webp',
+    desc:'Il classico chicken churros con panatura ai corn flakes.',
+    tags:[], ingredients:['Chicken churros','Panatura ai corn flakes']
+  },
+  {
+    id:'little-family-1', name:'Little Family 1', cat:'Fries & Co', price:4.90,
+    img:'assets/img/fries-bbq.webp',
+    desc:'Patatine fritte, straccetti di bacon croccante, cheddar fuso e salsa BBQ.',
+    tags:[], ingredients:['Patatine fritte','Straccetti di bacon croccante','Cheddar fuso','Salsa BBQ']
+  },
+  {
+    id:'little-family-2', name:'Little Family 2', cat:'Fries & Co', price:5.90,
+    img:'assets/img/fries-pistacchio.webp',
+    desc:'Patatine fritte, straccetti di bacon croccante, stracciatella di bufala e granella di pistacchio.',
+    tags:[], ingredients:['Patatine fritte','Straccetti di bacon croccante','Stracciatella di bufala','Granella di pistacchio']
+  },
+  {
+    id:'patatine', name:'Patatine Fritte', cat:'Fries & Co', price:3.90, compact:true,
+    desc:'Le classiche patatine fritte croccanti.', tags:[], ingredients:['Patatine fritte']
+  },
+  {
+    id:'patatine-dolci', name:'Patatine Dolci Americane', cat:'Fries & Co', price:4.90, compact:true,
+    desc:'Sweet potato chips, dolci e croccanti.', tags:[], ingredients:['Patatine dolci americane']
+  },
+  {
+    id:'big-family-maxi', name:'The Big Family Maxi', cat:'Big Family', price:19.90,
+    img:'assets/img/big-family.webp', badge:'PER 3-4',
+    desc:'Nuggets di pollo, anelli di cipolla, alette di pollo, bacon croccante e cubetti di wurstel.',
+    tags:['Da condividere'], ingredients:['Nuggets di pollo','Anelli di cipolla','Alette di pollo','Bacon croccante','Cubetti di wurstel','Base di patatine fritte']
+  },
+  {
+    id:'big-family-medio', name:'The Big Family Medio', cat:'Big Family', price:9.90,
+    img:'assets/img/wings.webp',
+    desc:'6 nuggets di pollo, 8 anelli di cipolla, 6 alette di pollo.',
+    tags:['Da condividere'], ingredients:['6 nuggets di pollo','8 anelli di cipolla','6 alette di pollo']
+  },
+  {
+    id:'nuggets', name:'Nuggets', cat:'Big Family', price:4.90,
+    img:'assets/img/nuggets.webp',
+    desc:'10 pezzi di nuggets di pollo croccanti.', tags:['Surgelato'], ingredients:['10 nuggets di pollo']
+  },
+  {
+    id:'wings', name:'Alette di Pollo', cat:'Big Family', price:5.90,
+    img:'assets/img/wings.webp',
+    desc:'6 alette di pollo glassate, croccanti fuori e succose dentro.', tags:['Surgelato'], ingredients:['6 alette di pollo']
+  },
+  {
+    id:'onion-rings', name:'Anelli di Cipolla', cat:'Big Family', price:4.90, compact:true,
+    desc:'12 pezzi di croccanti onion rings.', tags:['Surgelato'], ingredients:['12 anelli di cipolla']
+  },
+  {
+    id:'toast-wurstel', name:'Wurstel & Cheddar', cat:'Toast', price:4.90,
+    img:'assets/img/toast-wurstel.webp',
+    desc:'Toast filante con wurstel e cheddar, servito con patatine fritte.', tags:[], ingredients:['Wurstel','Cheddar filante','Pane toast','Patatine fritte incluse']
+  },
+  {
+    id:'toast-bacon', name:'Bacon & Cheddar', cat:'Toast', price:4.90,
+    img:'assets/img/toast-bacon.webp',
+    desc:'Toast con bacon croccante e cheddar, servito con patatine fritte.', tags:[], ingredients:['Bacon croccante','Cheddar filante','Pane toast','Patatine fritte incluse']
+  },
+  {
+    id:'kids-boss', name:'Kids Boss Menu', cat:'Kids', price:9.90,
+    img:'assets/img/kids-menu.webp',
+    desc:'Mini burger, patatine fritte e Coca-Cola: il menu su misura per i piccoli boss.', tags:['Bambini'], ingredients:['Mini burger di manzo con cheddar','Patatine fritte','Coca-Cola']
+  }
+];
+
+const categories = ['Tutti','Burger','Chicken Churros','Fries & Co','Big Family','Toast','Kids'];
+
+/* ---------------- RENDER FILTERS ---------------- */
+const filtersEl = document.getElementById('menuFilters');
+categories.forEach((cat,i)=>{
+  const b = document.createElement('button');
+  b.className = 'filter-btn' + (i===0?' active':'');
+  b.textContent = cat;
+  b.dataset.cat = cat;
+  b.addEventListener('click', ()=>{
+    document.querySelectorAll('.filter-btn').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    activeCat = cat;
+    renderMenu();
+  });
+  filtersEl.appendChild(b);
+});
+
+let activeCat = 'Tutti';
+const gridEl = document.getElementById('menuGrid');
+const emptyEl = document.getElementById('emptyState');
+const searchEl = document.getElementById('menuSearch');
+
+function renderMenu(){
+  const q = searchEl.value.trim().toLowerCase();
+  const filtered = menuItems.filter(it=>{
+    const matchCat = activeCat==='Tutti' || it.cat===activeCat;
+    const matchQ = !q || it.name.toLowerCase().includes(q) || it.desc.toLowerCase().includes(q) || it.cat.toLowerCase().includes(q);
+    return matchCat && matchQ;
+  });
+  gridEl.innerHTML = '';
+  emptyEl.style.display = filtered.length ? 'none' : 'block';
+  filtered.forEach(it=>{
+    const card = document.createElement('article');
+    card.className = 'item-card' + (it.compact ? ' compact' : '');
+    card.innerHTML = `
+      ${it.img ? `<div class="item-photo">${it.badge ? `<span class="item-ribbon">${it.badge}</span>` : ''}<img src="${it.img}" alt="${it.name}" loading="lazy"></div>` : ''}
+      <div class="item-body">
+        <div class="item-top"><h3>${it.name}</h3><span class="item-price">€${it.price.toFixed(2).replace('.',',')}</span></div>
+        <p class="item-desc">${it.desc}</p>
+        ${it.tags && it.tags.length ? `<div class="item-tags">${it.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>` : ''}
+        <span class="item-more">Scopri gli ingredienti →</span>
+      </div>`;
+    card.addEventListener('click', ()=>openModal(it));
+    gridEl.appendChild(card);
+  });
+}
+searchEl.addEventListener('input', renderMenu);
+renderMenu();
+
+/* ---------------- MODAL ---------------- */
+const overlay = document.getElementById('modalOverlay');
+function openModal(it){
+  document.getElementById('modalImg').src = it.img || 'assets/img/logo.webp';
+  document.getElementById('modalName').textContent = it.name;
+  document.getElementById('modalPrice').textContent = '€' + it.price.toFixed(2).replace('.',',');
+  document.getElementById('modalDesc').textContent = it.desc;
+  document.getElementById('modalIngredients').innerHTML = it.ingredients.map(i=>`<li>${i}</li>`).join('');
+  document.getElementById('modalTags').innerHTML = (it.tags||[]).map(t=>`<span class="tag">${t}</span>`).join('');
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(){
+  overlay.classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('modalClose').addEventListener('click', closeModal);
+overlay.addEventListener('click', e=>{ if(e.target===overlay) closeModal(); });
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
+</script>
+</body>
+</html>

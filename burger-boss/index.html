@@ -10,245 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --ink:#f3f1eb;
-    --bg:#1a1d24;
-    --bg-2:#22262f;
-    --bg-3:#2c313c;
-    --gold:#f2a93b;
-    --gold-2:#ffce7a;
-    --red:#e2402f;
-    --muted:#9aa0ad;
-    --line:rgba(255,255,255,.09);
-    --shadow:0 30px 60px -25px rgba(0,0,0,.6);
-  }
-  *{margin:0;padding:0;box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{
-    font-family:'Poppins',system-ui,sans-serif;
-    background:var(--bg);
-    color:var(--ink);
-    line-height:1.6;
-    overflow-x:hidden;
-    -webkit-font-smoothing:antialiased;
-  }
-  .display{font-family:'Bebas Neue',sans-serif;letter-spacing:.02em;line-height:1.02}
-  .wrap{max-width:1240px;margin:0 auto;padding:0 clamp(20px,5vw,64px)}
-  a{color:inherit;text-decoration:none}
-  img{max-width:100%;display:block}
-  section{position:relative;z-index:2}
-  ::selection{background:var(--gold);color:#1a1d24}
-  :focus-visible{outline:2px solid var(--gold);outline-offset:3px}
-  .eyebrow{font-family:'Bebas Neue',sans-serif;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);font-size:.82rem}
-  .note{font-size:.78rem;color:var(--muted);font-style:italic}
-
-  /* ---------- DEMO BANNER ---------- */
-  .demo-banner{background:var(--gold);color:#1a1d24;text-align:center;font-weight:600;font-size:.85rem;padding:9px 16px;position:relative;z-index:100}
-  .demo-banner b{font-weight:800}
-
-  /* ---------- BUTTONS ---------- */
-  .btn{display:inline-flex;align-items:center;gap:10px;padding:15px 30px;border-radius:100px;font-weight:700;font-size:.95rem;border:2px solid transparent;cursor:pointer;transition:transform .25s ease,box-shadow .25s ease,background .25s ease,color .25s ease}
-  .btn:active{transform:scale(.97)}
-  .btn-primary{background:var(--gold);color:#1a1d24;box-shadow:0 14px 30px -12px rgba(242,169,59,.55)}
-  .btn-primary:hover{transform:translateY(-3px);box-shadow:0 20px 34px -12px rgba(242,169,59,.7)}
-  .btn-ghost{border-color:rgba(255,255,255,.28);color:var(--ink)}
-  .btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
-  .btn-dark{background:#1a1d24;color:var(--gold)}
-  .btn-dark:hover{transform:translateY(-3px)}
-  .btn-sm{padding:11px 20px;font-size:.82rem}
-
-  /* ---------- HEADER ---------- */
-  /* note: backdrop-filter lives on ::before (not on header itself) so header
-     never becomes a containing block for the fixed-position mobile nav panel */
-  header{position:sticky;top:0;z-index:90;border-bottom:1px solid var(--line);transition:padding .3s ease}
-  header::before{content:"";position:absolute;inset:0;z-index:-1;backdrop-filter:blur(14px);background:rgba(26,29,36,.82)}
-  .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
-  .brand{position:relative;z-index:2;display:flex;align-items:center;gap:10px;font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.05em}
-  .brand img{height:42px;width:42px}
-  .navlinks{display:flex;align-items:center;gap:30px}
-  .navlinks a{font-size:.88rem;font-weight:600;color:var(--muted);transition:color .2s}
-  .navlinks a:hover{color:var(--gold)}
-  .navcta{position:relative;z-index:2;display:flex;align-items:center;gap:14px}
-  .burger-toggle{display:none;background:none;border:none;color:var(--ink);font-size:1.6rem;cursor:pointer}
-  @media(max-width:900px){
-    /* absolute (not fixed) + top:100% anchors the panel to the header's own
-       box, so it always starts right below the header regardless of the
-       demo banner's height, and never fights it for stacking order */
-    .navlinks{position:absolute;z-index:1;top:100%;left:0;right:0;height:100vh;background:var(--bg);flex-direction:column;padding:40px 30px;gap:26px;transform:translateX(100%);transition:transform .35s ease}
-    .navlinks.open{transform:translateX(0)}
-    .navlinks a{font-size:1.2rem}
-    .burger-toggle{display:block}
-    .navcta .btn-sm{display:none}
-  }
-
-  /* ---------- HERO ---------- */
-  .hero{position:relative;padding:70px 0 40px;overflow:hidden}
-  .hero::before{content:"";position:absolute;inset:-20% -10%;background:
-      radial-gradient(circle at 18% 25%, rgba(242,169,59,.16), transparent 55%),
-      radial-gradient(circle at 82% 70%, rgba(226,64,47,.14), transparent 55%);
-    pointer-events:none}
-  .hero-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:40px;align-items:center}
-  @media(max-width:960px){.hero-grid{grid-template-columns:1fr;text-align:center}}
-  .hero h1{font-size:clamp(3.2rem,7.2vw,5.6rem);text-transform:uppercase}
-  .hero h1 span{color:var(--gold)}
-  .hero p.lead{max-width:480px;color:var(--muted);font-size:1.08rem;margin:20px 0 32px}
-  @media(max-width:960px){.hero p.lead{margin-inline:auto}}
-  .hero-actions{display:flex;gap:16px;flex-wrap:wrap}
-  @media(max-width:960px){.hero-actions{justify-content:center}}
-  .hero-stats{display:flex;gap:30px;margin-top:40px}
-  @media(max-width:960px){.hero-stats{justify-content:center}}
-  .hero-stats div b{display:block;font-family:'Bebas Neue',sans-serif;font-size:2.1rem;color:var(--gold)}
-  .hero-stats div span{font-size:.78rem;color:var(--muted)}
-  .hero-photo{position:relative;display:flex;justify-content:center}
-  .hero-photo::before{content:"";position:absolute;width:88%;height:88%;border-radius:50%;background:radial-gradient(circle,rgba(242,169,59,.35),transparent 70%);filter:blur(10px);z-index:0}
-  .hero-photo img{position:relative;z-index:1;width:min(480px,90%);animation:float 5s ease-in-out infinite}
-  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
-  .badge-float{position:absolute;z-index:2;background:var(--red);color:#fff;font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:.06em;padding:10px 16px;border-radius:100px;box-shadow:0 12px 24px -8px rgba(226,64,47,.6);transform:rotate(-8deg)}
-  .badge-float.top{top:6%;right:4%}
-  @media(max-width:960px){.badge-float{display:none}}
-
-  /* ---------- GALLERY ---------- */
-  .gallery{padding:30px 0 90px}
-  .gallery-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
-  @media(max-width:900px){.gallery-strip{grid-template-columns:repeat(2,1fr)}}
-  .g-card{position:relative;border-radius:22px;overflow:hidden;aspect-ratio:3/4;background:var(--bg-2);border:1px solid var(--line)}
-  .g-card img{width:100%;height:100%;object-fit:cover;object-position:center 30%;transition:transform .5s ease}
-  .g-card:hover img{transform:scale(1.08)}
-  .g-card .g-label{position:absolute;left:0;right:0;bottom:0;padding:16px;background:linear-gradient(0deg,rgba(0,0,0,.75),transparent);font-family:'Bebas Neue',sans-serif;letter-spacing:.04em;font-size:1.1rem}
-
-  /* ---------- SECTION HEAD ---------- */
-  .sec-head{max-width:640px;margin:0 auto 44px;text-align:center}
-  .sec-head h2{font-size:clamp(2.4rem,5vw,3.4rem);text-transform:uppercase;margin-top:10px}
-  .sec-head p{color:var(--muted);margin-top:14px}
-
-  /* ---------- MENU ---------- */
-  .menu-section{padding:100px 0}
-  .menu-filters{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:44px}
-  .filter-btn{padding:10px 20px;border-radius:100px;border:1px solid var(--line);background:var(--bg-2);color:var(--muted);font-weight:600;font-size:.85rem;cursor:pointer;transition:all .2s}
-  .filter-btn:hover{border-color:var(--gold);color:var(--gold)}
-  .filter-btn.active{background:var(--gold);color:#1a1d24;border-color:var(--gold)}
-  .menu-search{display:block;margin:0 auto 40px;max-width:360px;position:relative}
-  .menu-search input{width:100%;padding:13px 20px 13px 42px;border-radius:100px;border:1px solid var(--line);background:var(--bg-2);color:var(--ink);font-family:inherit;font-size:.9rem}
-  .menu-search input:focus{outline:none;border-color:var(--gold)}
-  .menu-search svg{position:absolute;left:16px;top:50%;transform:translateY(-50%);opacity:.5}
-  .menu-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:22px}
-  .item-card{background:var(--bg-2);border:1px solid var(--line);border-radius:20px;overflow:hidden;display:flex;flex-direction:column;transition:transform .3s ease,border-color .3s ease;cursor:pointer}
-  .item-card:hover{transform:translateY(-6px);border-color:rgba(242,169,59,.4)}
-  .item-photo{aspect-ratio:4/3;background:var(--bg-3);position:relative;overflow:hidden}
-  .item-photo img{width:100%;height:100%;object-fit:cover;object-position:center 25%}
-  .item-card.compact .item-photo{display:none}
-  .item-ribbon{position:absolute;top:10px;left:10px;background:var(--red);color:#fff;font-family:'Bebas Neue',sans-serif;font-size:.78rem;letter-spacing:.05em;padding:5px 12px;border-radius:100px}
-  .item-body{padding:18px 20px 20px;display:flex;flex-direction:column;gap:8px;flex:1}
-  .item-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
-  .item-top h3{font-family:'Bebas Neue',sans-serif;font-size:1.28rem;letter-spacing:.02em}
-  .item-price{font-family:'Bebas Neue',sans-serif;color:var(--gold);font-size:1.28rem;white-space:nowrap}
-  .item-desc{color:var(--muted);font-size:.86rem;flex:1}
-  .item-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
-  .tag{font-size:.68rem;font-weight:700;letter-spacing:.03em;color:var(--gold);border:1px solid rgba(242,169,59,.4);padding:3px 9px;border-radius:100px}
-  .item-more{font-size:.78rem;color:var(--gold);font-weight:600;margin-top:6px;display:inline-flex;align-items:center;gap:6px}
-  .empty-state{text-align:center;color:var(--muted);padding:60px 0;display:none}
-
-  /* ---------- MODAL ---------- */
-  .modal-overlay{position:fixed;inset:0;background:rgba(10,11,14,.78);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:200;padding:20px}
-  .modal-overlay.open{display:flex}
-  .modal{background:var(--bg-2);border:1px solid var(--line);border-radius:24px;max-width:560px;width:100%;max-height:88vh;overflow-y:auto;box-shadow:var(--shadow)}
-  .modal-photo{aspect-ratio:16/10;position:relative}
-  .modal-photo img{width:100%;height:100%;object-fit:cover}
-  .modal-close{position:absolute;top:14px;right:14px;width:38px;height:38px;border-radius:50%;background:rgba(26,29,36,.75);border:1px solid var(--line);color:#fff;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
-  .modal-body{padding:26px 28px 30px}
-  .modal-body h3{font-family:'Bebas Neue',sans-serif;font-size:1.9rem;letter-spacing:.02em}
-  .modal-price{font-family:'Bebas Neue',sans-serif;color:var(--gold);font-size:1.5rem;margin-top:4px}
-  .modal-ingredients{margin-top:18px;list-style:none;display:flex;flex-direction:column;gap:9px}
-  .modal-ingredients li{display:flex;gap:10px;font-size:.92rem;color:var(--ink)}
-  .modal-ingredients li::before{content:"🍔";font-size:.85rem}
-  .modal-tags{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap}
-
-  /* ---------- RESERVATION ---------- */
-  .prenota{padding:100px 0;background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-  .prenota-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:60px;align-items:center}
-  @media(max-width:900px){.prenota-grid{grid-template-columns:1fr}}
-  .prenota-info h2{font-size:clamp(2.4rem,5vw,3.2rem);text-transform:uppercase}
-  .prenota-info p{color:var(--muted);margin-top:16px;max-width:420px}
-  .info-list{margin-top:30px;display:flex;flex-direction:column;gap:18px}
-  .info-list li{display:flex;gap:14px;align-items:flex-start}
-  .info-ico{width:42px;height:42px;border-radius:12px;background:rgba(242,169,59,.14);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.15rem}
-  .info-list b{display:block;font-size:.92rem}
-  .info-list span{color:var(--muted);font-size:.85rem}
-  form.book{background:var(--bg);border:1px solid var(--line);border-radius:24px;padding:34px;box-shadow:var(--shadow)}
-  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-  @media(max-width:560px){.form-row{grid-template-columns:1fr}}
-  .field{margin-bottom:16px}
-  .field label{display:block;font-size:.78rem;font-weight:600;color:var(--muted);margin-bottom:7px;text-transform:uppercase;letter-spacing:.04em}
-  .field input,.field select,.field textarea{width:100%;padding:13px 15px;border-radius:12px;border:1px solid var(--line);background:var(--bg-2);color:var(--ink);font-family:inherit;font-size:.92rem}
-  .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--gold)}
-  .field textarea{resize:vertical;min-height:70px}
-  form.book .btn{width:100%;justify-content:center;margin-top:6px}
-  .form-note{font-size:.76rem;color:var(--muted);margin-top:14px;text-align:center}
-
-  /* ---------- MAPS ---------- */
-  .dove{padding:100px 0}
-  .dove-grid{display:grid;grid-template-columns:1fr 1.15fr;gap:40px;align-items:stretch}
-  @media(max-width:900px){.dove-grid{grid-template-columns:1fr}}
-  .dove-card{background:var(--bg-2);border:1px solid var(--line);border-radius:24px;padding:34px;display:flex;flex-direction:column;justify-content:center}
-  .dove-card h3{font-family:'Bebas Neue',sans-serif;font-size:1.7rem;margin-bottom:16px}
-  .hours-table{width:100%;border-collapse:collapse;margin:18px 0}
-  .hours-table td{padding:7px 0;border-bottom:1px dashed var(--line);font-size:.88rem}
-  .hours-table td:last-child{text-align:right;color:var(--muted)}
-  .map-embed{border-radius:24px;overflow:hidden;border:1px solid var(--line);min-height:380px;position:relative}
-  .map-embed iframe{width:100%;height:100%;min-height:380px;border:0;filter:grayscale(.25) contrast(1.05)}
-  .map-tag{position:absolute;top:16px;left:16px;background:rgba(26,29,36,.85);backdrop-filter:blur(6px);padding:8px 14px;border-radius:100px;font-size:.74rem;color:var(--gold);border:1px solid var(--line)}
-
-  /* ---------- REVIEWS ---------- */
-  .reviews{padding:100px 0;background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-  .review-track{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
-  @media(max-width:900px){.review-track{grid-template-columns:1fr 1fr}}
-  @media(max-width:640px){.review-track{grid-template-columns:1fr}}
-  .review-card{background:var(--bg);border:1px solid var(--line);border-radius:20px;padding:26px;position:relative}
-  .review-card .sample-tag{position:absolute;top:16px;right:16px;font-size:.64rem;color:var(--muted);border:1px solid var(--line);padding:3px 9px;border-radius:100px}
-  .stars{color:var(--gold);font-size:.95rem;letter-spacing:2px;margin-bottom:12px}
-  .review-card p{font-size:.92rem;color:var(--ink);opacity:.9}
-  .review-who{display:flex;align-items:center;gap:12px;margin-top:18px}
-  .avatar{width:38px;height:38px;border-radius:50%;background:var(--gold);color:#1a1d24;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.85rem}
-  .review-who b{font-size:.85rem;display:block}
-  .review-who span{font-size:.74rem;color:var(--muted)}
-  .reviews-cta{text-align:center;margin-top:44px}
-
-  /* ---------- INSTAGRAM ---------- */
-  .insta{padding:100px 0}
-  .insta-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
-  @media(max-width:900px){.insta-grid{grid-template-columns:repeat(3,1fr)}}
-  .insta-tile{position:relative;aspect-ratio:1/1;border-radius:16px;overflow:hidden;background:var(--bg-2)}
-  .insta-tile img{width:100%;height:100%;object-fit:cover}
-  .insta-tile .ov{position:absolute;inset:0;background:linear-gradient(0deg,rgba(226,64,47,.55),rgba(242,169,59,.35));opacity:0;display:flex;align-items:center;justify-content:center;transition:opacity .25s ease;font-size:1.4rem}
-  .insta-tile:hover .ov{opacity:1}
-  .insta-cta{text-align:center;margin-top:40px}
-
-  /* ---------- FOOTER ---------- */
-  footer{padding:60px 0 30px;border-top:1px solid var(--line)}
-  .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px}
-  @media(max-width:760px){.footer-grid{grid-template-columns:1fr}}
-  .footer-brand{display:flex;align-items:center;gap:10px;font-family:'Bebas Neue',sans-serif;font-size:1.4rem;margin-bottom:14px}
-  .footer-brand img{height:36px}
-  footer p{color:var(--muted);font-size:.86rem;max-width:320px}
-  footer h4{font-size:.82rem;text-transform:uppercase;letter-spacing:.06em;color:var(--gold);margin-bottom:14px}
-  footer ul{list-style:none;display:flex;flex-direction:column;gap:10px}
-  footer ul a{color:var(--muted);font-size:.88rem;transition:color .2s}
-  footer ul a:hover{color:var(--gold)}
-  .foot-bottom{margin-top:50px;padding-top:24px;border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;color:var(--muted);font-size:.78rem}
-  .social-row{display:flex;gap:10px;margin-top:16px}
-  .social-row a{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;transition:all .2s}
-  .social-row a:hover{border-color:var(--gold);color:var(--gold)}
-
-  /* ---------- FLOATING CTA ---------- */
-  .float-cta{position:fixed;bottom:22px;right:22px;z-index:95;display:flex;align-items:center;gap:10px;padding:15px 22px;border-radius:100px;background:var(--gold);color:#1a1d24;font-weight:700;font-size:.9rem;box-shadow:0 16px 34px -12px rgba(242,169,59,.65);transition:transform .25s ease}
-  .float-cta:hover{transform:translateY(-4px)}
-  @media(max-width:560px){.float-cta span{display:none}.float-cta{padding:16px;bottom:16px;right:16px}}
-
-  /* ---------- REVEAL ---------- */
-  .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
-  .reveal.in{opacity:1;transform:translateY(0)}
-</style>
+<link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
@@ -256,34 +18,34 @@
 
 <header>
   <div class="wrap nav">
-    <a href="#top" class="brand"><img src="assets/img/logo.webp" alt="Burger Boss"> BURGER BOSS</a>
+    <a href="index.html" class="brand"><img src="assets/img/logo.webp" alt="Burger Boss"> BURGER BOSS</a>
     <nav class="navlinks" id="navlinks">
-      <a href="#home">Home</a>
-      <a href="#menu">Menu</a>
-      <a href="#prenota">Prenota</a>
-      <a href="#dove-siamo">Dove Siamo</a>
-      <a href="#recensioni">Recensioni</a>
-      <a href="#instagram">Instagram</a>
+      <a href="index.html" class="active">Home</a>
+      <a href="menu.html">Menu</a>
+      <a href="prenota.html">Prenota</a>
+      <a href="dove-siamo.html">Dove Siamo</a>
+      <a href="recensioni.html">Recensioni</a>
+      <a href="instagram.html">Instagram</a>
     </nav>
     <div class="navcta">
-      <a href="#prenota" class="btn btn-primary btn-sm">Prenota ora</a>
-      <button class="burger-toggle" id="burgerToggle" aria-label="Menu">☰</button>
+      <a href="prenota.html" class="btn btn-primary btn-sm">Prenota ora</a>
+      <button class="burger-toggle" id="burgerToggle" aria-label="Apri il menu di navigazione">☰</button>
     </div>
   </div>
 </header>
 
-<main id="top">
+<main>
 
   <!-- HERO -->
-  <section class="hero" id="home">
+  <section class="hero">
     <div class="wrap hero-grid">
       <div class="reveal in">
         <span class="eyebrow">★ Burger d'autore dal 100% gusto boss ★</span>
         <h1 class="display" style="margin-top:14px">Il gusto<br><span>che comanda.</span></h1>
         <p class="lead">Panini ripieni, croccanza vera e ricette firmate dai nomi più leggendari del crimine organizzato — solo che qui si "rapina" lo stomaco. Scegli il tuo boss, prenota il tavolo, vieni a scoprirlo.</p>
         <div class="hero-actions">
-          <a href="#prenota" class="btn btn-primary">📅 Prenota ora</a>
-          <a href="#menu" class="btn btn-ghost">Scopri il menu →</a>
+          <a href="prenota.html" class="btn btn-primary">📅 Prenota ora</a>
+          <a href="menu.html" class="btn btn-ghost">Scopri il menu →</a>
         </div>
         <div class="hero-stats">
           <div><b>15+</b><span>Burger firmati</span></div>
@@ -310,139 +72,51 @@
     </div>
   </section>
 
-  <!-- MENU -->
-  <section class="menu-section" id="menu">
+  <!-- HUB: LINKS TO THE OTHER PAGES -->
+  <section class="hub">
     <div class="wrap">
       <div class="sec-head reveal">
-        <span class="eyebrow">Il menu</span>
-        <h2 class="display">Non è un PDF. È un'esperienza.</h2>
-        <p>Filtra per categoria, cerca il tuo burger preferito e tocca una card per vedere tutti gli ingredienti, come se fossi al tavolo.</p>
+        <span class="eyebrow">Esplora</span>
+        <h2 class="display">Tutto Burger Boss, una pagina alla volta</h2>
       </div>
-
-      <div class="menu-search">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
-        <input type="text" id="menuSearch" placeholder="Cerca un piatto... es. bacon">
-      </div>
-
-      <div class="menu-filters" id="menuFilters"></div>
-      <div class="menu-grid" id="menuGrid"></div>
-      <div class="empty-state" id="emptyState">😕 Nessun piatto trovato. Prova un'altra ricerca.</div>
-    </div>
-  </section>
-
-  <!-- PRENOTA -->
-  <section class="prenota" id="prenota">
-    <div class="wrap prenota-grid">
-      <div class="prenota-info reveal">
-        <span class="eyebrow">Prenotazioni</span>
-        <h2 class="display" style="margin-top:10px">Prenota ora<br>il tuo tavolo</h2>
-        <p>Compila il form: riceverai conferma direttamente su WhatsApp. Niente attese, niente file — solo un tavolo pronto per te.</p>
-        <ul class="info-list">
-          <li><span class="info-ico">📍</span><div><b>Via Esempio 123, Catania (CT)</b><span>indirizzo di esempio — da confermare</span></div></li>
-          <li><span class="info-ico">🕒</span><div><b>12:00 – 15:00 · 19:00 – 23:30</b><span>tutti i giorni (orari di esempio)</span></div></li>
-          <li><span class="info-ico">📞</span><div><b>+39 095 000 0000</b><span>numero di esempio — da aggiornare</span></div></li>
-        </ul>
-      </div>
-      <form class="book reveal" id="bookForm">
-        <div class="form-row">
-          <div class="field"><label for="bName">Nome e cognome</label><input type="text" id="bName" required placeholder="Il tuo nome"></div>
-          <div class="field"><label for="bPhone">Telefono</label><input type="tel" id="bPhone" required placeholder="333 1234567"></div>
-        </div>
-        <div class="form-row">
-          <div class="field"><label for="bDate">Data</label><input type="date" id="bDate" required></div>
-          <div class="field"><label for="bTime">Ora</label><input type="time" id="bTime" required></div>
-        </div>
-        <div class="form-row">
-          <div class="field"><label for="bGuests">Persone</label>
-            <select id="bGuests">
-              <option>1 persona</option><option selected>2 persone</option><option>3 persone</option>
-              <option>4 persone</option><option>5 persone</option><option>6+ persone</option>
-            </select>
-          </div>
-          <div class="field"><label for="bNote">Note (opzionale)</label><input type="text" id="bNote" placeholder="Allergie, seggiolone..."></div>
-        </div>
-        <button type="submit" class="btn btn-primary">📲 Invia prenotazione via WhatsApp</button>
-        <p class="form-note">Il pulsante apre WhatsApp con i dati precompilati — pronto per essere collegato al numero reale del locale.</p>
-      </form>
-    </div>
-  </section>
-
-  <!-- DOVE SIAMO -->
-  <section class="dove" id="dove-siamo">
-    <div class="wrap">
-      <div class="sec-head reveal">
-        <span class="eyebrow">Dove siamo</span>
-        <h2 class="display">Vieni a trovarci</h2>
-        <p>Mappa dimostrativa: verrà sostituita con la posizione esatta del locale una volta confermato l'indirizzo.</p>
-      </div>
-      <div class="dove-grid">
-        <div class="dove-card reveal">
-          <h3>Burger Boss</h3>
-          <p style="color:var(--muted);font-size:.9rem">Via Esempio 123<br>95030 Catania (CT), Sicilia</p>
-          <table class="hours-table">
-            <tr><td>Lun – Ven</td><td>12:00–15:00 · 19:00–23:30</td></tr>
-            <tr><td>Sab – Dom</td><td>12:00–23:30</td></tr>
-          </table>
-          <a href="https://maps.google.com/?q=Burger+Boss" target="_blank" rel="noopener" class="btn btn-primary btn-sm" style="align-self:flex-start">🧭 Ottieni indicazioni</a>
-        </div>
-        <div class="map-embed reveal">
-          <span class="map-tag">📍 Mappa di esempio</span>
-          <iframe src="https://www.google.com/maps?q=Catania,Sicilia,Italia&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Mappa Burger Boss"></iframe>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- RECENSIONI -->
-  <section class="reviews" id="recensioni">
-    <div class="wrap">
-      <div class="sec-head reveal">
-        <span class="eyebrow">Recensioni clienti</span>
-        <h2 class="display">Cosa dice il quartiere</h2>
-        <p>Anteprima del riquadro recensioni: qui verranno collegate le recensioni reali del vostro profilo Google.</p>
-      </div>
-      <div class="review-track" id="reviewTrack"></div>
-      <div class="reviews-cta reveal">
-        <a href="#" class="btn btn-ghost">⭐ Lascia una recensione su Google</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- INSTAGRAM -->
-  <section class="insta" id="instagram">
-    <div class="wrap">
-      <div class="sec-head reveal">
-        <span class="eyebrow">Instagram</span>
-        <h2 class="display">@burgerboss</h2>
-        <p>Griglia dimostrativa con gli scatti del menu — pronta per essere collegata al vostro account Instagram reale.</p>
-      </div>
-      <div class="insta-grid" id="instaGrid"></div>
-      <div class="insta-cta reveal">
-        <a href="#" class="btn btn-primary">📷 Segui su Instagram</a>
+      <div class="hub-grid">
+        <a href="menu.html" class="hub-card reveal">
+          <span class="ico">🍔</span>
+          <h3>Il Menu</h3>
+          <p>Filtra, cerca e scopri gli ingredienti di ogni piatto.</p>
+          <span class="go">Scopri di più →</span>
+        </a>
+        <a href="prenota.html" class="hub-card reveal">
+          <span class="ico">📅</span>
+          <h3>Prenota</h3>
+          <p>Riserva il tuo tavolo in pochi secondi, via WhatsApp.</p>
+          <span class="go">Prenota ora →</span>
+        </a>
+        <a href="dove-siamo.html" class="hub-card reveal">
+          <span class="ico">📍</span>
+          <h3>Dove Siamo</h3>
+          <p>Indirizzo, orari e mappa per raggiungerci.</p>
+          <span class="go">Vieni a trovarci →</span>
+        </a>
+        <a href="recensioni.html" class="hub-card reveal">
+          <span class="ico">⭐</span>
+          <h3>Recensioni</h3>
+          <p>Cosa dicono i clienti che ci hanno già provato.</p>
+          <span class="go">Leggi le recensioni →</span>
+        </a>
+        <a href="instagram.html" class="hub-card reveal">
+          <span class="ico">📷</span>
+          <h3>Instagram</h3>
+          <p>Gli scatti più golosi, direttamente dal locale.</p>
+          <span class="go">Seguici →</span>
+        </a>
       </div>
     </div>
   </section>
 
 </main>
 
-<a href="#prenota" class="float-cta">📅 <span>Prenota ora</span></a>
-
-<!-- MODAL -->
-<div class="modal-overlay" id="modalOverlay">
-  <div class="modal">
-    <div class="modal-photo">
-      <img id="modalImg" src="" alt="">
-      <button class="modal-close" id="modalClose">✕</button>
-    </div>
-    <div class="modal-body">
-      <h3 id="modalName"></h3>
-      <div class="modal-price" id="modalPrice"></div>
-      <p class="item-desc" id="modalDesc" style="margin-top:10px"></p>
-      <ul class="modal-ingredients" id="modalIngredients"></ul>
-      <div class="modal-tags" id="modalTags"></div>
-    </div>
-  </div>
-</div>
+<a href="prenota.html" class="float-cta">📅 <span>Prenota ora</span></a>
 
 <footer>
   <div class="wrap">
@@ -451,18 +125,18 @@
         <div class="footer-brand"><img src="assets/img/logo.webp" alt="Burger Boss"> BURGER BOSS</div>
         <p>Burger d'autore, patatine leggendarie e un servizio che non lascia scampo alla fame. Il gusto che comanda, ogni giorno.</p>
         <div class="social-row">
-          <a href="#" aria-label="Instagram">📷</a>
+          <a href="instagram.html" aria-label="Instagram">📷</a>
           <a href="#" aria-label="Facebook">📘</a>
-          <a href="#" aria-label="WhatsApp">💬</a>
+          <a href="prenota.html" aria-label="WhatsApp">💬</a>
         </div>
       </div>
       <div>
         <h4>Naviga</h4>
         <ul>
-          <li><a href="#menu">Menu</a></li>
-          <li><a href="#prenota">Prenota</a></li>
-          <li><a href="#dove-siamo">Dove siamo</a></li>
-          <li><a href="#recensioni">Recensioni</a></li>
+          <li><a href="menu.html">Menu</a></li>
+          <li><a href="prenota.html">Prenota</a></li>
+          <li><a href="dove-siamo.html">Dove siamo</a></li>
+          <li><a href="recensioni.html">Recensioni</a></li>
         </ul>
       </div>
       <div>
@@ -481,259 +155,6 @@
   </div>
 </footer>
 
-<script>
-/* ---------------- MENU DATA ---------------- */
-const menuItems = [
-  {
-    id:'tony-montana', name:'Tony Montana', cat:'Burger', price:11.90,
-    img:'assets/img/burger-tonymontana.webp', badge:'MUST HAVE',
-    desc:'Manzo succulento, doppio bacon croccante, uovo fritto e la nostra salsa sweet chilly mayo. Il classico che non delude mai.',
-    tags:['Manzo · Beef','GF disponibile'],
-    ingredients:['Hamburger di manzo ripieno di cheddar e salsa mayo dolce piccante (200g)','Uovo fritto','Doppio bacon croccante','Cheddar','Insalata iceberg','Erba cipollina','Salsa sweet chilly mayo']
-  },
-  {
-    id:'frank-lucas', name:'Frank Lucas', cat:'Burger', price:11.90,
-    img:'assets/img/burger-franklucas.webp', badge:'MUST HAVE',
-    desc:'Petto di pollo croccante in panatura ai corn flakes, miele e stracciatella di bufala: dolce, sfizioso, indimenticabile.',
-    tags:['Pollo · Chicken','GF disponibile'],
-    ingredients:['Fettina di pollo con panatura ai corn flakes (150g)','Cipolla croccante','Bacon croccante','Pomodoro a fette','Miele','Stracciatella di bufala']
-  },
-  {
-    id:'rafael', name:'Rafael Caro Quintero', cat:'Burger', price:11.90,
-    img:'assets/img/burger-rafael.webp', badge:'MUST HAVE',
-    desc:"Hamburger ripieno di mortadella e provolone dolce, anelli di cipolla croccanti e uovo fritto che cola su tutto.",
-    tags:['Cavallo · Horse','GF disponibile'],
-    ingredients:['Hamburger ripieno con mortadella e provolone dolce (200g)','Anelli di cipolla','Uovo fritto','Bacon croccante','Provolone dolce','Salsa wanted','Pomodoro a fette']
-  },
-  {
-    id:'al-capone', name:'Al Capone', cat:'Burger', price:12.90,
-    img:'assets/img/burger-alcapone.webp', badge:'MUST HAVE',
-    desc:'Il bun ricoperto di crema e granella di pistacchio incontra un hamburger ripieno di pistacchio e provolone. Un boss assoluto.',
-    tags:['Asina · Donkey','GF disponibile'],
-    ingredients:['Hamburger ripieno con crema di pistacchio e provolone (200g)','Bun ricoperto di crema e granella di pistacchio','Cipolla caramellata','Insalata valeriana','Salsa mayo','Bacon croccante']
-  },
-  {
-    id:'churros-capone', name:'Churros Al Capone', cat:'Chicken Churros', price:4.90,
-    img:'assets/img/churros-plate.webp',
-    desc:'Ripieno di crema di pistacchio, avvolto nel bacon e cheddar, croccante panatura cornflakes.',
-    tags:[], ingredients:['Chicken churros ripieno di crema di pistacchio','Avvolto nel bacon e cheddar','Panatura croccante ai cornflakes']
-  },
-  {
-    id:'churros-montana', name:'Churros Tony Montana', cat:'Chicken Churros', price:4.90,
-    img:'assets/img/churros-plate.webp',
-    desc:'Ripieno di cheddar e sweet chilly mayo, avvolto nel bacon e cheddar con croccante panatura cornflakes.',
-    tags:[], ingredients:['Chicken churros ripieno di cheddar e sweet chilly mayo','Avvolto nel bacon e cheddar','Panatura croccante ai cornflakes']
-  },
-  {
-    id:'churros-vito', name:'Churros Vito Genovese', cat:'Chicken Churros', price:4.90,
-    img:'assets/img/churros-plate.webp',
-    desc:'Ripieno di cheddar e salsa BBQ, avvolto nel bacon e cheddar con croccante panatura cornflakes.',
-    tags:[], ingredients:['Chicken churros ripieno di cheddar e salsa BBQ','Avvolto nel bacon e cheddar','Panatura croccante ai cornflakes']
-  },
-  {
-    id:'churros-bacon', name:'Churros Bacon & Cheddar', cat:'Chicken Churros', price:2.90,
-    img:'assets/img/churros-plate.webp',
-    desc:'Il classico chicken churros con panatura ai corn flakes.',
-    tags:[], ingredients:['Chicken churros','Panatura ai corn flakes']
-  },
-  {
-    id:'little-family-1', name:'Little Family 1', cat:'Fries & Co', price:4.90,
-    img:'assets/img/fries-bbq.webp',
-    desc:'Patatine fritte, straccetti di bacon croccante, cheddar fuso e salsa BBQ.',
-    tags:[], ingredients:['Patatine fritte','Straccetti di bacon croccante','Cheddar fuso','Salsa BBQ']
-  },
-  {
-    id:'little-family-2', name:'Little Family 2', cat:'Fries & Co', price:5.90,
-    img:'assets/img/fries-pistacchio.webp',
-    desc:'Patatine fritte, straccetti di bacon croccante, stracciatella di bufala e granella di pistacchio.',
-    tags:[], ingredients:['Patatine fritte','Straccetti di bacon croccante','Stracciatella di bufala','Granella di pistacchio']
-  },
-  {
-    id:'patatine', name:'Patatine Fritte', cat:'Fries & Co', price:3.90, compact:true,
-    desc:'Le classiche patatine fritte croccanti.', tags:[], ingredients:['Patatine fritte']
-  },
-  {
-    id:'patatine-dolci', name:'Patatine Dolci Americane', cat:'Fries & Co', price:4.90, compact:true,
-    desc:'Sweet potato chips, dolci e croccanti.', tags:[], ingredients:['Patatine dolci americane']
-  },
-  {
-    id:'big-family-maxi', name:'The Big Family Maxi', cat:'Big Family', price:19.90,
-    img:'assets/img/big-family.webp', badge:'PER 3-4',
-    desc:'Nuggets di pollo, anelli di cipolla, alette di pollo, bacon croccante e cubetti di wurstel.',
-    tags:['Da condividere'], ingredients:['Nuggets di pollo','Anelli di cipolla','Alette di pollo','Bacon croccante','Cubetti di wurstel','Base di patatine fritte']
-  },
-  {
-    id:'big-family-medio', name:'The Big Family Medio', cat:'Big Family', price:9.90,
-    img:'assets/img/wings.webp',
-    desc:'6 nuggets di pollo, 8 anelli di cipolla, 6 alette di pollo.',
-    tags:['Da condividere'], ingredients:['6 nuggets di pollo','8 anelli di cipolla','6 alette di pollo']
-  },
-  {
-    id:'nuggets', name:'Nuggets', cat:'Big Family', price:4.90,
-    img:'assets/img/nuggets.webp',
-    desc:'10 pezzi di nuggets di pollo croccanti.', tags:['Surgelato'], ingredients:['10 nuggets di pollo']
-  },
-  {
-    id:'wings', name:'Alette di Pollo', cat:'Big Family', price:5.90,
-    img:'assets/img/wings.webp',
-    desc:'6 alette di pollo glassate, croccanti fuori e succose dentro.', tags:['Surgelato'], ingredients:['6 alette di pollo']
-  },
-  {
-    id:'onion-rings', name:'Anelli di Cipolla', cat:'Big Family', price:4.90, compact:true,
-    desc:'12 pezzi di croccanti onion rings.', tags:['Surgelato'], ingredients:['12 anelli di cipolla']
-  },
-  {
-    id:'toast-wurstel', name:'Wurstel & Cheddar', cat:'Toast', price:4.90,
-    img:'assets/img/toast-wurstel.webp',
-    desc:'Toast filante con wurstel e cheddar, servito con patatine fritte.', tags:[], ingredients:['Wurstel','Cheddar filante','Pane toast','Patatine fritte incluse']
-  },
-  {
-    id:'toast-bacon', name:'Bacon & Cheddar', cat:'Toast', price:4.90,
-    img:'assets/img/toast-bacon.webp',
-    desc:'Toast con bacon croccante e cheddar, servito con patatine fritte.', tags:[], ingredients:['Bacon croccante','Cheddar filante','Pane toast','Patatine fritte incluse']
-  },
-  {
-    id:'kids-boss', name:'Kids Boss Menu', cat:'Kids', price:9.90,
-    img:'assets/img/kids-menu.webp',
-    desc:'Mini burger, patatine fritte e Coca-Cola: il menu su misura per i piccoli boss.', tags:['Bambini'], ingredients:['Mini burger di manzo con cheddar','Patatine fritte','Coca-Cola']
-  }
-];
-
-const categories = ['Tutti','Burger','Chicken Churros','Fries & Co','Big Family','Toast','Kids'];
-
-/* ---------------- RENDER FILTERS ---------------- */
-const filtersEl = document.getElementById('menuFilters');
-categories.forEach((cat,i)=>{
-  const b = document.createElement('button');
-  b.className = 'filter-btn' + (i===0?' active':'');
-  b.textContent = cat;
-  b.dataset.cat = cat;
-  b.addEventListener('click', ()=>{
-    document.querySelectorAll('.filter-btn').forEach(x=>x.classList.remove('active'));
-    b.classList.add('active');
-    activeCat = cat;
-    renderMenu();
-  });
-  filtersEl.appendChild(b);
-});
-
-let activeCat = 'Tutti';
-const gridEl = document.getElementById('menuGrid');
-const emptyEl = document.getElementById('emptyState');
-const searchEl = document.getElementById('menuSearch');
-
-function renderMenu(){
-  const q = searchEl.value.trim().toLowerCase();
-  const filtered = menuItems.filter(it=>{
-    const matchCat = activeCat==='Tutti' || it.cat===activeCat;
-    const matchQ = !q || it.name.toLowerCase().includes(q) || it.desc.toLowerCase().includes(q) || it.cat.toLowerCase().includes(q);
-    return matchCat && matchQ;
-  });
-  gridEl.innerHTML = '';
-  emptyEl.style.display = filtered.length ? 'none' : 'block';
-  filtered.forEach(it=>{
-    const card = document.createElement('article');
-    card.className = 'item-card' + (it.compact ? ' compact' : '');
-    card.innerHTML = `
-      ${it.img ? `<div class="item-photo">${it.badge ? `<span class="item-ribbon">${it.badge}</span>` : ''}<img src="${it.img}" alt="${it.name}" loading="lazy"></div>` : ''}
-      <div class="item-body">
-        <div class="item-top"><h3>${it.name}</h3><span class="item-price">€${it.price.toFixed(2).replace('.',',')}</span></div>
-        <p class="item-desc">${it.desc}</p>
-        ${it.tags && it.tags.length ? `<div class="item-tags">${it.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>` : ''}
-        <span class="item-more">Scopri gli ingredienti →</span>
-      </div>`;
-    card.addEventListener('click', ()=>openModal(it));
-    gridEl.appendChild(card);
-  });
-}
-searchEl.addEventListener('input', renderMenu);
-renderMenu();
-
-/* ---------------- MODAL ---------------- */
-const overlay = document.getElementById('modalOverlay');
-function openModal(it){
-  document.getElementById('modalImg').src = it.img || 'assets/img/logo.webp';
-  document.getElementById('modalName').textContent = it.name;
-  document.getElementById('modalPrice').textContent = '€' + it.price.toFixed(2).replace('.',',');
-  document.getElementById('modalDesc').textContent = it.desc;
-  document.getElementById('modalIngredients').innerHTML = it.ingredients.map(i=>`<li>${i}</li>`).join('');
-  document.getElementById('modalTags').innerHTML = (it.tags||[]).map(t=>`<span class="tag">${t}</span>`).join('');
-  overlay.classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-function closeModal(){
-  overlay.classList.remove('open');
-  document.body.style.overflow = '';
-}
-document.getElementById('modalClose').addEventListener('click', closeModal);
-overlay.addEventListener('click', e=>{ if(e.target===overlay) closeModal(); });
-document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
-
-/* ---------------- REVIEWS ---------------- */
-const reviews = [
-  {name:'Giulia R.', initials:'GR', stars:5, text:'Il Tony Montana è pazzesco, uovo fritto perfetto e panino morbidissimo. Locale curato nei minimi dettagli.'},
-  {name:'Marco S.', initials:'MS', stars:5, text:'Al Capone da provare assolutamente: la crema di pistacchio sul bun è un\'idea geniale. Servizio veloce.'},
-  {name:'Federica T.', initials:'FT', stars:4, text:'Ottimo rapporto qualità prezzo, patatine croccanti al punto giusto. Location ideale per una cena informale.'},
-  {name:'Luca P.', initials:'LP', stars:5, text:'Frank Lucas: pollo croccante e miele, un contrasto che funziona benissimo. Tornerò sicuramente.'},
-  {name:'Chiara M.', initials:'CM', stars:5, text:'Menu bambini top, i miei figli hanno adorato il Kids Boss Menu. Staff gentilissimo con le famiglie.'},
-  {name:'Davide B.', initials:'DB', stars:4, text:'Atmosfera cool, musica giusta e burger enormi. Consigliato il Rafael Caro Quintero.'}
-];
-const reviewTrack = document.getElementById('reviewTrack');
-reviews.forEach(r=>{
-  const card = document.createElement('div');
-  card.className = 'review-card reveal';
-  card.innerHTML = `
-    <span class="sample-tag">Esempio</span>
-    <div class="stars">${'★'.repeat(r.stars)}${'☆'.repeat(5-r.stars)}</div>
-    <p>"${r.text}"</p>
-    <div class="review-who">
-      <div class="avatar">${r.initials}</div>
-      <div><b>${r.name}</b><span>Google Recensioni</span></div>
-    </div>`;
-  reviewTrack.appendChild(card);
-});
-
-/* ---------------- INSTAGRAM GRID ---------------- */
-const instaPhotos = [
-  'assets/img/burger-tonymontana.webp','assets/img/burger-alcapone.webp','assets/img/fries-bbq.webp',
-  'assets/img/burger-rafael.webp','assets/img/wings.webp','assets/img/burger-franklucas.webp'
-];
-const instaGrid = document.getElementById('instaGrid');
-instaPhotos.forEach(src=>{
-  const tile = document.createElement('div');
-  tile.className = 'insta-tile reveal';
-  tile.innerHTML = `<img src="${src}" alt="Burger Boss Instagram" loading="lazy"><div class="ov">📷</div>`;
-  instaGrid.appendChild(tile);
-});
-
-/* ---------------- BOOKING FORM -> WHATSAPP ---------------- */
-const WHATSAPP_NUMBER = '390950000000'; // ⚠️ placeholder — sostituire con il numero reale del locale
-document.getElementById('bookForm').addEventListener('submit', function(e){
-  e.preventDefault();
-  const name = document.getElementById('bName').value;
-  const phone = document.getElementById('bPhone').value;
-  const date = document.getElementById('bDate').value;
-  const time = document.getElementById('bTime').value;
-  const guests = document.getElementById('bGuests').value;
-  const note = document.getElementById('bNote').value;
-  const msg = `Ciao Burger Boss! Vorrei prenotare un tavolo 🍔%0A%0A👤 Nome: ${encodeURIComponent(name)}%0A📞 Telefono: ${encodeURIComponent(phone)}%0A📅 Data: ${encodeURIComponent(date)}%0A🕒 Ora: ${encodeURIComponent(time)}%0A👥 Persone: ${encodeURIComponent(guests)}${note ? '%0A📝 Note: '+encodeURIComponent(note) : ''}`;
-  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, '_blank');
-});
-
-/* ---------------- NAV MOBILE ---------------- */
-const navlinks = document.getElementById('navlinks');
-document.getElementById('burgerToggle').addEventListener('click', ()=> navlinks.classList.toggle('open'));
-navlinks.querySelectorAll('a').forEach(a=> a.addEventListener('click', ()=> navlinks.classList.remove('open')));
-
-/* ---------------- REVEAL ON SCROLL ---------------- */
-const io = new IntersectionObserver(entries=>{
-  entries.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
-},{threshold:.12});
-document.querySelectorAll('.reveal').forEach(el=> io.observe(el));
-// re-observe dynamically added cards
-setTimeout(()=>{ document.querySelectorAll('.reveal:not(.in)').forEach(el=> io.observe(el)); }, 50);
-
-document.getElementById('year').textContent = new Date().getFullYear();
-</script>
+<script src="assets/js/main.js"></script>
 </body>
 </html>

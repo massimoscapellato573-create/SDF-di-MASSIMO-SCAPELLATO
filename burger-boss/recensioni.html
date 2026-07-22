@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recensioni — Burger Boss</title>
+<meta name="description" content="Le recensioni dei clienti di Burger Boss.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231b1e25'/%3E%3Ccircle cx='32' cy='24' r='9' fill='none' stroke='%23f2a93b' stroke-width='3'/%3E%3Crect x='16' y='30' width='32' height='6' rx='3' fill='%23f2a93b'/%3E%3Cpath d='M16 40h32c0 6-7 9-16 9s-16-3-16-9z' fill='%23f2a93b'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<div class="demo-banner">🚧 <b>Anteprima / Bozza</b> — sito dimostrativo per Burger Boss. Indirizzo, telefono, orari, recensioni e Instagram sono contenuti di esempio da sostituire con i dati reali.</div>
+
+<header>
+  <div class="wrap nav">
+    <a href="index.html" class="brand"><img src="assets/img/logo.webp" alt="Burger Boss"> BURGER BOSS</a>
+    <nav class="navlinks" id="navlinks">
+      <a href="index.html">Home</a>
+      <a href="menu.html">Menu</a>
+      <a href="prenota.html">Prenota</a>
+      <a href="dove-siamo.html">Dove Siamo</a>
+      <a href="recensioni.html" class="active">Recensioni</a>
+      <a href="instagram.html">Instagram</a>
+    </nav>
+    <div class="navcta">
+      <a href="prenota.html" class="btn btn-primary btn-sm">Prenota ora</a>
+      <button class="burger-toggle" id="burgerToggle" aria-label="Apri il menu di navigazione">☰</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="page-hero">
+    <div class="wrap">
+      <span class="eyebrow reveal in">Recensioni clienti</span>
+      <h1 class="display reveal in">Cosa dice il quartiere</h1>
+      <p class="reveal in">Anteprima del riquadro recensioni: qui verranno collegate le recensioni reali del vostro profilo Google.</p>
+    </div>
+  </section>
+
+  <section class="reviews">
+    <div class="wrap">
+      <div class="review-track" id="reviewTrack"></div>
+      <div class="reviews-cta reveal">
+        <a href="#" class="btn btn-ghost">⭐ Lascia una recensione su Google</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<a href="prenota.html" class="float-cta">📅 <span>Prenota ora</span></a>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand"><img src="assets/img/logo.webp" alt="Burger Boss"> BURGER BOSS</div>
+        <p>Burger d'autore, patatine leggendarie e un servizio che non lascia scampo alla fame. Il gusto che comanda, ogni giorno.</p>
+        <div class="social-row">
+          <a href="instagram.html" aria-label="Instagram">📷</a>
+          <a href="#" aria-label="Facebook">📘</a>
+          <a href="prenota.html" aria-label="WhatsApp">💬</a>
+        </div>
+      </div>
+      <div>
+        <h4>Naviga</h4>
+        <ul>
+          <li><a href="menu.html">Menu</a></li>
+          <li><a href="prenota.html">Prenota</a></li>
+          <li><a href="dove-siamo.html">Dove siamo</a></li>
+          <li><a href="recensioni.html">Recensioni</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contatti</h4>
+        <ul>
+          <li>Via Esempio 123, Catania (CT)</li>
+          <li>+39 095 000 0000</li>
+          <li>info@burgerboss.example</li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© <span id="year"></span> Burger Boss — sito dimostrativo, bozza in fase di validazione.</span>
+      <span>Realizzato con 🧡 per presentare l'idea al cliente</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+<script>
+const reviews = [
+  {name:'Giulia R.', initials:'GR', stars:5, text:'Il Tony Montana è pazzesco, uovo fritto perfetto e panino morbidissimo. Locale curato nei minimi dettagli.'},
+  {name:'Marco S.', initials:'MS', stars:5, text:'Al Capone da provare assolutamente: la crema di pistacchio sul bun è un\'idea geniale. Servizio veloce.'},
+  {name:'Federica T.', initials:'FT', stars:4, text:'Ottimo rapporto qualità prezzo, patatine croccanti al punto giusto. Location ideale per una cena informale.'},
+  {name:'Luca P.', initials:'LP', stars:5, text:'Frank Lucas: pollo croccante e miele, un contrasto che funziona benissimo. Tornerò sicuramente.'},
+  {name:'Chiara M.', initials:'CM', stars:5, text:'Menu bambini top, i miei figli hanno adorato il Kids Boss Menu. Staff gentilissimo con le famiglie.'},
+  {name:'Davide B.', initials:'DB', stars:4, text:'Atmosfera cool, musica giusta e burger enormi. Consigliato il Rafael Caro Quintero.'}
+];
+const reviewTrack = document.getElementById('reviewTrack');
+reviews.forEach(r=>{
+  const card = document.createElement('div');
+  card.className = 'review-card reveal';
+  card.innerHTML = `
+    <span class="sample-tag">Esempio</span>
+    <div class="stars">${'★'.repeat(r.stars)}${'☆'.repeat(5-r.stars)}</div>
+    <p>"${r.text}"</p>
+    <div class="review-who">
+      <div class="avatar">${r.initials}</div>
+      <div><b>${r.name}</b><span>Google Recensioni</span></div>
+    </div>`;
+  reviewTrack.appendChild(card);
+});
+</script>
+</body>
+</html>
