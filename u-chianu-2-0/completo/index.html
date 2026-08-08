@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>U Chianu 2.0 — Pizzeria, Hamburgeria, Braceria &amp; Kebab a Misterbianco</title>
+<meta name="description" content="U Chianu 2.0 a Misterbianco (CT): pizza a lievitazione 48 ore, hamburger gourmet, braceria e kebab su misura, lounge bar. Menu completo, promozioni, prenotazioni su WhatsApp e recensioni.">
+<meta name="keywords" content="pizzeria Misterbianco, hamburgeria Misterbianco, kebab Misterbianco, braceria Catania, lounge bar Misterbianco, U Chianu 2.0, ristorante Madonna degli Ammalati">
+<meta name="robots" content="index, follow">
+<meta name="geo.region" content="IT-CT">
+<meta name="geo.placename" content="Misterbianco">
+<meta name="geo.position" content="37.5392;15.0241">
+<!-- Dominio non ancora attivo: aggiornare canonical/og:url e Search Console quando il cliente sceglie il nome a dominio -->
+<meta property="og:type" content="restaurant">
+<meta property="og:title" content="U Chianu 2.0 — Pizzeria, Hamburgeria, Braceria &amp; Kebab a Misterbianco">
+<meta property="og:description" content="Pizza 48h di lievitazione, hamburger gourmet, kebab su misura, braceria e lounge bar. Via San Benedetto 8, Misterbianco (CT).">
+<meta property="og:locale" content="it_IT">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230b0a08'/%3E%3Ctext x='32' y='42' font-family='Georgia,serif' font-size='24' font-weight='700' fill='%23e8b64a' text-anchor='middle'%3EUC%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&amp;family=Bebas+Neue&amp;family=Poppins:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Restaurant",
+  "name": "U Chianu 2.0",
+  "servesCuisine": ["Pizza", "Hamburger", "Kebab", "Grigliate", "Italiana"],
+  "priceRange": "€€",
+  "telephone": "+393932456442",
+  "acceptsReservations": "True",
+  "menu": "#menu",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Via San Benedetto, 8",
+    "addressLocality": "Misterbianco",
+    "addressRegion": "CT",
+    "postalCode": "95045",
+    "addressCountry": "IT"
+  },
+  "geo": { "@type": "GeoCoordinates", "latitude": 37.5392, "longitude": 15.0241 },
+  "openingHoursSpecification": [
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"], "opens": "17:00", "closes": "23:59" }
+  ],
+  "sameAs": ["https://social.quandoo.com/en/groups/u-chianu-2-0-105989"],
+  "hasMenu": {
+    "@type": "Menu",
+    "hasMenuSection": [
+      { "@type": "MenuSection", "name": "Pizze Classiche" },
+      { "@type": "MenuSection", "name": "Pizze Gourmet" },
+      { "@type": "MenuSection", "name": "Hamburger" },
+      { "@type": "MenuSection", "name": "Kebab" }
+    ]
+  }
+}
+</script>
+<style>
+  :root{
+    --bg:#0b0a08;
+    --bg-alt:#141210;
+    --card:#1a1611;
+    --card-2:#201b14;
+    --gold:#e8b64a;
+    --gold-deep:#c8912c;
+    --gold-light:#f6d789;
+    --ember:#d1502f;
+    --cream:#f8efdd;
+    --ink:#0b0a08;
+    --line:rgba(232,182,74,.2);
+    --radius:20px;
+    --shadow:0 20px 50px -20px rgba(0,0,0,.6);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;background:var(--bg);color:var(--cream);
+    font-family:'Poppins',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  img{max-width:100%;display:block;}
+  a{color:inherit;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+  .script{font-family:'Pacifico',cursive;}
+  .display{font-family:'Bebas Neue',sans-serif;letter-spacing:.03em;}
+  ::selection{background:var(--gold);color:var(--ink);}
+
+  /* TICKER */
+  .ticker-wrap{background:linear-gradient(90deg,var(--ember),var(--gold-deep));overflow:hidden;white-space:nowrap;position:relative;z-index:60;}
+  .ticker{display:inline-block;padding:8px 0;animation:scroll 22s linear infinite;font-size:.82rem;font-weight:600;color:#1c0d05;letter-spacing:.03em;}
+  .ticker span{margin:0 32px;}
+  @keyframes scroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+  /* HEADER */
+  header{position:sticky;top:0;z-index:55;background:rgba(11,10,8,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);transition:padding .25s;}
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;}
+  .brand{display:flex;align-items:center;gap:8px;text-decoration:none;}
+  .brand .script{color:var(--gold-light);font-size:1.6rem;text-shadow:0 0 18px rgba(232,182,74,.35);}
+  .brand .two{color:var(--gold);font-weight:800;font-size:1.1rem;border:1px solid var(--gold);padding:1px 8px;border-radius:999px;}
+  nav.links ul{list-style:none;display:flex;gap:26px;margin:0;padding:0;}
+  nav.links a{text-decoration:none;font-size:.92rem;font-weight:500;opacity:.85;position:relative;transition:opacity .2s,color .2s;}
+  nav.links a:hover{opacity:1;color:var(--gold-light);}
+  .status-pill{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;font-weight:600;padding:5px 12px;border-radius:999px;border:1px solid var(--line);}
+  .status-pill.open{color:#8ee6a8;border-color:rgba(142,230,168,.4);}
+  .status-pill.closed{color:#e69090;border-color:rgba(230,144,144,.4);}
+  .status-pill .dot{width:7px;height:7px;border-radius:50%;background:currentColor;box-shadow:0 0 8px currentColor;}
+  .nav-cta{display:flex;gap:10px;align-items:center;}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;border-radius:999px;font-weight:600;font-size:.88rem;text-decoration:none;border:1px solid var(--gold);transition:transform .25s,box-shadow .25s,background .25s,color .25s;}
+  .btn-solid{background:linear-gradient(135deg,var(--gold-light),var(--gold-deep));color:var(--ink);}
+  .btn-solid:hover{transform:translateY(-3px);box-shadow:0 12px 24px -8px rgba(232,182,74,.5);}
+  .btn-ghost{color:var(--gold-light);}
+  .btn-ghost:hover{background:var(--gold);color:var(--ink);transform:translateY(-3px);}
+  .navtoggle{display:none;background:none;border:1px solid var(--line);color:var(--cream);border-radius:8px;padding:8px 10px;font-size:1.1rem;}
+
+  /* HERO */
+  .hero{position:relative;padding:130px 24px 110px;text-align:center;overflow:hidden;border-bottom:1px solid var(--line);}
+  .hero::before{
+    content:"";position:absolute;inset:0;
+    background:
+      radial-gradient(circle at 20% 20%, rgba(232,182,74,.16), transparent 45%),
+      radial-gradient(circle at 80% 30%, rgba(209,80,47,.14), transparent 45%),
+      radial-gradient(ellipse at 50% 100%, rgba(232,182,74,.08), transparent 60%),
+      var(--bg);
+    z-index:0;
+  }
+  .orb{position:absolute;border-radius:50%;filter:blur(50px);opacity:.35;animation:float 9s ease-in-out infinite;z-index:0;}
+  .orb1{width:220px;height:220px;background:var(--gold);top:8%;left:8%;}
+  .orb2{width:280px;height:280px;background:var(--ember);bottom:2%;right:6%;animation-delay:2s;}
+  @keyframes float{0%,100%{transform:translateY(0) scale(1);}50%{transform:translateY(-24px) scale(1.05);}}
+  .hero-inner{position:relative;z-index:1;}
+  .badge{display:inline-block;border:1px solid var(--gold);color:var(--gold-light);padding:7px 18px;border-radius:999px;font-size:.8rem;letter-spacing:.05em;text-transform:uppercase;margin-bottom:24px;background:rgba(232,182,74,.06);}
+  .hero h1{font-size:clamp(2.6rem,7vw,5rem);margin:0 0 6px;line-height:1;}
+  .hero h1 .script{display:block;color:var(--gold-light);font-size:1.35em;text-shadow:0 0 40px rgba(232,182,74,.3);}
+  .hero h1 .two{font-size:.5em;vertical-align:middle;border:2px solid var(--gold);border-radius:999px;padding:2px 14px;margin-left:8px;}
+  .hero p.tagline{font-size:1.2rem;color:var(--gold);font-weight:600;margin:14px 0 10px;}
+  .hero p.sub{max-width:640px;margin:0 auto 40px;opacity:.82;}
+  .hero-cta{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+
+  .stats-bar{position:relative;z-index:1;display:grid;grid-template-columns:repeat(4,1fr);gap:0;max-width:900px;margin:64px auto 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .stat{text-align:center;padding:24px 12px;border-right:1px solid var(--line);}
+  .stat:last-child{border-right:none;}
+  .stat .display{font-size:2.4rem;color:var(--gold-light);}
+  .stat span.l{font-size:.78rem;opacity:.7;text-transform:uppercase;letter-spacing:.05em;}
+
+  section{padding:100px 0;position:relative;}
+  .section-head{text-align:center;max-width:680px;margin:0 auto 56px;}
+  .eyebrow{color:var(--gold);text-transform:uppercase;letter-spacing:.14em;font-size:.8rem;font-weight:700;}
+  .section-head h2{font-size:clamp(2rem,4.4vw,3rem);margin:10px 0 14px;}
+  .section-head p{opacity:.75;margin:0;}
+  .reveal{transition:opacity .7s ease,transform .7s ease;}
+  .reveal.pre{opacity:0;transform:translateY(28px);}
+  .reveal.in{opacity:1;transform:translateY(0);}
+
+  /* CHI SIAMO */
+  #chi-siamo{background:var(--bg-alt);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .about-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:56px;align-items:center;}
+  .about-media{position:relative;}
+  .about-media img{border-radius:var(--radius);box-shadow:var(--shadow);}
+  .about-media .float-card{position:absolute;bottom:-24px;left:-24px;background:var(--card);border:1px solid var(--gold);border-radius:16px;padding:16px 20px;box-shadow:var(--shadow);}
+  .about-media .float-card b{color:var(--gold-light);display:block;font-size:1.3rem;}
+  .feature-list{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:30px;}
+  .feature{display:flex;gap:12px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;}
+  .feature .ic{font-size:1.3rem;}
+  .feature b{display:block;color:var(--gold-light);font-size:.92rem;}
+  .feature span{font-size:.8rem;opacity:.7;}
+
+  /* MENU TABS */
+  .tabs{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:44px;}
+  .tab-btn{background:var(--card);border:1px solid var(--line);color:var(--cream);padding:10px 20px;border-radius:999px;font-size:.85rem;font-weight:600;cursor:pointer;transition:all .2s;}
+  .tab-btn:hover{border-color:var(--gold);}
+  .tab-btn.active{background:linear-gradient(135deg,var(--gold-light),var(--gold-deep));color:var(--ink);border-color:transparent;}
+  .tab-panel{display:none;}
+  .tab-panel.active{display:block;animation:fadein .4s ease;}
+  @keyframes fadein{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+  .menu-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+  .menu-item{display:flex;justify-content:space-between;gap:16px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 20px;transition:border-color .2s,transform .2s;}
+  .menu-item:hover{border-color:var(--gold);transform:translateY(-2px);}
+  .menu-item .mi-name{color:var(--gold-light);font-weight:600;font-size:.95rem;display:block;}
+  .menu-item .mi-desc{font-size:.8rem;opacity:.65;display:block;margin-top:2px;}
+  .menu-item .price{color:var(--gold);font-weight:700;white-space:nowrap;align-self:center;}
+  .menu-note{text-align:center;margin-top:40px;opacity:.7;font-size:.9rem;}
+
+  /* PROMO */
+  #promo{background:linear-gradient(180deg,var(--bg-alt),var(--bg));border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .promo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+  .promo-card{position:relative;background:var(--card);border:1px solid var(--gold);border-radius:var(--radius);padding:30px;text-align:center;overflow:hidden;}
+  .promo-card::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 0%, rgba(232,182,74,.15), transparent 60%);}
+  .promo-card .big{position:relative;font-size:2.6rem;color:var(--gold-light);font-weight:800;display:block;margin-bottom:8px;font-family:'Bebas Neue',sans-serif;}
+  .promo-card p{position:relative;margin:0;}
+  .promo-fine{text-align:center;opacity:.6;font-size:.82rem;margin-top:28px;}
+
+  /* GALLERY */
+  .gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:160px;gap:12px;}
+  .gallery-grid .g1{grid-column:span 2;grid-row:span 2;}
+  .gallery-grid img{width:100%;height:100%;object-fit:cover;border-radius:14px;cursor:pointer;transition:transform .35s;filter:saturate(1.1);}
+  .gallery-grid img:hover{transform:scale(1.03);}
+  .gallery-note{text-align:center;opacity:.55;font-size:.82rem;margin-top:20px;}
+  .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.9);display:none;align-items:center;justify-content:center;z-index:200;padding:40px;}
+  .lightbox.active{display:flex;}
+  .lightbox img{max-width:90vw;max-height:85vh;border-radius:12px;}
+  .lightbox-close{position:absolute;top:24px;right:32px;color:var(--cream);font-size:2rem;cursor:pointer;background:none;border:none;}
+
+  /* REVIEWS */
+  #recensioni{background:var(--bg-alt);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .review-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+  .review-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:26px;}
+  .review-card .stars{color:var(--gold);letter-spacing:2px;margin-bottom:12px;}
+  .review-card p{font-size:.92rem;opacity:.85;font-style:italic;margin:0 0 14px;}
+  .review-card .who{font-size:.82rem;color:var(--gold-light);font-weight:600;}
+  .review-tag{font-size:.68rem;text-transform:uppercase;letter-spacing:.06em;opacity:.5;border:1px solid var(--line);display:inline-block;padding:2px 8px;border-radius:999px;margin-top:8px;}
+  .google-cta{margin-top:44px;text-align:center;}
+  .google-cta p{opacity:.7;margin-bottom:16px;}
+
+  /* DOVE */
+  .dove-grid{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:stretch;}
+  .info-list{list-style:none;margin:0 0 28px;padding:0;display:flex;flex-direction:column;gap:18px;}
+  .info-list li{display:flex;gap:14px;align-items:flex-start;}
+  .info-list .ic{width:40px;height:40px;flex:none;border-radius:12px;background:rgba(232,182,74,.1);border:1px solid var(--gold);display:flex;align-items:center;justify-content:center;color:var(--gold-light);font-size:1.15rem;}
+  .info-list b{color:var(--gold-light);}
+  .map-frame{border-radius:var(--radius);overflow:hidden;border:1px solid var(--line);min-height:360px;box-shadow:var(--shadow);}
+  .map-frame iframe{width:100%;height:100%;min-height:360px;border:0;}
+
+  /* CONTATTI */
+  #contatti{background:var(--bg-alt);border-top:1px solid var(--line);}
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:44px;}
+  .contact-form{display:flex;flex-direction:column;gap:16px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:32px;box-shadow:var(--shadow);}
+  .contact-form input,.contact-form textarea{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:13px 14px;color:var(--cream);font-family:inherit;font-size:.95rem;}
+  .contact-form input:focus,.contact-form textarea:focus{outline:none;border-color:var(--gold);}
+  .contact-form textarea{resize:vertical;min-height:120px;}
+  .contact-form label{font-size:.82rem;color:var(--gold-light);}
+  .contact-side{display:flex;flex-direction:column;justify-content:center;gap:18px;}
+  .contact-side .btn{justify-content:center;}
+  .contact-side .mini-note{opacity:.6;font-size:.82rem;text-align:center;}
+
+  footer{padding:56px 0 30px;border-top:1px solid var(--line);background:var(--bg);}
+  .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px;margin-bottom:36px;}
+  footer h4{color:var(--gold-light);font-size:.9rem;text-transform:uppercase;letter-spacing:.06em;margin:0 0 16px;}
+  footer ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;}
+  footer ul a{text-decoration:none;opacity:.75;font-size:.88rem;}
+  footer ul a:hover{opacity:1;color:var(--gold-light);}
+  footer p{opacity:.75;font-size:.88rem;margin:4px 0;}
+  .footer-bottom{border-top:1px solid var(--line);padding-top:22px;text-align:center;opacity:.55;font-size:.8rem;}
+
+  .float-actions{position:fixed;right:22px;bottom:22px;display:flex;flex-direction:column;gap:12px;z-index:80;}
+  .fab{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.4rem;text-decoration:none;box-shadow:0 12px 24px -8px rgba(0,0,0,.6);transition:transform .2s;}
+  .fab:hover{transform:translateY(-4px) scale(1.05);}
+  .fab-wa{background:#25D366;color:#0b0a08;}
+  .fab-top{background:var(--card);border:1px solid var(--gold);color:var(--gold-light);opacity:0;pointer-events:none;transition:opacity .3s,transform .2s;}
+  .fab-top.show{opacity:1;pointer-events:auto;}
+
+  @media (max-width:960px){
+    nav.links{display:none;}
+    .navtoggle{display:inline-block;}
+    .about-grid,.dove-grid,.contact-grid{grid-template-columns:1fr;}
+    .stats-bar{grid-template-columns:1fr 1fr;}
+    .stat{border-bottom:1px solid var(--line);}
+    .promo-grid,.review-grid{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr;}
+    .gallery-grid{grid-template-columns:repeat(2,1fr);}
+    .gallery-grid .g1{grid-column:span 2;}
+  }
+  @media (max-width:600px){
+    .menu-grid{grid-template-columns:1fr;}
+    .feature-list{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<div class="ticker-wrap">
+  <div class="ticker">
+    <span>🍕 Margherita Day 4€ dal martedì al venerdì</span>
+    <span>🎁 Ogni 2 pizze maxi: Coca Cola 1,5L in omaggio</span>
+    <span>🍕 Ogni 3 pizze: 1 Margherita in omaggio</span>
+    <span>🚚 Consegna a domicilio gratuita sopra i 20€</span>
+    <span>🍕 Margherita Day 4€ dal martedì al venerdì</span>
+    <span>🎁 Ogni 2 pizze maxi: Coca Cola 1,5L in omaggio</span>
+    <span>🍕 Ogni 3 pizze: 1 Margherita in omaggio</span>
+    <span>🚚 Consegna a domicilio gratuita sopra i 20€</span>
+  </div>
+</div>
+
+<header>
+  <div class="nav wrap">
+    <a href="#top" class="brand"><span class="script">U Chianu</span><span class="two">2.0</span></a>
+    <nav class="links"><ul>
+      <li><a href="#chi-siamo">Chi siamo</a></li>
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#promo">Promozioni</a></li>
+      <li><a href="#galleria">Galleria</a></li>
+      <li><a href="#recensioni">Recensioni</a></li>
+      <li><a href="#dove">Dove siamo</a></li>
+      <li><a href="#contatti">Contatti</a></li>
+    </ul></nav>
+    <div class="nav-cta">
+      <span class="status-pill" id="statusPill"><span class="dot"></span><span id="statusText">Verifica orari…</span></span>
+      <a class="btn btn-solid" href="https://wa.me/393932456442?text=Ciao%2C%20vorrei%20prenotare%2Fordinare%20da%20U%20Chianu%202.0" target="_blank" rel="noopener">Prenota / Ordina</a>
+    </div>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="wrap hero-inner">
+    <span class="badge">Misterbianco · Via San Benedetto, 8</span>
+    <h1><span class="script">U Chianu<span class="two">2.0</span></span></h1>
+    <p class="tagline">Pizzeria · Hamburgeria · Braceria · Kebab · Lounge Bar</p>
+    <p class="sub">Farine speciali, lievitazione 48 ore, ingredienti selezionati e un'atmosfera che unisce pizza napoletana, hamburger d'autore, grigliate e kebab in un solo indirizzo a Misterbianco.</p>
+    <div class="hero-cta">
+      <a class="btn btn-solid" href="https://wa.me/393932456442?text=Ciao%2C%20vorrei%20ordinare%20da%20U%20Chianu%202.0" target="_blank" rel="noopener">💬 Ordina su WhatsApp</a>
+      <a class="btn btn-ghost" href="#menu">Esplora il menu</a>
+      <a class="btn btn-ghost" href="tel:+393932456442">📞 393 245 6442</a>
+    </div>
+
+    <div class="stats-bar">
+      <div class="stat"><span class="display">48H</span><span class="l">Lievitazione pizze</span></div>
+      <div class="stat"><span class="display">5-IN-1</span><span class="l">Pizza · Burger · Kebab · Braceria · Bar</span></div>
+      <div class="stat"><span class="display">20€</span><span class="l">Consegna gratuita sopra</span></div>
+      <div class="stat"><span class="display">7/7</span><span class="l">Aperto (tranne lunedì)</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="chi-siamo">
+  <div class="wrap about-grid reveal">
+    <div class="about-media">
+      <img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=1000&q=80" alt="Pizza sfornata a U Chianu 2.0" loading="lazy">
+      <div class="float-card"><b>48h</b>lievitazione naturale</div>
+    </div>
+    <div>
+      <span class="eyebrow">Chi siamo</span>
+      <h2>Cinque anime, un solo locale</h2>
+      <p style="opacity:.85">U Chianu 2.0 nasce a Misterbianco per unire pizza napoletana a lunga lievitazione, hamburger gourmet, grigliate di braceria, kebab preparato al momento e un lounge bar per la sera, tutto con farine speciali e materie prime selezionate.</p>
+      <div class="feature-list">
+        <div class="feature"><span class="ic">🍕</span><div><b>Pizza 48h</b><span>Impasto a lunga lievitazione, più leggero e digeribile</span></div></div>
+        <div class="feature"><span class="ic">🥩</span><div><b>Braceria</b><span>Grigliate preparate al momento</span></div></div>
+        <div class="feature"><span class="ic">🌯</span><div><b>Kebab su misura</b><span>Scegli base, condimenti e salsa</span></div></div>
+        <div class="feature"><span class="ic">🍹</span><div><b>Lounge bar</b><span>L'aperitivo diventa serata</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="menu">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">La carta</span>
+      <h2>Il menu completo</h2>
+      <p>Sfoglia le categorie: dalle pizze classiche a quelle gourmet, dagli hamburger d'autore al kebab su misura.</p>
+    </div>
+
+    <div class="tabs reveal">
+      <button class="tab-btn active" data-tab="classiche">Pizze Classiche</button>
+      <button class="tab-btn" data-tab="gourmet">Pizze Gourmet</button>
+      <button class="tab-btn" data-tab="speciali">Pizze Speciali</button>
+      <button class="tab-btn" data-tab="burger">Hamburger</button>
+      <button class="tab-btn" data-tab="kebab">Kebab</button>
+      <button class="tab-btn" data-tab="focacce">Focacce &amp; Calzoni</button>
+      <button class="tab-btn" data-tab="dolci">Dolci</button>
+      <button class="tab-btn" data-tab="bevande">Bevande</button>
+    </div>
+
+    <div class="tab-panel active" id="classiche">
+      <div class="menu-grid">
+        <div class="menu-item"><div><span class="mi-name">Margherita</span><span class="mi-desc">Pomodoro, mozzarella, olio evo, origano</span></div><span class="price">5€ / 10€</span></div>
+        <div class="menu-item"><div><span class="mi-name">Diavola</span><span class="mi-desc">Pomodoro, mozzarella, salame piccante</span></div><span class="price">6€ / 14€</span></div>
+        <div class="menu-item"><div><span class="mi-name">Capricciosa</span><span class="mi-desc">Pomodoro, mozzarella, prosciutto cotto, funghi, uovo, olive</span></div><span class="price">7€ / 14€</span></div>
+        <div class="menu-item"><div><span class="mi-name">Norma</span><span class="mi-desc">Pomodoro, mozzarella, melanzane fritte, ricotta salata, basilico</span></div><span class="price">7€ / 14€</span></div>
+        <div class="menu-item"><div><span class="mi-name">Quattro Formaggi</span><span class="mi-desc">Mozzarella, gorgonzola, parmigiano, emmental</span></div><span class="price">7,5€ / 15€</span></div>
+        <div class="menu-item"><div><span class="mi-name">Parmigiana</span><span class="mi-desc">Pomodoro, mozzarella, prosciutto cotto, uovo, melanzane</span></div><span class="price">7,5€ / 15€</span></div>
+      </div>
+    </div>
+
+    <div class="tab-panel" id="gourmet">
+      <div class="menu-grid">
+        <div class="menu-item"><div><span class="mi-name">A Cantata</span><span class="mi-desc">Datterino rosso siciliano, olive taggiasche, nduja calabrese, fior di latte</span></div><span class="price">13€ / 26€</span></div>
+        <div class="menu-item"><div><span class="mi-name">Carritteri</span><span class="mi-desc">Salmone, philadelphia, rucola, pomodorini, scaglie di grana</span></div><span class="price">12€ / 24€</span></div>
+        <div class="menu-item"><div><span class="mi-name">Madonna degli Ammalati</span><span class="mi-desc">Burrata, ciliegino, granella di pistacchio, speck croccante</span></div><span class="price">12€ / 24€</span></div>
+        <div class="menu-item"><div><span class="mi-name">I Mastri</span><span class="mi-desc">Crema di pistacchio, fior di bufala, salame primo sale, pancetta</span></div><span class="price">14€ / 28€</span></div>
+        <div class="menu-item"><div><span class="mi-name">Campanarazzu</span><span class="mi-desc">Fior di latte, burrata, rucola, punte di asparagi, olio e basilico</span></div><span class="price">13€ / 26€</span></div>
+        <div class="menu-item"><div><span class="mi-name">U Chianu in giallo</span><span class="mi-desc">Fiordilatte, stracciatella, speck, datterini gialli, tartufo</span></div><span class="price">14€ / 28€</span></div>
+      </div>
+    </div>
+
+    <div class="tab-panel" id="speciali">
+      <div class="menu-grid">
+        <div class="menu-item"><div><span class="mi-name">Carbonara</span><span class="mi-desc">Carbocrema, pecorino DOP, grana padano, guanciale croccante, pepe nero</span></div><span class="price">10€ / 20€</span></div>
+        <div class="menu-item"><div><span class="mi-name">Nocina</span><span class="mi-desc">Bufala, crema di noci, granella di noci, radicchio, speck stagionato</span></div><span class="price">11€ / 22€</span></div>
+        <div class="menu-item"><div><span class="mi-name">Bresaola</span><span class="mi-desc">Stracciatella, bresaola, rucola, scaglie di grana</span></div><span class="price">10€ / 20€</span></div>
+        <div class="menu-item"><div><span class="mi-name">Cucuzza</span><span class="mi-desc">Crema di zucca, fiordilatte, semi di zucca, gorgonzola</span></div><span class="price">10€ / 20€</span></div>
+        <div class="menu-item"><div><span class="mi-name">Vegetariana</span><span class="mi-desc">Crema di pistacchio, melanzane, zucchine, mozzarella, grana</span></div><span class="price">10€ / 20€</span></div>
+        <div class="menu-item"><div><span class="mi-name">Quattro Stagioni</span><span class="mi-desc">Pomodoro, mozzarella, funghi, prosciutto, olive</span></div><span class="price">8€ / 16€</span></div>
+      </div>
+    </div>
+
+    <div class="tab-panel" id="burger">
+      <div class="menu-grid">
+        <div class="menu-item"><div><span class="mi-name">Piazza Mercato</span><span class="mi-desc">Black angus 200g, pomodoro, bacon, stracciatella di bufala, pesto genovese</span></div><span class="price">9€</span></div>
+        <div class="menu-item"><div><span class="mi-name">Via Marchese</span><span class="mi-desc">Polpetta di cavallo, cipolla agrodolce, provola affumicata, bacon</span></div><span class="price">8€</span></div>
+        <div class="menu-item"><div><span class="mi-name">Via Garibaldi</span><span class="mi-desc">Hamburger di cavallo ripieno pistacchio e philadelphia, burrata, rucola</span></div><span class="price">11€</span></div>
+        <div class="menu-item"><div><span class="mi-name">Piazza 25 Aprile</span><span class="mi-desc">Doppio hamburger 200g, cheddar, bacon, cipolla caramellata</span></div><span class="price">10€</span></div>
+        <div class="menu-item"><div><span class="mi-name">Via San Nicolò</span><span class="mi-desc">Pollo fritto, cheddar fuso, lattuga, salsa agrodolce</span></div><span class="price">9€</span></div>
+      </div>
+    </div>
+
+    <div class="tab-panel" id="kebab">
+      <div class="menu-grid">
+        <div class="menu-item"><div><span class="mi-name">Componi il tuo kebab</span><span class="mi-desc">Base kebab + condimenti a scelta (pomodoro, iceberg, cheddar, bacon, mais, peperoni, cipolla, olive…)</span></div><span class="price">7€</span></div>
+        <div class="menu-item"><div><span class="mi-name">Salse a scelta</span><span class="mi-desc">Boscaiola, cheddar, burger, agrodolce, sweet chili, senape, yogurt, barbecue…</span></div><span class="price">incl.</span></div>
+      </div>
+    </div>
+
+    <div class="tab-panel" id="focacce">
+      <div class="menu-grid">
+        <div class="menu-item"><div><span class="mi-name">Calzone Chimica</span><span class="mi-desc">Salsa San Marzano, mozzarella, olio evo</span></div><span class="price">6,5€</span></div>
+        <div class="menu-item"><div><span class="mi-name">Calzone Letteratura</span><span class="mi-desc">Crema di pistacchio, mortadella, cotto, olive, uovo</span></div><span class="price">8€</span></div>
+        <div class="menu-item"><div><span class="mi-name">Focaccia Terza</span><span class="mi-desc">Mozzarella, crudo, scaglie di grana</span></div><span class="price">10€</span></div>
+        <div class="menu-item"><div><span class="mi-name">Focaccia Quinta</span><span class="mi-desc">Mozzarella, crudo, melanzane fritte, rucola, grana</span></div><span class="price">9€</span></div>
+        <div class="menu-item"><div><span class="mi-name">Scacciata tradizionale</span><span class="mi-desc">Solo su ordinazione</span></div><span class="price">12€/kg</span></div>
+      </div>
+    </div>
+
+    <div class="tab-panel" id="dolci">
+      <div class="menu-grid">
+        <div class="menu-item"><div><span class="mi-name">Nutella</span><span class="mi-desc">Nutella Ferrero, zucchero a velo</span></div><span class="price">6€</span></div>
+        <div class="menu-item"><div><span class="mi-name">Nutella al pistacchio</span><span class="mi-desc">Nutella al pistacchio, granella</span></div><span class="price">8€</span></div>
+        <div class="menu-item"><div><span class="mi-name">Frittelle 12 pz</span><span class="mi-desc">Nutella, zucchero a velo</span></div><span class="price">10€</span></div>
+      </div>
+    </div>
+
+    <div class="tab-panel" id="bevande">
+      <div class="menu-grid">
+        <div class="menu-item"><div><span class="mi-name">Coca Cola</span><span class="mi-desc">33cl / 1,5lt</span></div><span class="price">1,5€ / 2,5€</span></div>
+        <div class="menu-item"><div><span class="mi-name">Birra Moretti / Heineken / Peroni</span><span class="mi-desc">33cl</span></div><span class="price">2€</span></div>
+        <div class="menu-item"><div><span class="mi-name">Stella Artois</span><span class="mi-desc">66cl</span></div><span class="price">3,5€</span></div>
+        <div class="menu-item"><div><span class="mi-name">Birra Cristalli di Sale / Corona / Tennent's</span><span class="mi-desc">33cl</span></div><span class="price">3€</span></div>
+      </div>
+    </div>
+
+    <p class="menu-note">Menu indicativo — Reg. CE 1169/2011: alcuni alimenti possono contenere allergeni, chiedi al personale.</p>
+  </div>
+</section>
+
+<section id="promo">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Offerte</span>
+      <h2>Promozioni della settimana</h2>
+    </div>
+    <div class="promo-grid reveal">
+      <div class="promo-card"><span class="big">4€</span><p>Margherita Day</p></div>
+      <div class="promo-card"><span class="big">🎁</span><p>Ogni 2 pizze maxi, Coca Cola 1,5L in omaggio</p></div>
+      <div class="promo-card"><span class="big">🍕</span><p>Ogni 3 pizze, 1 Margherita in omaggio</p></div>
+    </div>
+    <p class="promo-fine">Promozioni valide dal martedì al venerdì, escluso sabato, domenica e festivi. Non cumulabili fra loro. Aperipizza a persona 11,99€, dalle 19:00 alle 21:00.</p>
+  </div>
+</section>
+
+<section id="galleria">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Galleria</span>
+      <h2>Un assaggio di U Chianu 2.0</h2>
+    </div>
+    <div class="gallery-grid reveal">
+      <img class="g1" src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=1000&q=80" alt="Pizza forno a legna" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=700&q=80" alt="Hamburger gourmet" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1633436375753-95e02306a83d?auto=format&fit=crop&w=700&q=80" alt="Kebab appena preparato" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=700&q=80" alt="Braceria alla griglia" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=700&q=80" alt="Lounge bar drink" loading="lazy">
+    </div>
+    <p class="gallery-note">Foto dimostrative — verranno sostituite con gli scatti reali del locale. Clicca per ingrandire.</p>
+  </div>
+</section>
+
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose">&times;</button>
+  <img id="lightboxImg" src="" alt="">
+</div>
+
+<section id="recensioni">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Cosa dicono di noi</span>
+      <h2>Recensioni</h2>
+      <p>Testi di esempio: verranno sostituiti con le recensioni reali dei clienti (Google, Quandoo) prima della pubblicazione.</p>
+    </div>
+    <div class="review-grid reveal">
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p>"Pizza con impasto leggerissimo e hamburger davvero curati. Ottimo rapporto qualità-prezzo."</p>
+        <div class="who">Cliente esempio</div>
+        <span class="review-tag">Recensione di esempio</span>
+      </div>
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p>"Il kebab personalizzato è top e il servizio è sempre veloce. Locale consigliato per famiglie e amici."</p>
+        <div class="who">Cliente esempio</div>
+        <span class="review-tag">Recensione di esempio</span>
+      </div>
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p>"Location curata, buona musica la sera e ottimo aperipizza. Torneremo sicuramente."</p>
+        <div class="who">Cliente esempio</div>
+        <span class="review-tag">Recensione di esempio</span>
+      </div>
+    </div>
+    <div class="google-cta reveal">
+      <p>Aiutaci a crescere: lascia la tua recensione su Google o Quandoo dopo la visita.</p>
+      <a class="btn btn-solid" href="https://social.quandoo.com/en/groups/u-chianu-2-0-105989" target="_blank" rel="noopener">⭐ Lascia una recensione</a>
+    </div>
+  </div>
+</section>
+
+<section id="dove">
+  <div class="wrap dove-grid reveal">
+    <div>
+      <span class="eyebrow">Dove siamo</span>
+      <h2>Vieni a trovarci</h2>
+      <ul class="info-list">
+        <li><span class="ic">📍</span><span><b>Indirizzo</b><br>Via San Benedetto, 8 — Madonna degli Ammalati, Misterbianco (CT) 95045</span></li>
+        <li><span class="ic">🕒</span><span><b>Orari</b><br>Lunedì chiuso · Martedì–Domenica dalle 17:00</span></li>
+        <li><span class="ic">📞</span><span><b>Telefono</b><br><a href="tel:+393932456442">393 245 6442</a> · <a href="tel:+393514031779">351 403 1779</a></span></li>
+        <li><span class="ic">🚚</span><span><b>Consegna a domicilio</b><br>Gratuita sopra i 20€</span></li>
+      </ul>
+      <a class="btn btn-ghost" href="https://maps.google.com/?q=Via+San+Benedetto+8+Misterbianco" target="_blank" rel="noopener">📍 Ottieni indicazioni</a>
+    </div>
+    <div class="map-frame">
+      <iframe src="https://maps.google.com/maps?q=Via%20San%20Benedetto%208%20Misterbianco&t=&z=15&output=embed" loading="lazy" title="Mappa U Chianu 2.0"></iframe>
+    </div>
+  </div>
+</section>
+
+<section id="contatti">
+  <div class="wrap contact-grid reveal">
+    <div>
+      <span class="eyebrow">Contatti</span>
+      <h2>Scrivici, ti rispondiamo subito</h2>
+      <p style="opacity:.75">Compila il modulo: aprirà WhatsApp con il messaggio già pronto da inviarci.</p>
+      <form class="contact-form" id="contactForm">
+        <div>
+          <label for="name">Nome</label>
+          <input type="text" id="name" placeholder="Il tuo nome" required>
+        </div>
+        <div>
+          <label for="phone">Telefono (opzionale)</label>
+          <input type="tel" id="phone" placeholder="Il tuo numero">
+        </div>
+        <div>
+          <label for="msg">Messaggio</label>
+          <textarea id="msg" placeholder="Es. Vorrei prenotare un tavolo per 4 persone alle 20:30" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-solid">Invia su WhatsApp</button>
+      </form>
+    </div>
+    <div class="contact-side">
+      <a class="btn btn-solid" href="https://wa.me/393932456442" target="_blank" rel="noopener">💬 Scrivici su WhatsApp</a>
+      <a class="btn btn-ghost" href="tel:+393932456442">📞 Chiama il locale</a>
+      <a class="btn btn-ghost" href="https://social.quandoo.com/en/groups/u-chianu-2-0-105989" target="_blank" rel="noopener">⭐ Recensioni &amp; scheda Quandoo</a>
+      <p class="mini-note">Rispondiamo di solito entro pochi minuti negli orari di apertura.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <a href="#top" class="brand"><span class="script">U Chianu</span><span class="two">2.0</span></a>
+        <p style="margin-top:14px">Pizzeria · Hamburgeria · Braceria · Kebab · Lounge Bar a Misterbianco (CT).</p>
+        <p>Via San Benedetto, 8 — Madonna degli Ammalati</p>
+        <p>393 245 6442 · 351 403 1779</p>
+      </div>
+      <div>
+        <h4>Naviga</h4>
+        <ul>
+          <li><a href="#menu">Menu</a></li>
+          <li><a href="#promo">Promozioni</a></li>
+          <li><a href="#recensioni">Recensioni</a></li>
+          <li><a href="#dove">Dove siamo</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contatti</h4>
+        <ul>
+          <li><a href="https://wa.me/393932456442" target="_blank" rel="noopener">WhatsApp</a></li>
+          <li><a href="tel:+393932456442">393 245 6442</a></li>
+          <li><a href="https://social.quandoo.com/en/groups/u-chianu-2-0-105989" target="_blank" rel="noopener">Quandoo</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 U Chianu 2.0. Sito dimostrativo — Pacchetto Completo.</div>
+  </div>
+</footer>
+
+<div class="float-actions">
+  <a class="fab fab-wa" href="https://wa.me/393932456442" target="_blank" rel="noopener" aria-label="Scrivici su WhatsApp">💬</a>
+  <a class="fab fab-top" href="#top" id="toTop" aria-label="Torna su">↑</a>
+</div>
+
+<script>
+  // Tabs
+  document.querySelectorAll('.tab-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
+      document.querySelectorAll('.tab-panel').forEach(function(p){p.classList.remove('active');});
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  // Contact form -> WhatsApp
+  document.getElementById('contactForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var name = document.getElementById('name').value.trim();
+    var phone = document.getElementById('phone').value.trim();
+    var msg = document.getElementById('msg').value.trim();
+    var text = encodeURIComponent('Ciao, sono ' + name + (phone ? ' (tel: ' + phone + ')' : '') + '. ' + msg);
+    window.open('https://wa.me/393932456442?text=' + text, '_blank');
+  });
+
+  // Lightbox
+  var lightbox = document.getElementById('lightbox');
+  var lightboxImg = document.getElementById('lightboxImg');
+  document.querySelectorAll('.gallery-grid img').forEach(function(img){
+    img.addEventListener('click', function(){
+      lightboxImg.src = img.src;
+      lightboxImg.alt = img.alt;
+      lightbox.classList.add('active');
+    });
+  });
+  document.getElementById('lightboxClose').addEventListener('click', function(){ lightbox.classList.remove('active'); });
+  lightbox.addEventListener('click', function(e){ if(e.target === lightbox) lightbox.classList.remove('active'); });
+
+  // Scroll reveal (progressive enhancement: elements stay visible if JS/IO is unavailable)
+  var revealEls = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    revealEls.forEach(function(el){ el.classList.add('pre'); });
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){ entry.target.classList.remove('pre'); entry.target.classList.add('in'); io.unobserve(entry.target); }
+      });
+    }, {threshold:.1});
+    revealEls.forEach(function(el){ io.observe(el); });
+  }
+
+  // Back to top
+  var toTop = document.getElementById('toTop');
+  window.addEventListener('scroll', function(){
+    toTop.classList.toggle('show', window.scrollY > 500);
+  });
+
+  // Open/closed status (Europe/Rome), Lunedì chiuso, altrimenti 17:00-23:59
+  function updateStatus(){
+    var now = new Date();
+    var parts = new Intl.DateTimeFormat('it-IT', {timeZone:'Europe/Rome', weekday:'short', hour:'2-digit', minute:'2-digit', hour12:false}).formatToParts(now);
+    var map = {}; parts.forEach(function(p){ map[p.type] = p.value; });
+    var day = map.weekday; // lun, mar, ...
+    var hour = parseInt(map.hour, 10);
+    var pill = document.getElementById('statusPill');
+    var text = document.getElementById('statusText');
+    var isMonday = day && day.toLowerCase().indexOf('lun') === 0;
+    var isOpenHours = hour >= 17 && hour < 24;
+    if(!isMonday && isOpenHours){
+      pill.classList.add('open'); pill.classList.remove('closed');
+      text.textContent = 'Aperto ora';
+    } else {
+      pill.classList.add('closed'); pill.classList.remove('open');
+      text.textContent = isMonday ? 'Chiuso (lunedì)' : 'Apre alle 17:00';
+    }
+  }
+  updateStatus();
+  setInterval(updateStatus, 60000);
+</script>
+
+</body>
+</html>
