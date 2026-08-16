@@ -222,10 +222,6 @@
   .info-card svg{width:30px;height:30px;color:var(--gold);margin:0 auto 16px;display:block}
   .info-card h4{font-family:'Cinzel',serif;font-size:.95rem;letter-spacing:.05em;margin-bottom:10px}
   .info-card p{font-size:.84rem;color:var(--muted-2);line-height:1.7}
-  .iban-row{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:12px;flex-wrap:wrap}
-  .iban-row code{font-family:monospace;font-size:.78rem;color:var(--gold-2);background:var(--bg-2);border:1px solid var(--line);padding:7px 10px;letter-spacing:.04em;word-break:break-all}
-  .iban-copy{border:1px solid var(--line);background:none;color:var(--muted);padding:7px 12px;cursor:pointer;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;font-family:'Jost',sans-serif;transition:border-color .2s,color .2s}
-  .iban-copy:hover{border-color:var(--gold);color:var(--gold-2)}
 
   /* ---------- CONTACT ---------- */
   .contact{text-align:center}
@@ -322,7 +318,7 @@
         <span class="mono">Catania · Black &amp; Gray</span>
         <span class="rule"></span>
       </div>
-      <h1>Pietro Salice<br><span class="accent">darko.tats</span></h1>
+      <h1><span class="accent">darko.tats</span></h1>
       <p class="sub">Tatuaggi black &amp; gray, ritratti e realismo. Ogni pezzo raccontato sulla pelle con cura, tecnica e pazienza.</p>
       <div class="tags">
         <span class="tag">Realismo</span>
@@ -353,8 +349,10 @@
     <div class="about-text">
       <span class="script">L'inchiostro come mestiere, la pelle come tela</span>
       <h3>Chi sono</h3>
-      <p>Sono Pietro Salice, tatuatore a Catania specializzato in black &amp; gray. Lavoro principalmente su ritratti, soggetti realistici e composizioni chicano, curando ogni dettaglio dall'ombreggiatura al contrasto.</p>
-      <p>Ogni progetto nasce da un confronto diretto con chi lo indosserà: capisco l'idea, propongo la composizione più adatta e la realizzo con calma, senza fretta.</p>
+      <p>Sono Pietro Salice, tatuatore a Catania specializzato in black &amp; gray.</p>
+      <p>Sono cresciuto in un ambiente in cui il disegno è sempre stato parte fondamentale della mia vita, un modo per esprimere i miei pensieri e le mie idee. È stata proprio questa passione, fin da bambino, a portarmi a frequentare il liceo artistico.</p>
+      <p>Andando avanti con gli studi, disegnando sempre di più e ammirando giorno dopo giorno il mondo dell'arte, ho capito quanto questa passione potesse trasformarsi in qualcosa di più grande: quello che ad oggi è il mio lavoro.</p>
+      <p>Per me tatuare non è solo realizzare un disegno e inciderlo sulla pelle, bensì sapere che dietro quel disegno c'è una storia.</p>
       <div class="stat-row">
         <div class="stat"><b>109</b><span>Lavori pubblicati</span></div>
         <div class="stat"><b>1.8K+</b><span>Seguono il progetto</span></div>
@@ -490,6 +488,7 @@
       </a>
     </div>
 
+    <!-- TODO backend: account Google Calendar da collegare per la disponibilità reale — pietro.salice01@gmail.com -->
     <div class="cal-block reveal" id="calendario">
       <h3>Richiedi una data</h3>
       <p class="cal-sub">Lun – Sab · 10:00 – 19:00</p>
@@ -518,11 +517,7 @@
       <div class="info-card">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M2 10h20M6 15h4"/></svg>
         <h4>Acconto</h4>
-        <p>La data si blocca con un acconto tramite bonifico. È rimborsabile se disdici <b>entro 4 giorni</b> prima dell'appuntamento; oltre, non viene restituito.</p>
-        <div class="iban-row">
-          <code id="ibanCode">IT02 L036 6901 6009 1219 4716 873</code>
-          <button class="iban-copy" id="ibanCopy" type="button">Copia</button>
-        </div>
+        <p>Dopo la conferma dell'appuntamento ti verrà comunicato l'importo dell'acconto in base al progetto, da versare per bloccare la data. È rimborsabile se disdici <b>entro 4 giorni</b> prima dell'appuntamento; oltre, non viene restituito.</p>
       </div>
       <div class="info-card">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
@@ -669,15 +664,6 @@
     }
   }
   calIdea.addEventListener('input', update);
-
-  /* Copia IBAN */
-  const ibanCopy = document.getElementById('ibanCopy');
-  ibanCopy.addEventListener('click', () => {
-    navigator.clipboard.writeText('IT02L0366901600912194716873').then(() => {
-      ibanCopy.textContent = 'Copiato ✓';
-      setTimeout(() => { ibanCopy.textContent = 'Copia'; }, 2000);
-    });
-  });
 </script>
 
 </body>
