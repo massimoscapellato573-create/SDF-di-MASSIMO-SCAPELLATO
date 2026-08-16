@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pietro Salice — darko.tats | Black &amp; Gray Tattoo Artist, Catania</title>
+<meta name="description" content="Pietro Salice, in arte darko.tats — tatuatore Black &amp; Gray a Catania. Ritratti, realismo, chicano e lettering. Scrivimi su WhatsApp o Instagram per fissare il tuo appuntamento.">
+<meta name="keywords" content="tatuatore Catania, black and gray tattoo, darko.tats, Pietro Salice tatuatore, tatuaggi realistici Catania, chicano tattoo Sicilia">
+<meta name="robots" content="index, follow">
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Pietro Salice — darko.tats | Black & Gray Tattoo Artist">
+<meta property="og:description" content="Tatuatore specializzato in Black & Gray, ritratti e realismo. Catania. Scrivimi su WhatsApp o Instagram per il tuo appuntamento.">
+<meta property="og:locale" content="it_IT">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230b0b0c'/%3E%3Ctext x='32' y='42' font-family='Georgia,serif' font-size='26' font-weight='700' fill='%23c8a45c' text-anchor='middle'%3EPS%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TattooParlor",
+  "name": "darko.tats — Pietro Salice",
+  "description": "Tatuatore Black & Gray specializzato in ritratti, realismo, chicano e lettering.",
+  "telephone": "+393514891816",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Catania",
+    "addressCountry": "IT"
+  },
+  "sameAs": ["https://www.instagram.com/darko.tats"]
+}
+</script>
+<style>
+  :root{
+    --bg:#0a0a0b;
+    --bg-2:#141412;
+    --bg-3:#1b1a17;
+    --gold:#c8a45c;
+    --gold-2:#e8cd8f;
+    --gold-dim:#8a7141;
+    --ink:#f4efe4;
+    --muted:rgba(244,239,228,.62);
+    --muted-2:rgba(244,239,228,.4);
+    --line:rgba(200,164,92,.22);
+    --wa:#25D366;
+    --shadow:0 30px 80px -30px rgba(0,0,0,.7);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Jost',system-ui,sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.6;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.4;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.08'/%3E%3C/svg%3E");
+  }
+  .serif{font-family:'Cinzel',serif}
+  .script{font-family:'Cormorant Garamond',serif;font-style:italic}
+  .mono{font-family:'Jost',sans-serif;text-transform:uppercase;letter-spacing:.22em;font-size:.72rem;font-weight:500}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 clamp(20px,5vw,64px)}
+  a{color:inherit}
+  img{max-width:100%;display:block}
+  section{position:relative;z-index:2}
+  ::selection{background:var(--gold);color:var(--bg)}
+  :focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+
+  /* ---------- NAV ---------- */
+  nav{position:fixed;top:0;left:0;right:0;z-index:60;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:20px clamp(20px,5vw,64px);
+    backdrop-filter:blur(10px);
+    background:linear-gradient(to bottom,rgba(10,10,11,.92),rgba(10,10,11,.55));
+    border-bottom:1px solid transparent;
+    transition:padding .3s, border-color .3s;}
+  nav.small{padding:12px clamp(20px,5vw,64px);border-color:var(--line)}
+  .brand{display:flex;align-items:center;gap:.6ch;text-decoration:none}
+  .brand .mark{font-family:'Cinzel',serif;font-weight:600;font-size:1.3rem;letter-spacing:.06em;color:var(--gold-2)}
+  .brand small{font-family:'Jost',sans-serif;font-size:.6rem;letter-spacing:.24em;color:var(--muted-2);text-transform:uppercase;display:block;margin-top:2px}
+  .nav-links{display:flex;gap:32px;align-items:center}
+  .nav-links a:not(.wa-nav){color:var(--ink);text-decoration:none;font-weight:400;font-size:.86rem;letter-spacing:.06em;text-transform:uppercase;position:relative;opacity:.85}
+  .nav-links a:not(.wa-nav)::after{content:"";position:absolute;left:0;bottom:-6px;height:1px;width:0;background:var(--gold);transition:width .3s}
+  .nav-links a:not(.wa-nav):hover::after{width:100%}
+  .nav-links a:not(.wa-nav):hover{opacity:1}
+  .wa-nav{display:inline-flex;align-items:center;gap:8px;background:var(--wa);color:#07321c!important;padding:10px 18px;border-radius:2px;font-size:.8rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;text-decoration:none}
+  .wa-nav svg{width:15px;height:15px;flex:none}
+  .burger{display:none;flex-direction:column;gap:5px;background:none;border:0;cursor:pointer;z-index:70}
+  .burger span{width:24px;height:1px;background:var(--gold-2);display:block}
+
+  /* ---------- HERO ---------- */
+  .hero{min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:140px 20px 60px;position:relative}
+  .hero::after{content:"";position:absolute;inset:0;z-index:-1;
+    background:radial-gradient(ellipse 60% 50% at 50% 20%, rgba(200,164,92,.10), transparent 70%);}
+  .hero-eyebrow{display:flex;align-items:center;gap:14px;margin-bottom:28px;color:var(--gold);}
+  .hero-eyebrow .rule{width:40px;height:1px;background:var(--gold-dim)}
+  .hero h1{font-family:'Cinzel',serif;font-weight:600;font-size:clamp(2.4rem,7vw,5rem);letter-spacing:.03em;line-height:1.08;color:var(--ink)}
+  .hero h1 .accent{color:var(--gold-2)}
+  .hero .sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.15rem,2.4vw,1.55rem);color:var(--muted);margin-top:22px;max-width:640px}
+  .hero .tags{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:30px}
+  .tag{border:1px solid var(--line);padding:8px 18px;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-2);border-radius:100px}
+  .hero-cta{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-top:44px}
+  .btn{display:inline-flex;align-items:center;gap:10px;padding:15px 30px;border-radius:2px;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;font-weight:500;text-decoration:none;transition:transform .25s, box-shadow .25s}
+  .btn svg{width:17px;height:17px;flex:none}
+  .btn-primary{background:var(--wa);color:#07321c}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 14px 30px -10px rgba(37,211,102,.45)}
+  .btn-outline{border:1px solid var(--gold-dim);color:var(--gold-2);background:transparent}
+  .btn-outline:hover{transform:translateY(-2px);border-color:var(--gold);background:rgba(200,164,92,.08)}
+  .scroll-cue{position:absolute;bottom:34px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;opacity:.55}
+  .scroll-cue .line{width:1px;height:36px;background:linear-gradient(var(--gold),transparent);animation:scrollpulse 2s ease-in-out infinite}
+  @keyframes scrollpulse{0%,100%{opacity:.3}50%{opacity:1}}
+
+  /* ---------- DIVIDER ---------- */
+  .divider{padding:0}
+  .divider-inner{height:1px;background:linear-gradient(90deg,transparent,var(--line) 20%,var(--line) 80%,transparent)}
+
+  /* ---------- SECTION HEAD ---------- */
+  .section{padding:110px 0}
+  .section-head{text-align:center;max-width:640px;margin:0 auto 60px}
+  .section-head .mono{color:var(--gold);display:block;margin-bottom:16px}
+  .section-head h2{font-family:'Cinzel',serif;font-weight:600;font-size:clamp(1.8rem,4vw,2.6rem);letter-spacing:.02em}
+  .section-head p{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--muted);font-size:1.2rem;margin-top:16px}
+
+  /* ---------- ABOUT ---------- */
+  .about{display:grid;grid-template-columns:1fr 1.3fr;gap:64px;align-items:center}
+  .about-frame{aspect-ratio:4/5;border:1px solid var(--line);position:relative;background:linear-gradient(160deg,var(--bg-3),var(--bg-2));display:flex;align-items:center;justify-content:center;overflow:hidden}
+  .about-frame::before{content:"";position:absolute;inset:14px;border:1px solid rgba(200,164,92,.35)}
+  .about-frame .monogram{font-family:'Cinzel',serif;font-size:5.5rem;color:var(--gold-dim);letter-spacing:.05em}
+  .about-text .script{color:var(--gold-2);font-size:1.5rem;display:block;margin-bottom:18px}
+  .about-text h3{font-family:'Cinzel',serif;font-size:1.6rem;font-weight:600;margin-bottom:22px;letter-spacing:.01em}
+  .about-text p{color:var(--muted);margin-bottom:16px;max-width:52ch}
+  .stat-row{display:flex;gap:40px;margin-top:32px;flex-wrap:wrap}
+  .stat b{font-family:'Cinzel',serif;font-size:1.7rem;color:var(--gold-2);display:block}
+  .stat span{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-2)}
+
+  /* ---------- STYLE CARDS ---------- */
+  .styles-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+  .style-card{background:var(--bg);padding:44px 28px;text-align:center;transition:background .3s}
+  .style-card:hover{background:var(--bg-2)}
+  .style-card .icon{width:46px;height:46px;margin:0 auto 22px;color:var(--gold)}
+  .style-card h4{font-family:'Cinzel',serif;font-size:1rem;letter-spacing:.04em;margin-bottom:10px}
+  .style-card p{font-size:.85rem;color:var(--muted-2);line-height:1.6}
+
+  /* ---------- GALLERY ---------- */
+  .gallery{background:var(--bg-2);position:relative}
+  .gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px}
+  .gallery-item{aspect-ratio:4/5;position:relative;overflow:hidden;background:linear-gradient(150deg,var(--bg-3),#0e0d0c);cursor:default}
+  .gallery-item img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;transition:transform .6s ease}
+  .gallery-item:hover img{transform:scale(1.06)}
+  .gallery-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;padding:20px}
+  .gallery-placeholder svg{width:34px;height:34px;color:var(--gold-dim)}
+  .gallery-placeholder span{font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted-2)}
+  .gallery-item .cap{position:absolute;left:0;right:0;bottom:0;padding:22px 20px;background:linear-gradient(to top,rgba(0,0,0,.85),transparent);opacity:0;transition:opacity .35s;font-family:'Cinzel',serif;font-size:.82rem;letter-spacing:.05em;color:var(--gold-2)}
+  .gallery-item:hover .cap{opacity:1}
+  .gallery-note{text-align:center;padding:34px 20px 6px;color:var(--muted-2);font-size:.8rem;letter-spacing:.03em}
+
+  /* ---------- CONTACT ---------- */
+  .contact{text-align:center}
+  .contact-card{max-width:720px;margin:0 auto;border:1px solid var(--line);padding:clamp(40px,7vw,80px) clamp(24px,6vw,60px);position:relative;background:radial-gradient(ellipse 70% 60% at 50% 0%, rgba(200,164,92,.07), transparent 70%)}
+  .contact-card .rule-top{width:1px;height:44px;background:linear-gradient(var(--gold),transparent);margin:0 auto 24px}
+  .contact-card h2{font-family:'Cinzel',serif;font-size:clamp(1.6rem,3.4vw,2.2rem);margin-bottom:16px}
+  .contact-card p{color:var(--muted);font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.2rem;max-width:44ch;margin:0 auto 40px}
+  .contact-channels{display:flex;flex-direction:column;gap:14px;max-width:380px;margin:0 auto}
+  .channel{display:flex;align-items:center;gap:16px;padding:16px 22px;border:1px solid var(--line);text-decoration:none;color:var(--ink);transition:border-color .25s, background .25s}
+  .channel:hover{border-color:var(--gold);background:rgba(200,164,92,.06)}
+  .channel .ic{width:22px;height:22px;flex:none;color:var(--gold-2)}
+  .channel .lbl{text-align:left;flex:1}
+  .channel .lbl b{display:block;font-size:.94rem;font-weight:500}
+  .channel .lbl small{display:block;font-size:.72rem;color:var(--muted-2);letter-spacing:.04em;margin-top:2px}
+  .channel .arrow{color:var(--gold-dim);font-size:1.1rem}
+  .contact-loc{margin-top:36px;display:flex;align-items:center;justify-content:center;gap:10px;color:var(--muted-2);font-size:.78rem;letter-spacing:.14em;text-transform:uppercase}
+  .contact-loc svg{width:14px;height:14px;color:var(--gold-dim)}
+
+  /* ---------- FOOTER ---------- */
+  footer{padding:50px 0 34px;text-align:center}
+  footer .brand-foot{font-family:'Cinzel',serif;color:var(--gold-2);letter-spacing:.08em;font-size:1rem;margin-bottom:10px}
+  footer p{color:var(--muted-2);font-size:.74rem;letter-spacing:.04em}
+  footer .foot-links{display:flex;gap:22px;justify-content:center;margin:18px 0;flex-wrap:wrap}
+  footer .foot-links a{color:var(--muted);font-size:.78rem;text-decoration:none;letter-spacing:.06em;text-transform:uppercase}
+  footer .foot-links a:hover{color:var(--gold-2)}
+
+  /* ---------- FLOATING WA ---------- */
+  .float-wa{position:fixed;bottom:24px;right:24px;z-index:65;width:56px;height:56px;border-radius:50%;background:var(--wa);display:flex;align-items:center;justify-content:center;box-shadow:0 12px 30px -8px rgba(37,211,102,.55);text-decoration:none;animation:floatpulse 2.6s ease-in-out infinite}
+  .float-wa svg{width:26px;height:26px;color:#07321c}
+  @keyframes floatpulse{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+
+  /* ---------- REVEAL ---------- */
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .8s ease, transform .8s ease}
+  .reveal.in{opacity:1;transform:translateY(0)}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:900px){
+    .about{grid-template-columns:1fr}
+    .styles-grid{grid-template-columns:repeat(2,1fr)}
+    .gallery-grid{grid-template-columns:repeat(2,1fr)}
+  }
+  @media (max-width:760px){
+    .nav-links{position:fixed;top:0;right:0;height:100svh;width:min(78vw,320px);background:var(--bg-2);border-left:1px solid var(--line);flex-direction:column;justify-content:center;gap:30px;transform:translateX(100%);transition:transform .35s ease;padding:40px}
+    .nav-links.open{transform:translateX(0)}
+    .burger{display:flex}
+    .wa-nav{display:none}
+    .nav-links .wa-nav{display:inline-flex}
+  }
+  @media (max-width:640px){
+    .styles-grid{grid-template-columns:1fr}
+    .gallery-grid{grid-template-columns:1fr}
+    .section{padding:80px 0}
+  }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="#top" class="brand">
+    <span>
+      <span class="mark">Pietro Salice</span>
+      <small>darko.tats · Black &amp; Gray Tattoo</small>
+    </span>
+  </a>
+  <div class="nav-links" id="navLinks">
+    <a href="#chi-sono">Chi sono</a>
+    <a href="#stile">Stile</a>
+    <a href="#lavori">Lavori</a>
+    <a href="#contatti">Contatti</a>
+    <a class="wa-nav" href="https://wa.me/message/6XITFZZ7OLKWH1" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.92 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 18.14h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.24 8.24 0 0 1-1.26-4.37c0-4.55 3.7-8.25 8.26-8.25 2.2 0 4.28.86 5.84 2.42a8.2 8.2 0 0 1 2.42 5.84c0 4.55-3.71 8.22-8.27 8.22zm4.52-6.16c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.24-.64.81-.78.97-.14.17-.29.19-.53.06-.25-.12-1.04-.38-1.98-1.22-.73-.65-1.23-1.46-1.37-1.7-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.14.16-.25.24-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.36-.77-1.86-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.57.12.17 1.75 2.68 4.25 3.75.59.26 1.06.41 1.42.53.6.19 1.14.16 1.57.1.48-.07 1.47-.6 1.68-1.19.21-.58.21-1.08.14-1.19-.06-.1-.22-.16-.47-.28z"/></svg>
+      WhatsApp
+    </a>
+  </div>
+  <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+
+<section class="hero" id="top">
+  <div class="hero-eyebrow">
+    <span class="rule"></span>
+    <span class="mono">Catania · Black &amp; Gray</span>
+    <span class="rule"></span>
+  </div>
+  <h1>Pietro Salice<br><span class="accent">darko.tats</span></h1>
+  <p class="sub">Tatuaggi black &amp; gray, ritratti e realismo. Ogni pezzo raccontato sulla pelle con cura, tecnica e pazienza.</p>
+  <div class="tags">
+    <span class="tag">Realismo</span>
+    <span class="tag">Ritratti</span>
+    <span class="tag">Chicano</span>
+    <span class="tag">Lettering</span>
+  </div>
+  <div class="hero-cta">
+    <a class="btn btn-primary" href="https://wa.me/message/6XITFZZ7OLKWH1" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.92 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 18.14h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.24 8.24 0 0 1-1.26-4.37c0-4.55 3.7-8.25 8.26-8.25 2.2 0 4.28.86 5.84 2.42a8.2 8.2 0 0 1 2.42 5.84c0 4.55-3.71 8.22-8.27 8.22zm4.52-6.16c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.24-.64.81-.78.97-.14.17-.29.19-.53.06-.25-.12-1.04-.38-1.98-1.22-.73-.65-1.23-1.46-1.37-1.7-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.14.16-.25.24-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.36-.77-1.86-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.57.12.17 1.75 2.68 4.25 3.75.59.26 1.06.41 1.42.53.6.19 1.14.16 1.57.1.48-.07 1.47-.6 1.68-1.19.21-.58.21-1.08.14-1.19-.06-.1-.22-.16-.47-.28z"/></svg>
+      Scrivimi su WhatsApp
+    </a>
+    <a class="btn btn-outline" href="https://www.instagram.com/darko.tats" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></svg>
+      Instagram
+    </a>
+  </div>
+  <div class="scroll-cue"><span class="line"></span></div>
+</section>
+
+<div class="divider"><div class="wrap"><div class="divider-inner"></div></div></div>
+
+<section class="section" id="chi-sono">
+  <div class="wrap about reveal">
+    <div class="about-frame"><span class="monogram">PS</span></div>
+    <div class="about-text">
+      <span class="script">L'inchiostro come mestiere, la pelle come tela</span>
+      <h3>Chi sono</h3>
+      <p>Sono Pietro Salice, tatuatore a Catania specializzato in black &amp; gray. Lavoro principalmente su ritratti, soggetti realistici e composizioni chicano, curando ogni dettaglio dall'ombreggiatura al contrasto.</p>
+      <p>Ogni progetto nasce da un confronto diretto con chi lo indosserà: capisco l'idea, propongo la composizione più adatta e la realizzo con calma, senza fretta.</p>
+      <div class="stat-row">
+        <div class="stat"><b>109</b><span>Lavori pubblicati</span></div>
+        <div class="stat"><b>1.8K+</b><span>Seguono il progetto</span></div>
+        <div class="stat"><b>B&amp;G</b><span>Stile principale</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="wrap"><div class="divider-inner"></div></div></div>
+
+<section class="section" id="stile">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="mono">Specializzazione</span>
+      <h2>Stile &amp; soggetti</h2>
+      <p>Quattro anime dello stesso approccio: il black &amp; gray.</p>
+    </div>
+    <div class="styles-grid reveal">
+      <div class="style-card">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="12" cy="9" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>
+        <h4>Ritratti</h4>
+        <p>Volti e sguardi realizzati con realismo fotografico, luce e ombra curate al millimetro.</p>
+      </div>
+      <div class="style-card">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18"/></svg>
+        <h4>Realismo</h4>
+        <p>Orologi, animali, oggetti simbolici: profondità e dettaglio in black &amp; gray puro.</p>
+      </div>
+      <div class="style-card">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 3l2.5 5.5L20 9l-4 4 1 5.5L12 16l-5 2.5 1-5.5-4-4 5.5-.5z"/></svg>
+        <h4>Chicano</h4>
+        <p>Composizioni tra carte, orologi e figure femminili, con forte impronta narrativa.</p>
+      </div>
+      <div class="style-card">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
+        <h4>Lettering</h4>
+        <p>Scritte gotiche e old style, curate come parte integrante della composizione.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section gallery" id="lavori">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="mono">Portfolio</span>
+      <h2>Lavori recenti</h2>
+      <p>Una selezione di tatuaggi realizzati in studio.</p>
+    </div>
+  </div>
+  <div class="gallery-grid reveal">
+    <div class="gallery-item">
+      <img src="assets/img/lavoro-1.jpg" alt="Ritratto black and gray, occhio e mano sul volto" onerror="this.style.display='none'">
+      <div class="gallery-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M4 16l4.5-6 3.5 4.5L15 10l5 8H4z"/><circle cx="8" cy="8" r="1.6"/></svg><span>Ritratto B&amp;G</span></div>
+      <div class="cap">Ritratto — Black &amp; Gray</div>
+    </div>
+    <div class="gallery-item">
+      <img src="assets/img/lavoro-2.jpg" alt="Ritratto realistico stile Joker, why so serious" onerror="this.style.display='none'">
+      <div class="gallery-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M4 16l4.5-6 3.5 4.5L15 10l5 8H4z"/><circle cx="8" cy="8" r="1.6"/></svg><span>Realismo</span></div>
+      <div class="cap">Realismo — Ritratto</div>
+    </div>
+    <div class="gallery-item">
+      <img src="assets/img/lavoro-3.jpg" alt="Orologio da tasca, rosa e carte da gioco chicano" onerror="this.style.display='none'">
+      <div class="gallery-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M4 16l4.5-6 3.5 4.5L15 10l5 8H4z"/><circle cx="8" cy="8" r="1.6"/></svg><span>Chicano</span></div>
+      <div class="cap">Chicano — Orologio &amp; Carte</div>
+    </div>
+    <div class="gallery-item">
+      <img src="assets/img/lavoro-4.jpg" alt="Leone realistico con occhi azzurri e orologio da tasca" onerror="this.style.display='none'">
+      <div class="gallery-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M4 16l4.5-6 3.5 4.5L15 10l5 8H4z"/><circle cx="8" cy="8" r="1.6"/></svg><span>Realismo</span></div>
+      <div class="cap">Realismo — Leone</div>
+    </div>
+    <div class="gallery-item">
+      <img src="assets/img/lavoro-5.jpg" alt="Dadi con lettering gotico sull'avambraccio" onerror="this.style.display='none'">
+      <div class="gallery-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M4 16l4.5-6 3.5 4.5L15 10l5 8H4z"/><circle cx="8" cy="8" r="1.6"/></svg><span>Chicano</span></div>
+      <div class="cap">Chicano — Dadi &amp; Lettering</div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M12 5v14M5 12h14"/></svg><span>Prossimo lavoro</span></div>
+    </div>
+  </div>
+  <p class="gallery-note">Portfolio completo su Instagram — <a href="https://www.instagram.com/darko.tats" target="_blank" rel="noopener" style="color:var(--gold-2);text-decoration:none">@darko.tats</a></p>
+</section>
+
+<div class="divider"><div class="wrap"><div class="divider-inner"></div></div></div>
+
+<section class="section contact" id="contatti">
+  <div class="wrap">
+    <div class="contact-card reveal">
+      <div class="rule-top"></div>
+      <h2>Prenota il tuo tatuaggio</h2>
+      <p>Scrivimi per raccontarmi la tua idea e fissare un appuntamento in studio.</p>
+      <div class="contact-channels">
+        <a class="channel" href="https://wa.me/message/6XITFZZ7OLKWH1" target="_blank" rel="noopener">
+          <svg class="ic" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.92 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 18.14h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.24 8.24 0 0 1-1.26-4.37c0-4.55 3.7-8.25 8.26-8.25 2.2 0 4.28.86 5.84 2.42a8.2 8.2 0 0 1 2.42 5.84c0 4.55-3.71 8.22-8.27 8.22zm4.52-6.16c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.24-.64.81-.78.97-.14.17-.29.19-.53.06-.25-.12-1.04-.38-1.98-1.22-.73-.65-1.23-1.46-1.37-1.7-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.14.16-.25.24-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.36-.77-1.86-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.57.12.17 1.75 2.68 4.25 3.75.59.26 1.06.41 1.42.53.6.19 1.14.16 1.57.1.48-.07 1.47-.6 1.68-1.19.21-.58.21-1.08.14-1.19-.06-.1-.22-.16-.47-.28z"/></svg>
+          <span class="lbl"><b>WhatsApp</b><small>Risposta rapida</small></span>
+          <span class="arrow">→</span>
+        </a>
+        <a class="channel" href="tel:+393514891816">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <span class="lbl"><b>+39 351 489 1816</b><small>Chiama direttamente</small></span>
+          <span class="arrow">→</span>
+        </a>
+        <a class="channel" href="https://www.instagram.com/darko.tats" target="_blank" rel="noopener">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></svg>
+          <span class="lbl"><b>@darko.tats</b><small>Segui i lavori su Instagram</small></span>
+          <span class="arrow">→</span>
+        </a>
+      </div>
+      <div class="contact-loc">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="9" r="2.4"/></svg>
+        Catania
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="brand-foot">Pietro Salice · darko.tats</div>
+    <div class="foot-links">
+      <a href="https://wa.me/message/6XITFZZ7OLKWH1" target="_blank" rel="noopener">WhatsApp</a>
+      <a href="tel:+393514891816">Chiama</a>
+      <a href="https://www.instagram.com/darko.tats" target="_blank" rel="noopener">Instagram</a>
+    </div>
+    <p>© <span id="year"></span> Pietro Salice — Black &amp; Gray Tattoo Artist, Catania</p>
+  </div>
+</footer>
+
+<a class="float-wa" href="https://wa.me/message/6XITFZZ7OLKWH1" target="_blank" rel="noopener" aria-label="Scrivi su WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.92 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 18.14h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.24 8.24 0 0 1-1.26-4.37c0-4.55 3.7-8.25 8.26-8.25 2.2 0 4.28.86 5.84 2.42a8.2 8.2 0 0 1 2.42 5.84c0 4.55-3.71 8.22-8.27 8.22zm4.52-6.16c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.24-.64.81-.78.97-.14.17-.29.19-.53.06-.25-.12-1.04-.38-1.98-1.22-.73-.65-1.23-1.46-1.37-1.7-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.14.16-.25.24-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.36-.77-1.86-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.57.12.17 1.75 2.68 4.25 3.75.59.26 1.06.41 1.42.53.6.19 1.14.16 1.57.1.48-.07 1.47-.6 1.68-1.19.21-.58.21-1.08.14-1.19-.06-.1-.22-.16-.47-.28z"/></svg>
+</a>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('small', window.scrollY > 40);
+  }, { passive: true });
+
+  const burger = document.getElementById('burger');
+  const navLinks = document.getElementById('navLinks');
+  burger.addEventListener('click', () => navLinks.classList.toggle('open'));
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
