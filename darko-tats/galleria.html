@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Galleria — Pietro Salice | darko.tats, Black &amp; Gray Tattoo Catania</title>
+<meta name="description" content="La galleria completa dei tatuaggi di Pietro Salice, darko.tats — ritratti, realismo, chicano e lettering in black &amp; gray. Catania.">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Galleria — Pietro Salice | darko.tats">
+<meta property="og:description" content="Tutti i lavori black & gray: ritratti, realismo, chicano e lettering. Catania.">
+<meta property="og:locale" content="it_IT">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230b0b0c'/%3E%3Ctext x='32' y='42' font-family='Georgia,serif' font-size='26' font-weight='700' fill='%23c8a45c' text-anchor='middle'%3EPS%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0a0b;
+    --bg-2:#141412;
+    --bg-3:#1b1a17;
+    --gold:#c8a45c;
+    --gold-2:#e8cd8f;
+    --gold-dim:#8a7141;
+    --ink:#f4efe4;
+    --muted:rgba(244,239,228,.62);
+    --muted-2:rgba(244,239,228,.4);
+    --line:rgba(200,164,92,.22);
+    --wa:#25D366;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Jost',system-ui,sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.6;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.4;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.08'/%3E%3C/svg%3E");
+  }
+  .mono{font-family:'Jost',sans-serif;text-transform:uppercase;letter-spacing:.22em;font-size:.72rem;font-weight:500}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 clamp(20px,5vw,64px)}
+  a{color:inherit}
+  img{max-width:100%;display:block}
+  section{position:relative;z-index:2}
+  ::selection{background:var(--gold);color:var(--bg)}
+  :focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+
+  /* ---------- NAV ---------- */
+  nav{position:fixed;top:0;left:0;right:0;z-index:60;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:20px clamp(20px,5vw,64px);
+    backdrop-filter:blur(10px);
+    background:linear-gradient(to bottom,rgba(10,10,11,.92),rgba(10,10,11,.55));
+    border-bottom:1px solid transparent;
+    transition:padding .3s, border-color .3s;}
+  nav.small{padding:12px clamp(20px,5vw,64px);border-color:var(--line)}
+  .brand{display:flex;align-items:center;gap:.6ch;text-decoration:none}
+  .brand .mark{font-family:'Cinzel',serif;font-weight:600;font-size:1.3rem;letter-spacing:.06em;color:var(--gold-2)}
+  .brand small{font-family:'Jost',sans-serif;font-size:.6rem;letter-spacing:.24em;color:var(--muted-2);text-transform:uppercase;display:block;margin-top:2px}
+  .nav-links{display:flex;gap:32px;align-items:center}
+  .nav-links a:not(.wa-nav){color:var(--ink);text-decoration:none;font-weight:400;font-size:.86rem;letter-spacing:.06em;text-transform:uppercase;position:relative;opacity:.85}
+  .nav-links a:not(.wa-nav)::after{content:"";position:absolute;left:0;bottom:-6px;height:1px;width:0;background:var(--gold);transition:width .3s}
+  .nav-links a:not(.wa-nav):hover::after{width:100%}
+  .nav-links a:not(.wa-nav):hover{opacity:1}
+  .nav-links a.active{opacity:1;color:var(--gold-2)}
+  .nav-links a.active::after{width:100%}
+  .wa-nav{display:inline-flex;align-items:center;gap:8px;background:var(--wa);color:#07321c!important;padding:10px 18px;border-radius:2px;font-size:.8rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;text-decoration:none}
+  .wa-nav svg{width:15px;height:15px;flex:none}
+  .burger{display:none;flex-direction:column;gap:5px;background:none;border:0;cursor:pointer;z-index:70}
+  .burger span{width:24px;height:1px;background:var(--gold-2);display:block}
+
+  /* ---------- PAGE HEAD ---------- */
+  .page-head{padding:170px 0 60px;text-align:center}
+  .page-head .eyebrow{display:flex;align-items:center;gap:14px;margin-bottom:24px;color:var(--gold);justify-content:center}
+  .page-head .eyebrow .rule{width:40px;height:1px;background:var(--gold-dim)}
+  .page-head h1{font-family:'Cinzel',serif;font-weight:600;font-size:clamp(2rem,5vw,3.2rem);letter-spacing:.03em}
+  .page-head p{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--muted);font-size:1.25rem;margin-top:16px;max-width:46ch;margin-left:auto;margin-right:auto}
+
+  /* ---------- GALLERY GRID ---------- */
+  .gallery-full{padding-bottom:90px}
+  .gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px}
+  .gallery-item{aspect-ratio:4/5;position:relative;overflow:hidden;background:linear-gradient(150deg,var(--bg-3),#0e0d0c);cursor:pointer;border:0;padding:0;text-align:inherit}
+  .gallery-item img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;transition:transform .6s ease}
+  .gallery-item:hover img{transform:scale(1.06)}
+  .gallery-item .cap{position:absolute;left:0;right:0;bottom:0;padding:22px 20px;background:linear-gradient(to top,rgba(0,0,0,.85),transparent);opacity:0;transition:opacity .35s;font-family:'Cinzel',serif;font-size:.82rem;letter-spacing:.05em;color:var(--gold-2);pointer-events:none}
+  .gallery-item:hover .cap{opacity:1}
+  .cta-tile{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-decoration:none;background:linear-gradient(150deg,var(--bg-3),#0e0d0c);border:1px solid var(--line);transition:border-color .3s, background .3s;padding:24px;text-align:center;cursor:pointer}
+  .cta-tile:hover{border-color:var(--gold);background:var(--bg-2)}
+  .cta-tile svg{width:34px;height:34px;color:var(--gold)}
+  .cta-tile b{font-family:'Cinzel',serif;font-weight:600;font-size:1rem;letter-spacing:.04em}
+  .cta-tile span{font-size:.8rem;color:var(--muted-2);max-width:26ch}
+  .gallery-note{text-align:center;padding:34px 20px 0;color:var(--muted-2);font-size:.8rem;letter-spacing:.03em}
+
+  /* ---------- LIGHTBOX ---------- */
+  .lightbox{position:fixed;inset:0;z-index:100;background:rgba(6,6,7,.94);display:none;align-items:center;justify-content:center;flex-direction:column;padding:24px}
+  .lightbox.open{display:flex}
+  .lightbox img{max-width:min(92vw,900px);max-height:78vh;object-fit:contain;box-shadow:0 30px 90px -20px rgba(0,0,0,.9)}
+  .lightbox .lb-cap{margin-top:18px;font-family:'Cinzel',serif;font-size:.9rem;letter-spacing:.06em;color:var(--gold-2);text-align:center}
+  .lightbox .lb-count{margin-top:6px;font-size:.72rem;letter-spacing:.18em;color:var(--muted-2)}
+  .lb-btn{position:absolute;background:none;border:1px solid var(--line);color:var(--ink);width:46px;height:46px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.2rem;transition:border-color .25s, background .25s}
+  .lb-btn:hover{border-color:var(--gold);background:rgba(200,164,92,.1)}
+  .lb-close{top:22px;right:22px}
+  .lb-prev{left:18px;top:50%;transform:translateY(-50%)}
+  .lb-next{right:18px;top:50%;transform:translateY(-50%)}
+
+  /* ---------- CONTACT STRIP ---------- */
+  .cta-strip{padding:0 0 100px;text-align:center}
+  .cta-strip .rule-top{width:1px;height:44px;background:linear-gradient(var(--gold),transparent);margin:0 auto 24px}
+  .cta-strip h2{font-family:'Cinzel',serif;font-size:clamp(1.5rem,3.2vw,2.1rem);margin-bottom:14px}
+  .cta-strip p{color:var(--muted);font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.2rem;max-width:44ch;margin:0 auto 36px}
+  .btn{display:inline-flex;align-items:center;gap:10px;padding:15px 30px;border-radius:2px;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;font-weight:500;text-decoration:none;transition:transform .25s, box-shadow .25s}
+  .btn svg{width:17px;height:17px;flex:none}
+  .btn-primary{background:var(--wa);color:#07321c}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 14px 30px -10px rgba(37,211,102,.45)}
+  .btn-outline{border:1px solid var(--gold-dim);color:var(--gold-2);background:transparent}
+  .btn-outline:hover{transform:translateY(-2px);border-color:var(--gold);background:rgba(200,164,92,.08)}
+  .cta-row{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+
+  /* ---------- FOOTER ---------- */
+  footer{padding:50px 0 34px;text-align:center;border-top:1px solid var(--line)}
+  footer .brand-foot{font-family:'Cinzel',serif;color:var(--gold-2);letter-spacing:.08em;font-size:1rem;margin-bottom:10px}
+  footer p{color:var(--muted-2);font-size:.74rem;letter-spacing:.04em}
+  footer .foot-links{display:flex;gap:22px;justify-content:center;margin:18px 0;flex-wrap:wrap}
+  footer .foot-links a{color:var(--muted);font-size:.78rem;text-decoration:none;letter-spacing:.06em;text-transform:uppercase}
+  footer .foot-links a:hover{color:var(--gold-2)}
+
+  /* ---------- FLOATING WA ---------- */
+  .float-wa{position:fixed;bottom:24px;right:24px;z-index:65;width:56px;height:56px;border-radius:50%;background:var(--wa);display:flex;align-items:center;justify-content:center;box-shadow:0 12px 30px -8px rgba(37,211,102,.55);text-decoration:none;animation:floatpulse 2.6s ease-in-out infinite}
+  .float-wa svg{width:26px;height:26px;color:#07321c}
+  @keyframes floatpulse{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+
+  /* ---------- REVEAL ---------- */
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .8s ease, transform .8s ease}
+  .reveal.in{opacity:1;transform:translateY(0)}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:900px){
+    .gallery-grid{grid-template-columns:repeat(2,1fr)}
+  }
+  @media (max-width:760px){
+    .nav-links{position:fixed;top:0;right:0;height:100svh;width:min(78vw,320px);background:var(--bg-2);border-left:1px solid var(--line);flex-direction:column;justify-content:center;gap:30px;transform:translateX(100%);transition:transform .35s ease;padding:40px}
+    .nav-links.open{transform:translateX(0)}
+    .burger{display:flex}
+    .wa-nav{display:none}
+    .nav-links .wa-nav{display:inline-flex}
+    .lb-prev{left:8px}
+    .lb-next{right:8px}
+  }
+  @media (max-width:640px){
+    .gallery-grid{grid-template-columns:1fr}
+    .page-head{padding:150px 0 44px}
+  }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="index.html" class="brand">
+    <span>
+      <span class="mark">Pietro Salice</span>
+      <small>darko.tats · Black &amp; Gray Tattoo</small>
+    </span>
+  </a>
+  <div class="nav-links" id="navLinks">
+    <a href="index.html#chi-sono">Chi sono</a>
+    <a href="index.html#stile">Stile</a>
+    <a class="active" href="galleria.html">Galleria</a>
+    <a href="index.html#prenotazioni">Prenotazioni</a>
+    <a href="index.html#contatti">Contatti</a>
+    <a class="wa-nav" href="https://wa.me/message/6XITFZZ7OLKWH1" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.92 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 18.14h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.24 8.24 0 0 1-1.26-4.37c0-4.55 3.7-8.25 8.26-8.25 2.2 0 4.28.86 5.84 2.42a8.2 8.2 0 0 1 2.42 5.84c0 4.55-3.71 8.22-8.27 8.22zm4.52-6.16c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.24-.64.81-.78.97-.14.17-.29.19-.53.06-.25-.12-1.04-.38-1.98-1.22-.73-.65-1.23-1.46-1.37-1.7-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.14.16-.25.24-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.36-.77-1.86-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.57.12.17 1.75 2.68 4.25 3.75.59.26 1.06.41 1.42.53.6.19 1.14.16 1.57.1.48-.07 1.47-.6 1.68-1.19.21-.58.21-1.08.14-1.19-.06-.1-.22-.16-.47-.28z"/></svg>
+      WhatsApp
+    </a>
+  </div>
+  <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+
+<section class="page-head">
+  <div class="wrap">
+    <div class="eyebrow">
+      <span class="rule"></span>
+      <span class="mono">Portfolio completo</span>
+      <span class="rule"></span>
+    </div>
+    <h1>Galleria</h1>
+    <p>Tutti i lavori realizzati in studio: ritratti, realismo, chicano e lettering. Tocca una foto per ingrandirla.</p>
+  </div>
+</section>
+
+<section class="gallery-full">
+  <div class="gallery-grid reveal" id="galleryGrid">
+    <button class="gallery-item" type="button">
+      <img src="assets/img/lavoro-9.jpg" alt="Schiena completa black and gray: lupo, corvo, teschi e rune" loading="lazy">
+      <div class="cap">Schiena completa — Lupo, Corvo &amp; Rune</div>
+    </button>
+    <button class="gallery-item" type="button">
+      <img src="assets/img/lavoro-2.jpg" alt="Ritratto realistico stile Joker, why so serious" loading="lazy">
+      <div class="cap">Realismo — Ritratto</div>
+    </button>
+    <button class="gallery-item" type="button">
+      <img src="assets/img/lavoro-6.jpg" alt="Zio Paperone con slot machine e fiches, black and gray sul braccio" loading="lazy">
+      <div class="cap">Realismo — Zio Paperone &amp; Slot</div>
+    </button>
+    <button class="gallery-item" type="button">
+      <img src="assets/img/lavoro-7.jpg" alt="Volto femminile chicano con scritta Hustle sulla spalla" loading="lazy">
+      <div class="cap">Chicano — Hustle</div>
+    </button>
+    <button class="gallery-item" type="button">
+      <img src="assets/img/lavoro-4.jpg" alt="Leone realistico con occhi azzurri e orologio da tasca" loading="lazy">
+      <div class="cap">Realismo — Leone</div>
+    </button>
+    <button class="gallery-item" type="button">
+      <img src="assets/img/lavoro-8.jpg" alt="Personaggio cartoon con banconote e scritta Make Money sul polpaccio" loading="lazy">
+      <div class="cap">Cartoon — Make Money</div>
+    </button>
+    <button class="gallery-item" type="button">
+      <img src="assets/img/lavoro-3.jpg" alt="Orologio da tasca, rosa e carte da gioco chicano" loading="lazy">
+      <div class="cap">Chicano — Orologio &amp; Carte</div>
+    </button>
+    <button class="gallery-item" type="button">
+      <img src="assets/img/lavoro-10.jpg" alt="Lettering ornamentale sul polpaccio, sempre fui sonhador" loading="lazy">
+      <div class="cap">Lettering — Polpaccio</div>
+    </button>
+    <button class="gallery-item" type="button">
+      <img src="assets/img/lavoro-5.jpg" alt="Dadi con lettering gotico sull'avambraccio" loading="lazy">
+      <div class="cap">Chicano — Dadi &amp; Lettering</div>
+    </button>
+    <button class="gallery-item" type="button">
+      <img src="assets/img/lavoro-1.jpg" alt="Tatuaggio black and gray, ritratto realizzato da Pietro Salice" loading="lazy">
+      <div class="cap">Realismo — Ritratto</div>
+    </button>
+    <a class="cta-tile" href="https://wa.me/message/6XITFZZ7OLKWH1?text=Ciao%20Pietro%2C%20ho%20visto%20la%20tua%20galleria%20e%20vorrei%20prenotare%20un%20tatuaggio." target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.92 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 18.14h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.24 8.24 0 0 1-1.26-4.37c0-4.55 3.7-8.25 8.26-8.25 2.2 0 4.28.86 5.84 2.42a8.2 8.2 0 0 1 2.42 5.84c0 4.55-3.71 8.22-8.27 8.22zm4.52-6.16c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.24-.64.81-.78.97-.14.17-.29.19-.53.06-.25-.12-1.04-.38-1.98-1.22-.73-.65-1.23-1.46-1.37-1.7-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.14.16-.25.24-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.36-.77-1.86-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.57.12.17 1.75 2.68 4.25 3.75.59.26 1.06.41 1.42.53.6.19 1.14.16 1.57.1.48-.07 1.47-.6 1.68-1.19.21-.58.21-1.08.14-1.19-.06-.1-.22-.16-.47-.28z"/></svg>
+      <b>Il prossimo è il tuo</b>
+      <span>Raccontami la tua idea su WhatsApp e prenota il tuo posto.</span>
+    </a>
+    <a class="cta-tile" href="https://www.instagram.com/darko.tats" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></svg>
+      <b>@darko.tats</b>
+      <span>Segui i lavori più recenti su Instagram.</span>
+    </a>
+  </div>
+  <p class="gallery-note">La galleria si aggiorna man mano con i nuovi lavori realizzati in studio.</p>
+</section>
+
+<section class="cta-strip">
+  <div class="wrap">
+    <div class="rule-top"></div>
+    <h2>Ti è piaciuto qualcosa?</h2>
+    <p>Scrivimi per raccontarmi la tua idea: definiamo insieme soggetto, dimensioni e appuntamento.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="https://wa.me/message/6XITFZZ7OLKWH1?text=Ciao%20Pietro%2C%20vorrei%20prenotare%20un%20tatuaggio.%20Ecco%20la%20mia%20idea%3A%20" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.92 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 18.14h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.24 8.24 0 0 1-1.26-4.37c0-4.55 3.7-8.25 8.26-8.25 2.2 0 4.28.86 5.84 2.42a8.2 8.2 0 0 1 2.42 5.84c0 4.55-3.71 8.22-8.27 8.22zm4.52-6.16c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.24-.64.81-.78.97-.14.17-.29.19-.53.06-.25-.12-1.04-.38-1.98-1.22-.73-.65-1.23-1.46-1.37-1.7-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.14.16-.25.24-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.36-.77-1.86-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.57.12.17 1.75 2.68 4.25 3.75.59.26 1.06.41 1.42.53.6.19 1.14.16 1.57.1.48-.07 1.47-.6 1.68-1.19.21-.58.21-1.08.14-1.19-.06-.1-.22-.16-.47-.28z"/></svg>
+        Prenota su WhatsApp
+      </a>
+      <a class="btn btn-outline" href="index.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M15 18l-6-6 6-6"/></svg>
+        Torna alla home
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="brand-foot">Pietro Salice · darko.tats</div>
+    <div class="foot-links">
+      <a href="index.html">Home</a>
+      <a href="https://wa.me/message/6XITFZZ7OLKWH1" target="_blank" rel="noopener">WhatsApp</a>
+      <a href="tel:+393514891816">Chiama</a>
+      <a href="https://www.instagram.com/darko.tats" target="_blank" rel="noopener">Instagram</a>
+    </div>
+    <p>© <span id="year"></span> Pietro Salice — Black &amp; Gray Tattoo Artist, Catania</p>
+  </div>
+</footer>
+
+<a class="float-wa" href="https://wa.me/message/6XITFZZ7OLKWH1" target="_blank" rel="noopener" aria-label="Scrivi su WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.92 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 18.14h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.24 8.24 0 0 1-1.26-4.37c0-4.55 3.7-8.25 8.26-8.25 2.2 0 4.28.86 5.84 2.42a8.2 8.2 0 0 1 2.42 5.84c0 4.55-3.71 8.22-8.27 8.22zm4.52-6.16c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.24-.64.81-.78.97-.14.17-.29.19-.53.06-.25-.12-1.04-.38-1.98-1.22-.73-.65-1.23-1.46-1.37-1.7-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.14.16-.25.24-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.36-.77-1.86-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.57.12.17 1.75 2.68 4.25 3.75.59.26 1.06.41 1.42.53.6.19 1.14.16 1.57.1.48-.07 1.47-.6 1.68-1.19.21-.58.21-1.08.14-1.19-.06-.1-.22-.16-.47-.28z"/></svg>
+</a>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Foto ingrandita">
+  <button class="lb-btn lb-close" id="lbClose" aria-label="Chiudi">✕</button>
+  <button class="lb-btn lb-prev" id="lbPrev" aria-label="Foto precedente">‹</button>
+  <button class="lb-btn lb-next" id="lbNext" aria-label="Foto successiva">›</button>
+  <img id="lbImg" src="" alt="">
+  <div class="lb-cap" id="lbCap"></div>
+  <div class="lb-count" id="lbCount"></div>
+</div>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('small', window.scrollY > 40);
+  }, { passive: true });
+
+  const burger = document.getElementById('burger');
+  const navLinks = document.getElementById('navLinks');
+  burger.addEventListener('click', () => navLinks.classList.toggle('open'));
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.05 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  /* Lightbox */
+  const items = Array.from(document.querySelectorAll('.gallery-item'));
+  const lightbox = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lbImg');
+  const lbCap = document.getElementById('lbCap');
+  const lbCount = document.getElementById('lbCount');
+  let current = 0;
+
+  function show(i) {
+    current = (i + items.length) % items.length;
+    const img = items[current].querySelector('img');
+    const cap = items[current].querySelector('.cap');
+    lbImg.src = img.src;
+    lbImg.alt = img.alt;
+    lbCap.textContent = cap ? cap.textContent : '';
+    lbCount.textContent = (current + 1) + ' / ' + items.length;
+  }
+  function open(i) { show(i); lightbox.classList.add('open'); document.body.style.overflow = 'hidden'; }
+  function close() { lightbox.classList.remove('open'); document.body.style.overflow = ''; }
+
+  items.forEach((item, i) => item.addEventListener('click', () => open(i)));
+  document.getElementById('lbClose').addEventListener('click', close);
+  document.getElementById('lbPrev').addEventListener('click', (e) => { e.stopPropagation(); show(current - 1); });
+  document.getElementById('lbNext').addEventListener('click', (e) => { e.stopPropagation(); show(current + 1); });
+  lightbox.addEventListener('click', (e) => { if (e.target === lightbox) close(); });
+  document.addEventListener('keydown', (e) => {
+    if (!lightbox.classList.contains('open')) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'ArrowLeft') show(current - 1);
+    if (e.key === 'ArrowRight') show(current + 1);
+  });
+</script>
+
+</body>
+</html>

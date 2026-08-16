@@ -148,11 +148,24 @@
 
   /* ---------- STYLE CARDS ---------- */
   .styles-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
-  .style-card{background:var(--bg);padding:44px 28px;text-align:center;transition:background .3s}
-  .style-card:hover{background:var(--bg-2)}
+  .style-card{background:var(--bg);padding:44px 28px;text-align:center;position:relative;overflow:hidden}
+  .style-card .card-photo{position:absolute;inset:0;z-index:0;pointer-events:none}
+  .style-card .card-photo img{width:100%;height:100%;object-fit:cover;opacity:.34;transition:opacity .45s, transform .8s ease}
+  .style-card .card-photo::after{content:"";position:absolute;inset:0;background:linear-gradient(to top, rgba(10,10,11,.92) 8%, rgba(10,10,11,.5) 55%, rgba(10,10,11,.32))}
+  .style-card:hover .card-photo img{opacity:.55;transform:scale(1.06)}
+  .style-card .icon,.style-card h4,.style-card p{position:relative;z-index:1}
   .style-card .icon{width:46px;height:46px;margin:0 auto 22px;color:var(--gold)}
   .style-card h4{font-family:'Cinzel',serif;font-size:1rem;letter-spacing:.04em;margin-bottom:10px}
   .style-card p{font-size:.85rem;color:var(--muted-2);line-height:1.6}
+
+  /* ---------- SHOWCASE BAND ---------- */
+  .showcase{position:relative;height:min(78vh,640px);overflow:hidden}
+  .showcase img{width:100%;height:100%;object-fit:cover;object-position:center 36%}
+  .showcase::after{content:"";position:absolute;inset:0;
+    background:linear-gradient(180deg, var(--bg) 0%, rgba(10,10,11,.2) 26%, rgba(10,10,11,.3) 62%, var(--bg) 100%)}
+  .showcase-caption{position:absolute;left:0;right:0;bottom:clamp(34px,8vh,76px);z-index:2;text-align:center;padding:0 20px}
+  .showcase-caption .mono{color:var(--gold-2);display:block;margin-bottom:12px;text-shadow:0 2px 12px rgba(0,0,0,.8)}
+  .showcase-caption h3{font-family:'Cinzel',serif;font-weight:600;font-size:clamp(1.3rem,3.2vw,2rem);letter-spacing:.03em;text-shadow:0 2px 18px rgba(0,0,0,.9)}
 
   /* ---------- GALLERY ---------- */
   .gallery{background:var(--bg-2);position:relative}
@@ -165,7 +178,8 @@
   .gallery-placeholder span{font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted-2)}
   .gallery-item .cap{position:absolute;left:0;right:0;bottom:0;padding:22px 20px;background:linear-gradient(to top,rgba(0,0,0,.85),transparent);opacity:0;transition:opacity .35s;font-family:'Cinzel',serif;font-size:.82rem;letter-spacing:.05em;color:var(--gold-2)}
   .gallery-item:hover .cap{opacity:1}
-  .gallery-note{text-align:center;padding:34px 20px 6px;color:var(--muted-2);font-size:.8rem;letter-spacing:.03em}
+  .gallery-note{text-align:center;padding:22px 20px 6px;color:var(--muted-2);font-size:.8rem;letter-spacing:.03em}
+  .gallery-more{display:flex;justify-content:center;padding-top:40px}
 
   /* ---------- BOOKING ---------- */
   .booking-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:36px;max-width:960px;margin:0 auto}
@@ -247,6 +261,7 @@
     <a href="#chi-sono">Chi sono</a>
     <a href="#stile">Stile</a>
     <a href="#lavori">Lavori</a>
+    <a href="galleria.html">Galleria</a>
     <a href="#prenotazioni">Prenotazioni</a>
     <a href="#contatti">Contatti</a>
     <a class="wa-nav" href="https://wa.me/message/6XITFZZ7OLKWH1" target="_blank" rel="noopener">
@@ -319,21 +334,25 @@
     </div>
     <div class="styles-grid reveal">
       <div class="style-card">
+        <div class="card-photo"><img src="assets/img/lavoro-2.jpg" alt="" loading="lazy"></div>
         <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="12" cy="9" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>
         <h4>Ritratti</h4>
         <p>Volti e sguardi realizzati con realismo fotografico, luce e ombra curate al millimetro.</p>
       </div>
       <div class="style-card">
+        <div class="card-photo"><img src="assets/img/lavoro-4.jpg" alt="" loading="lazy"></div>
         <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18"/></svg>
         <h4>Realismo</h4>
         <p>Orologi, animali, oggetti simbolici: profondità e dettaglio in black &amp; gray puro.</p>
       </div>
       <div class="style-card">
+        <div class="card-photo"><img src="assets/img/lavoro-7.jpg" alt="" loading="lazy"></div>
         <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 3l2.5 5.5L20 9l-4 4 1 5.5L12 16l-5 2.5 1-5.5-4-4 5.5-.5z"/></svg>
         <h4>Chicano</h4>
         <p>Composizioni tra carte, orologi e figure femminili, con forte impronta narrativa.</p>
       </div>
       <div class="style-card">
+        <div class="card-photo"><img src="assets/img/lavoro-10.jpg" alt="" loading="lazy"></div>
         <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
         <h4>Lettering</h4>
         <p>Scritte gotiche e old style, curate come parte integrante della composizione.</p>
@@ -341,6 +360,14 @@
     </div>
   </div>
 </section>
+
+<div class="showcase reveal">
+  <img src="assets/img/lavoro-9.jpg" alt="Schiena completa black and gray: lupo, corvo, teschi e rune" loading="lazy">
+  <div class="showcase-caption">
+    <span class="mono">Grandi progetti</span>
+    <h3>Dalla prima idea alla schiena completa</h3>
+  </div>
+</div>
 
 <section class="section gallery" id="lavori">
   <div class="wrap">
@@ -352,26 +379,37 @@
   </div>
   <div class="gallery-grid reveal">
     <div class="gallery-item">
-      <img src="assets/img/lavoro-2.jpg" alt="Ritratto realistico stile Joker, why so serious">
+      <img src="assets/img/lavoro-2.jpg" alt="Ritratto realistico stile Joker, why so serious" loading="lazy">
       <div class="cap">Realismo — Ritratto</div>
     </div>
     <div class="gallery-item">
-      <img src="assets/img/lavoro-3.jpg" alt="Orologio da tasca, rosa e carte da gioco chicano">
-      <div class="cap">Chicano — Orologio &amp; Carte</div>
+      <img src="assets/img/lavoro-6.jpg" alt="Zio Paperone con slot machine e fiches, black and gray sul braccio" loading="lazy">
+      <div class="cap">Realismo — Zio Paperone &amp; Slot</div>
     </div>
     <div class="gallery-item">
-      <img src="assets/img/lavoro-4.jpg" alt="Leone realistico con occhi azzurri e orologio da tasca">
+      <img src="assets/img/lavoro-7.jpg" alt="Volto femminile chicano con scritta Hustle sulla spalla" loading="lazy">
+      <div class="cap">Chicano — Hustle</div>
+    </div>
+    <div class="gallery-item">
+      <img src="assets/img/lavoro-4.jpg" alt="Leone realistico con occhi azzurri e orologio da tasca" loading="lazy">
       <div class="cap">Realismo — Leone</div>
     </div>
     <div class="gallery-item">
-      <img src="assets/img/lavoro-5.jpg" alt="Dadi con lettering gotico sull'avambraccio">
-      <div class="cap">Chicano — Dadi &amp; Lettering</div>
+      <img src="assets/img/lavoro-8.jpg" alt="Personaggio cartoon con banconote e scritta Make Money sul polpaccio" loading="lazy">
+      <div class="cap">Cartoon — Make Money</div>
     </div>
     <div class="gallery-item">
-      <div class="gallery-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M12 5v14M5 12h14"/></svg><span>Prossimo lavoro</span></div>
+      <img src="assets/img/lavoro-5.jpg" alt="Dadi con lettering gotico sull'avambraccio" loading="lazy">
+      <div class="cap">Chicano — Dadi &amp; Lettering</div>
     </div>
   </div>
-  <p class="gallery-note">Portfolio completo su Instagram — <a href="https://www.instagram.com/darko.tats" target="_blank" rel="noopener" style="color:var(--gold-2);text-decoration:none">@darko.tats</a></p>
+  <div class="gallery-more reveal">
+    <a class="btn btn-outline" href="galleria.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+      Vedi tutta la galleria
+    </a>
+  </div>
+  <p class="gallery-note">Portfolio completo anche su Instagram — <a href="https://www.instagram.com/darko.tats" target="_blank" rel="noopener" style="color:var(--gold-2);text-decoration:none">@darko.tats</a></p>
 </section>
 
 <div class="divider"><div class="wrap"><div class="divider-inner"></div></div></div>
@@ -450,6 +488,7 @@
   <div class="wrap">
     <div class="brand-foot">Pietro Salice · darko.tats</div>
     <div class="foot-links">
+      <a href="galleria.html">Galleria</a>
       <a href="https://wa.me/message/6XITFZZ7OLKWH1" target="_blank" rel="noopener">WhatsApp</a>
       <a href="tel:+393514891816">Chiama</a>
       <a href="https://www.instagram.com/darko.tats" target="_blank" rel="noopener">Instagram</a>
