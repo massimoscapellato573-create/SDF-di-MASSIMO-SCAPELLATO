@@ -159,6 +159,14 @@
   .gallery-item:hover .cap{opacity:1}
   .gallery-note{text-align:center;padding:34px 20px 6px;color:var(--muted-2);font-size:.8rem;letter-spacing:.03em}
 
+  /* ---------- BOOKING ---------- */
+  .booking-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:36px;max-width:960px;margin:0 auto}
+  .booking-step{text-align:center;padding:0 12px}
+  .step-num{font-family:'Cinzel',serif;font-size:.85rem;color:var(--gold-dim);letter-spacing:.1em;display:block;margin-bottom:14px}
+  .booking-step h4{font-family:'Cinzel',serif;font-size:1.05rem;font-weight:600;margin-bottom:10px;letter-spacing:.02em}
+  .booking-step p{color:var(--muted-2);font-size:.88rem;line-height:1.65;max-width:32ch;margin:0 auto}
+  .booking-cta{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:56px}
+
   /* ---------- CONTACT ---------- */
   .contact{text-align:center}
   .contact-card{max-width:720px;margin:0 auto;border:1px solid var(--line);padding:clamp(40px,7vw,80px) clamp(24px,6vw,60px);position:relative;background:radial-gradient(ellipse 70% 60% at 50% 0%, rgba(200,164,92,.07), transparent 70%)}
@@ -198,6 +206,7 @@
     .about{grid-template-columns:1fr}
     .styles-grid{grid-template-columns:repeat(2,1fr)}
     .gallery-grid{grid-template-columns:repeat(2,1fr)}
+    .booking-steps{grid-template-columns:1fr;gap:40px}
   }
   @media (max-width:760px){
     .nav-links{position:fixed;top:0;right:0;height:100svh;width:min(78vw,320px);background:var(--bg-2);border-left:1px solid var(--line);flex-direction:column;justify-content:center;gap:30px;transform:translateX(100%);transition:transform .35s ease;padding:40px}
@@ -226,6 +235,7 @@
     <a href="#chi-sono">Chi sono</a>
     <a href="#stile">Stile</a>
     <a href="#lavori">Lavori</a>
+    <a href="#prenotazioni">Prenotazioni</a>
     <a href="#contatti">Contatti</a>
     <a class="wa-nav" href="https://wa.me/message/6XITFZZ7OLKWH1" target="_blank" rel="noopener">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.92 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 18.14h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.24 8.24 0 0 1-1.26-4.37c0-4.55 3.7-8.25 8.26-8.25 2.2 0 4.28.86 5.84 2.42a8.2 8.2 0 0 1 2.42 5.84c0 4.55-3.71 8.22-8.27 8.22zm4.52-6.16c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.24-.64.81-.78.97-.14.17-.29.19-.53.06-.25-.12-1.04-.38-1.98-1.22-.73-.65-1.23-1.46-1.37-1.7-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.14.16-.25.24-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.36-.77-1.86-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.57.12.17 1.75 2.68 4.25 3.75.59.26 1.06.41 1.42.53.6.19 1.14.16 1.57.1.48-.07 1.47-.6 1.68-1.19.21-.58.21-1.08.14-1.19-.06-.1-.22-.16-.47-.28z"/></svg>
@@ -266,7 +276,7 @@
 
 <section class="section" id="chi-sono">
   <div class="wrap about reveal">
-    <div class="about-frame"><span class="monogram">PS</span></div>
+    <div class="about-frame"><img src="assets/img/pietro.jpg" alt="Pietro Salice, darko.tats" style="width:100%;height:100%;object-fit:cover"></div>
     <div class="about-text">
       <span class="script">L'inchiostro come mestiere, la pelle come tela</span>
       <h3>Chi sono</h3>
@@ -325,28 +335,23 @@
   </div>
   <div class="gallery-grid reveal">
     <div class="gallery-item">
-      <img src="assets/img/lavoro-1.jpg" alt="Ritratto black and gray, occhio e mano sul volto" onerror="this.style.display='none'">
-      <div class="gallery-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M4 16l4.5-6 3.5 4.5L15 10l5 8H4z"/><circle cx="8" cy="8" r="1.6"/></svg><span>Ritratto B&amp;G</span></div>
+      <img src="assets/img/lavoro-1.jpg" alt="Ritratto black and gray, occhio e mano sul volto">
       <div class="cap">Ritratto — Black &amp; Gray</div>
     </div>
     <div class="gallery-item">
-      <img src="assets/img/lavoro-2.jpg" alt="Ritratto realistico stile Joker, why so serious" onerror="this.style.display='none'">
-      <div class="gallery-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M4 16l4.5-6 3.5 4.5L15 10l5 8H4z"/><circle cx="8" cy="8" r="1.6"/></svg><span>Realismo</span></div>
+      <img src="assets/img/lavoro-2.jpg" alt="Ritratto realistico stile Joker, why so serious">
       <div class="cap">Realismo — Ritratto</div>
     </div>
     <div class="gallery-item">
-      <img src="assets/img/lavoro-3.jpg" alt="Orologio da tasca, rosa e carte da gioco chicano" onerror="this.style.display='none'">
-      <div class="gallery-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M4 16l4.5-6 3.5 4.5L15 10l5 8H4z"/><circle cx="8" cy="8" r="1.6"/></svg><span>Chicano</span></div>
+      <img src="assets/img/lavoro-3.jpg" alt="Orologio da tasca, rosa e carte da gioco chicano">
       <div class="cap">Chicano — Orologio &amp; Carte</div>
     </div>
     <div class="gallery-item">
-      <img src="assets/img/lavoro-4.jpg" alt="Leone realistico con occhi azzurri e orologio da tasca" onerror="this.style.display='none'">
-      <div class="gallery-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M4 16l4.5-6 3.5 4.5L15 10l5 8H4z"/><circle cx="8" cy="8" r="1.6"/></svg><span>Realismo</span></div>
+      <img src="assets/img/lavoro-4.jpg" alt="Leone realistico con occhi azzurri e orologio da tasca">
       <div class="cap">Realismo — Leone</div>
     </div>
     <div class="gallery-item">
-      <img src="assets/img/lavoro-5.jpg" alt="Dadi con lettering gotico sull'avambraccio" onerror="this.style.display='none'">
-      <div class="gallery-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M4 16l4.5-6 3.5 4.5L15 10l5 8H4z"/><circle cx="8" cy="8" r="1.6"/></svg><span>Chicano</span></div>
+      <img src="assets/img/lavoro-5.jpg" alt="Dadi con lettering gotico sull'avambraccio">
       <div class="cap">Chicano — Dadi &amp; Lettering</div>
     </div>
     <div class="gallery-item">
@@ -354,6 +359,45 @@
     </div>
   </div>
   <p class="gallery-note">Portfolio completo su Instagram — <a href="https://www.instagram.com/darko.tats" target="_blank" rel="noopener" style="color:var(--gold-2);text-decoration:none">@darko.tats</a></p>
+</section>
+
+<div class="divider"><div class="wrap"><div class="divider-inner"></div></div></div>
+
+<section class="section" id="prenotazioni">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="mono">Appuntamenti</span>
+      <h2>Prenotazioni</h2>
+      <p>Tre passaggi semplici, dalla prima idea all'appuntamento confermato.</p>
+    </div>
+    <div class="booking-steps reveal">
+      <div class="booking-step">
+        <span class="step-num">01</span>
+        <h4>Raccontami l'idea</h4>
+        <p>Scrivimi su WhatsApp con soggetto, dimensioni indicative e zona del corpo.</p>
+      </div>
+      <div class="booking-step">
+        <span class="step-num">02</span>
+        <h4>Definiamo il progetto</h4>
+        <p>Ti propongo composizione, tempi di realizzazione e preventivo.</p>
+      </div>
+      <div class="booking-step">
+        <span class="step-num">03</span>
+        <h4>Conferma con acconto</h4>
+        <p>La data si blocca con un acconto, il resto si salda in studio.</p>
+      </div>
+    </div>
+    <div class="booking-cta reveal">
+      <a class="btn btn-primary" href="https://wa.me/message/6XITFZZ7OLKWH1?text=Ciao%20Pietro%2C%20vorrei%20prenotare%20un%20tatuaggio.%20Ecco%20la%20mia%20idea%3A%20" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.92 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 18.14h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.24 8.24 0 0 1-1.26-4.37c0-4.55 3.7-8.25 8.26-8.25 2.2 0 4.28.86 5.84 2.42a8.2 8.2 0 0 1 2.42 5.84c0 4.55-3.71 8.22-8.27 8.22zm4.52-6.16c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.24-.64.81-.78.97-.14.17-.29.19-.53.06-.25-.12-1.04-.38-1.98-1.22-.73-.65-1.23-1.46-1.37-1.7-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.14.16-.25.24-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.36-.77-1.86-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.57.12.17 1.75 2.68 4.25 3.75.59.26 1.06.41 1.42.53.6.19 1.14.16 1.57.1.48-.07 1.47-.6 1.68-1.19.21-.58.21-1.08.14-1.19-.06-.1-.22-.16-.47-.28z"/></svg>
+        Prenota su WhatsApp
+      </a>
+      <a class="btn btn-outline" id="depositBtn" href="https://wa.me/message/6XITFZZ7OLKWH1?text=Ciao%20Pietro%2C%20vorrei%20lasciare%20l%27acconto%20per%20il%20mio%20appuntamento." target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M2 10h20M6 15h4"/></svg>
+        Lascia un acconto
+      </a>
+    </div>
+  </div>
 </section>
 
 <div class="divider"><div class="wrap"><div class="divider-inner"></div></div></div>
