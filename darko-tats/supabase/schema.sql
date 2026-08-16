@@ -19,27 +19,34 @@ create table if not exists public.richieste (
 
 alter table public.richieste enable row level security;
 
+-- Diritti di base sulla tabella (le regole RLS sotto restano il vero filtro)
+grant usage on schema public to anon, authenticated;
+grant select, insert on public.richieste to anon;
+grant select, insert, update on public.richieste to authenticated;
+
 -- Chiunque (i clienti dal sito) può creare una richiesta, ma solo "in attesa"
 -- e senza poter impostare da soli l'acconto o lo stato di accettazione.
+-- "to public" invece di "to anon": la vera restrizione resta nel WITH CHECK,
+-- questo evita problemi di riconoscimento del ruolo con le nuove chiavi API.
 drop policy if exists "clienti_possono_inserire" on public.richieste;
 create policy "clienti_possono_inserire" on public.richieste
   for insert
-  to anon
+  to public
   with check (stato = 'in_attesa' and acconto_importo is null);
 
 -- Solo Pietro (autenticato con la sua email) vede e modifica tutte le richieste.
 drop policy if exists "pietro_vede_tutto" on public.richieste;
 create policy "pietro_vede_tutto" on public.richieste
   for select
-  to authenticated
-  using (auth.email() = 'pietro.salice01@gmail.com');
+  to public
+  using (auth.role() = 'authenticated' and auth.email() = 'pietro.salice01@gmail.com');
 
 drop policy if exists "pietro_modifica_tutto" on public.richieste;
 create policy "pietro_modifica_tutto" on public.richieste
   for update
-  to authenticated
-  using (auth.email() = 'pietro.salice01@gmail.com')
-  with check (auth.email() = 'pietro.salice01@gmail.com');
+  to public
+  using (auth.role() = 'authenticated' and auth.email() = 'pietro.salice01@gmail.com')
+  with check (auth.role() = 'authenticated' and auth.email() = 'pietro.salice01@gmail.com');
 
 -- Funzione che permette al CLIENTE di controllare lo stato della propria
 -- richiesta (conoscendo solo il codice/id ricevuto dopo l'invio), senza
@@ -55,7 +62,7 @@ as $$
   where id = richiesta_id;
 $$;
 
-grant execute on function public.stato_richiesta(uuid) to anon;
+grant execute on function public.stato_richiesta(uuid) to anon, authenticated;
 
 -- Abilita gli aggiornamenti in tempo reale per il pannello di Pietro
 -- (solo se non è già stata aggiunta in un run precedente)
