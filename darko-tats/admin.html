@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pannello prenotazioni — darko.tats</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230b0b0c'/%3E%3Ctext x='32' y='42' font-family='Georgia,serif' font-size='26' font-weight='700' fill='%23c8a45c' text-anchor='middle'%3EPS%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0a0b; --bg-2:#141412; --bg-3:#1b1a17;
+    --gold:#c8a45c; --gold-2:#e8cd8f; --gold-dim:#8a7141;
+    --ink:#f4efe4; --muted:rgba(244,239,228,.62); --muted-2:rgba(244,239,228,.4);
+    --line:rgba(200,164,92,.22);
+    --ok:#4caf7d; --ok-2:#8fe0b5; --no:#c96a6a; --no-2:#e39a9a;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Jost',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;min-height:100vh}
+  .serif{font-family:'Cinzel',serif}
+  .wrap{max-width:920px;margin:0 auto;padding:32px clamp(18px,4vw,40px) 80px}
+  button,input{font-family:'Jost',sans-serif}
+  a{color:var(--gold-2)}
+
+  /* login */
+  .login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+  .login-card{width:100%;max-width:360px;border:1px solid var(--line);padding:40px 32px;background:radial-gradient(ellipse 80% 60% at 50% 0%, rgba(200,164,92,.07), transparent 70%)}
+  .login-card h1{font-family:'Cinzel',serif;font-size:1.3rem;text-align:center;margin-bottom:6px}
+  .login-card .sub{text-align:center;color:var(--muted-2);font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:28px}
+  .field{margin-bottom:14px}
+  .field label{display:block;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted-2);margin-bottom:6px}
+  .field input{width:100%;background:var(--bg-2);border:1px solid var(--line);color:var(--ink);padding:12px 14px;font-size:.92rem}
+  .field input:focus{outline:none;border-color:var(--gold)}
+  .btn{display:block;width:100%;background:var(--gold);color:var(--bg);border:0;padding:13px;font-size:.88rem;letter-spacing:.06em;text-transform:uppercase;font-weight:600;cursor:pointer;margin-top:22px;transition:background .2s}
+  .btn:hover{background:var(--gold-2)}
+  .btn:disabled{opacity:.5;cursor:default}
+  .form-err{color:var(--no-2);font-size:.82rem;margin-top:14px;text-align:center;display:none}
+
+  /* dashboard */
+  .dash{display:none}
+  header.dash-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;flex-wrap:wrap;gap:14px}
+  header.dash-head h1{font-family:'Cinzel',serif;font-size:1.4rem}
+  header.dash-head .sub{color:var(--muted-2);font-size:.78rem;letter-spacing:.06em}
+  .logout{background:none;border:1px solid var(--line);color:var(--muted);padding:9px 16px;font-size:.76rem;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:border-color .2s,color .2s}
+  .logout:hover{border-color:var(--gold);color:var(--gold-2)}
+
+  .tabs{display:flex;gap:8px;margin:28px 0 22px;flex-wrap:wrap}
+  .tab{background:none;border:1px solid var(--line);color:var(--muted);padding:9px 16px;font-size:.78rem;letter-spacing:.04em;cursor:pointer;transition:border-color .2s,color .2s,background .2s}
+  .tab .n{opacity:.6;margin-left:5px}
+  .tab.active{border-color:var(--gold);color:var(--gold-2);background:rgba(200,164,92,.08)}
+
+  .empty{color:var(--muted-2);text-align:center;padding:60px 20px;font-size:.92rem}
+
+  .req-card{border:1px solid var(--line);padding:20px 22px;margin-bottom:14px;background:var(--bg-2)}
+  .req-top{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap}
+  .req-top .who b{font-family:'Cinzel',serif;font-size:1.05rem;font-weight:600;display:block}
+  .req-top .who a{font-size:.84rem;color:var(--muted);text-decoration:none}
+  .req-top .who a:hover{color:var(--gold-2)}
+  .req-when{text-align:right;font-family:'Cinzel',serif;color:var(--gold-2);font-size:.95rem}
+  .req-when small{display:block;font-family:'Jost',sans-serif;color:var(--muted-2);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;margin-top:2px}
+  .req-idea{color:var(--muted);font-size:.88rem;margin-top:12px;padding-top:12px;border-top:1px dashed var(--line)}
+  .req-idea.empty-idea{font-style:italic;color:var(--muted-2)}
+  .req-meta{color:var(--muted-2);font-size:.7rem;letter-spacing:.04em;margin-top:10px}
+  .req-status{display:inline-flex;align-items:center;gap:6px;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;padding:5px 12px;border-radius:100px;margin-top:10px}
+  .req-status.ok{border:1px solid var(--ok);color:var(--ok-2)}
+  .req-status.no{border:1px solid var(--no);color:var(--no-2)}
+  .req-status b{font-family:'Jost',sans-serif}
+
+  .req-actions{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;align-items:center}
+  .a-accept{background:var(--ok);color:#0c2417;border:0;padding:10px 18px;font-size:.8rem;font-weight:600;letter-spacing:.04em;cursor:pointer}
+  .a-reject{background:none;border:1px solid var(--no);color:var(--no-2);padding:10px 18px;font-size:.8rem;letter-spacing:.04em;cursor:pointer}
+  .a-accept:hover{opacity:.9}
+  .a-reject:hover{background:rgba(201,106,106,.1)}
+  .accept-form{display:none;gap:10px;align-items:center;margin-top:14px;padding-top:14px;border-top:1px dashed var(--line);flex-wrap:wrap}
+  .accept-form input{width:130px;background:var(--bg);border:1px solid var(--line);color:var(--ink);padding:9px 12px;font-size:.88rem}
+  .accept-form .confirm{background:var(--ok);color:#0c2417;border:0;padding:9px 16px;font-size:.8rem;font-weight:600;cursor:pointer}
+  .accept-form .cancel{background:none;border:0;color:var(--muted-2);font-size:.78rem;text-decoration:underline;cursor:pointer}
+
+  .live-dot{width:8px;height:8px;border-radius:50%;background:var(--ok);display:inline-block;margin-right:8px;animation:pulse 1.8s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
+</style>
+</head>
+<body>
+
+<div class="login-screen" id="loginScreen">
+  <div class="login-card">
+    <h1>darko.tats</h1>
+    <p class="sub">Pannello prenotazioni</p>
+    <div class="field">
+      <label for="loginEmail">Email</label>
+      <input type="email" id="loginEmail" autocomplete="username">
+    </div>
+    <div class="field">
+      <label for="loginPass">Password</label>
+      <input type="password" id="loginPass" autocomplete="current-password">
+    </div>
+    <button class="btn" id="loginBtn">Accedi</button>
+    <p class="form-err" id="loginErr"></p>
+  </div>
+</div>
+
+<div class="dash" id="dash">
+  <div class="wrap">
+    <header class="dash-head">
+      <div>
+        <h1>Richieste appuntamento</h1>
+        <p class="sub"><span class="live-dot"></span>aggiornamento in tempo reale</p>
+      </div>
+      <button class="logout" id="logoutBtn">Esci</button>
+    </header>
+
+    <div class="tabs">
+      <button class="tab active" data-tab="in_attesa">In attesa <span class="n" id="cWait">0</span></button>
+      <button class="tab" data-tab="accettata">Accettate <span class="n" id="cOk">0</span></button>
+      <button class="tab" data-tab="rifiutata">Rifiutate <span class="n" id="cNo">0</span></button>
+      <button class="tab" data-tab="tutte">Tutte</button>
+    </div>
+
+    <div id="list"></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/js/supabase-config.js"></script>
+<script>
+  const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  const loginScreen = document.getElementById('loginScreen');
+  const dash = document.getElementById('dash');
+  const loginBtn = document.getElementById('loginBtn');
+  const loginErr = document.getElementById('loginErr');
+
+  const fmtDay = new Intl.DateTimeFormat('it-IT', { weekday: 'short', day: 'numeric', month: 'short' });
+  const fmtEuro = (n) => new Intl.NumberFormat('it-IT', { style: 'currency', currency: 'EUR' }).format(n);
+  const fmtWhen = (created) => new Intl.DateTimeFormat('it-IT', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }).format(new Date(created));
+
+  let allReqs = [];
+  let activeTab = 'in_attesa';
+
+  async function doLogin() {
+    loginErr.style.display = 'none';
+    loginBtn.disabled = true;
+    loginBtn.textContent = 'Accesso in corso…';
+    const { error } = await sb.auth.signInWithPassword({
+      email: document.getElementById('loginEmail').value.trim(),
+      password: document.getElementById('loginPass').value
+    });
+    loginBtn.disabled = false;
+    loginBtn.textContent = 'Accedi';
+    if (error) {
+      loginErr.textContent = 'Email o password non corrette.';
+      loginErr.style.display = 'block';
+      return;
+    }
+    enterDash();
+  }
+  loginBtn.addEventListener('click', doLogin);
+  document.getElementById('loginPass').addEventListener('keydown', (e) => { if (e.key === 'Enter') doLogin(); });
+
+  document.getElementById('logoutBtn').addEventListener('click', async () => {
+    await sb.auth.signOut();
+    location.reload();
+  });
+
+  async function enterDash() {
+    loginScreen.style.display = 'none';
+    dash.style.display = 'block';
+    await refresh();
+    sb.channel('richieste-live')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'richieste' }, () => {
+        refresh();
+        notify();
+      })
+      .subscribe();
+  }
+
+  function notify() {
+    if (Notification && Notification.permission === 'granted') {
+      new Notification('darko.tats — nuova richiesta', { body: 'Controlla il pannello prenotazioni.' });
+    }
+    try {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const o = ctx.createOscillator(); const g = ctx.createGain();
+      o.connect(g); g.connect(ctx.destination);
+      o.frequency.value = 720; g.gain.value = 0.06;
+      o.start(); setTimeout(() => { o.stop(); ctx.close(); }, 180);
+    } catch (e) {}
+  }
+  if (window.Notification && Notification.permission === 'default') {
+    document.body.addEventListener('click', () => Notification.requestPermission(), { once: true });
+  }
+
+  async function refresh() {
+    const { data, error } = await sb.from('richieste').select('*').order('giorno', { ascending: true }).order('ora', { ascending: true });
+    if (error) { console.error(error); return; }
+    allReqs = data || [];
+    document.getElementById('cWait').textContent = allReqs.filter(r => r.stato === 'in_attesa').length;
+    document.getElementById('cOk').textContent = allReqs.filter(r => r.stato === 'accettata').length;
+    document.getElementById('cNo').textContent = allReqs.filter(r => r.stato === 'rifiutata').length;
+    render();
+  }
+
+  document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+    t.classList.add('active');
+    activeTab = t.dataset.tab;
+    render();
+  }));
+
+  function render() {
+    const list = document.getElementById('list');
+    const items = activeTab === 'tutte' ? allReqs : allReqs.filter(r => r.stato === activeTab);
+    if (!items.length) {
+      list.innerHTML = '<p class="empty">Nessuna richiesta qui.</p>';
+      return;
+    }
+    list.innerHTML = items.map(r => cardHtml(r)).join('');
+    items.forEach(r => wireCard(r));
+  }
+
+  function cardHtml(r) {
+    const idea = r.idea ? `<div class="req-idea">${escapeHtml(r.idea)}</div>` : `<div class="req-idea empty-idea">Nessuna idea descritta</div>`;
+    let statusBadge = '';
+    let actions = '';
+    if (r.stato === 'accettata') {
+      statusBadge = `<span class="req-status ok">Confermata · acconto <b>${fmtEuro(r.acconto_importo)}</b></span>`;
+    } else if (r.stato === 'rifiutata') {
+      statusBadge = `<span class="req-status no">Rifiutata</span>`;
+    } else {
+      actions = `
+        <div class="req-actions">
+          <button class="a-accept" data-id="${r.id}" data-action="show-accept">Accetta</button>
+          <button class="a-reject" data-id="${r.id}" data-action="reject">Rifiuta</button>
+        </div>
+        <div class="accept-form" id="accept-${r.id}">
+          <input type="number" min="0" step="5" id="amt-${r.id}" placeholder="Acconto €">
+          <button class="confirm" data-id="${r.id}" data-action="confirm-accept">Conferma</button>
+          <button class="cancel" data-id="${r.id}" data-action="cancel-accept">annulla</button>
+        </div>`;
+    }
+    return `
+      <div class="req-card">
+        <div class="req-top">
+          <div class="who">
+            <b>${escapeHtml(r.nome)}</b>
+            <a href="tel:${escapeHtml(r.telefono)}">${escapeHtml(r.telefono)}</a>
+          </div>
+          <div class="req-when">${fmtDay.format(new Date(r.giorno + 'T00:00:00'))}<small>${r.ora}</small></div>
+        </div>
+        ${idea}
+        <p class="req-meta">Richiesta inviata il ${fmtWhen(r.created_at)}</p>
+        ${statusBadge}
+        ${actions}
+      </div>`;
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  }
+
+  function wireCard(r) {
+    const el = document.querySelector(`[data-id="${r.id}"][data-action="show-accept"]`);
+    if (el) el.addEventListener('click', () => {
+      document.getElementById(`accept-${r.id}`).style.display = 'flex';
+    });
+    const cancelEl = document.querySelector(`[data-id="${r.id}"][data-action="cancel-accept"]`);
+    if (cancelEl) cancelEl.addEventListener('click', () => {
+      document.getElementById(`accept-${r.id}`).style.display = 'none';
+    });
+    const confirmEl = document.querySelector(`[data-id="${r.id}"][data-action="confirm-accept"]`);
+    if (confirmEl) confirmEl.addEventListener('click', async () => {
+      const val = parseFloat(document.getElementById(`amt-${r.id}`).value);
+      if (!val || val <= 0) { alert('Inserisci un importo valido.'); return; }
+      confirmEl.disabled = true;
+      await sb.from('richieste').update({ stato: 'accettata', acconto_importo: val }).eq('id', r.id);
+      refresh();
+    });
+    const rejectEl = document.querySelector(`[data-id="${r.id}"][data-action="reject"]`);
+    if (rejectEl) rejectEl.addEventListener('click', async () => {
+      if (!confirm(`Rifiutare la richiesta di ${r.nome}?`)) return;
+      await sb.from('richieste').update({ stato: 'rifiutata' }).eq('id', r.id);
+      refresh();
+    });
+  }
+
+  /* Se una sessione è già attiva, entra direttamente */
+  sb.auth.getSession().then(({ data }) => {
+    if (data.session) enterDash();
+  });
+</script>
+
+</body>
+</html>
