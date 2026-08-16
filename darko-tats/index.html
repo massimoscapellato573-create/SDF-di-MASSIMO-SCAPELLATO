@@ -24,12 +24,13 @@
   "name": "darko.tats — Pietro Salice",
   "description": "Tatuatore Black & Gray specializzato in ritratti, realismo, chicano e lettering.",
   "telephone": "+393514891816",
+  "openingHours": "Mo-Sa 10:00-19:00",
   "address": {
     "@type": "PostalAddress",
     "addressLocality": "Catania",
     "addressCountry": "IT"
   },
-  "sameAs": ["https://www.instagram.com/darko.tats"]
+  "sameAs": ["https://www.instagram.com/darko.tats", "https://www.tiktok.com/@darko.tats"]
 }
 </script>
 <style>
@@ -189,6 +190,43 @@
   .booking-step p{color:var(--muted-2);font-size:.88rem;line-height:1.65;max-width:32ch;margin:0 auto}
   .booking-cta{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:56px}
 
+  /* ---------- CALENDAR REQUEST ---------- */
+  .cal-block{max-width:840px;margin:70px auto 0;border:1px solid var(--line);padding:clamp(28px,5vw,48px);
+    background:radial-gradient(ellipse 80% 60% at 50% 0%, rgba(200,164,92,.06), transparent 70%)}
+  .cal-block h3{font-family:'Cinzel',serif;font-size:1.3rem;font-weight:600;text-align:center;letter-spacing:.02em}
+  .cal-block .cal-sub{text-align:center;color:var(--muted-2);font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;margin-top:8px}
+  .cal-step{margin-top:30px}
+  .cal-step .mono{color:var(--gold);display:block;margin-bottom:14px}
+  .cal-days{display:flex;gap:10px;overflow-x:auto;padding-bottom:10px;scrollbar-width:thin}
+  .cal-day{flex:none;width:78px;border:1px solid var(--line);background:none;color:var(--ink);padding:12px 0;text-align:center;cursor:pointer;font-family:'Jost',sans-serif;transition:border-color .2s, background .2s}
+  .cal-day small{display:block;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-2);margin-bottom:4px}
+  .cal-day b{font-family:'Cinzel',serif;font-size:1.15rem;font-weight:600;display:block}
+  .cal-day span{display:block;font-size:.66rem;color:var(--muted-2);text-transform:uppercase;letter-spacing:.1em;margin-top:2px}
+  .cal-day:hover{border-color:var(--gold-dim)}
+  .cal-day.sel{border-color:var(--gold);background:rgba(200,164,92,.12)}
+  .cal-day.sel b,.cal-day.sel small,.cal-day.sel span{color:var(--gold-2)}
+  .cal-slots{display:flex;flex-wrap:wrap;gap:10px}
+  .cal-slot{border:1px solid var(--line);background:none;color:var(--ink);padding:10px 18px;cursor:pointer;font-family:'Jost',sans-serif;font-size:.88rem;letter-spacing:.06em;transition:border-color .2s, background .2s}
+  .cal-slot:hover{border-color:var(--gold-dim)}
+  .cal-slot.sel{border-color:var(--gold);background:rgba(200,164,92,.12);color:var(--gold-2)}
+  .cal-idea input{width:100%;background:var(--bg-2);border:1px solid var(--line);color:var(--ink);padding:14px 16px;font-family:'Jost',sans-serif;font-size:.92rem;letter-spacing:.02em}
+  .cal-idea input::placeholder{color:var(--muted-2)}
+  .cal-idea input:focus{outline:none;border-color:var(--gold)}
+  .cal-send{margin-top:34px;text-align:center}
+  .cal-send .btn[aria-disabled="true"]{opacity:.4;pointer-events:none}
+  .cal-note{margin-top:18px;text-align:center;color:var(--muted-2);font-size:.8rem;font-style:italic;font-family:'Cormorant Garamond',serif;font-size:1.02rem}
+
+  /* ---------- INFO UTILI ---------- */
+  .info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);max-width:1000px;margin:70px auto 0}
+  .info-card{background:var(--bg);padding:34px 28px;text-align:center}
+  .info-card svg{width:30px;height:30px;color:var(--gold);margin:0 auto 16px;display:block}
+  .info-card h4{font-family:'Cinzel',serif;font-size:.95rem;letter-spacing:.05em;margin-bottom:10px}
+  .info-card p{font-size:.84rem;color:var(--muted-2);line-height:1.7}
+  .iban-row{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:12px;flex-wrap:wrap}
+  .iban-row code{font-family:monospace;font-size:.78rem;color:var(--gold-2);background:var(--bg-2);border:1px solid var(--line);padding:7px 10px;letter-spacing:.04em;word-break:break-all}
+  .iban-copy{border:1px solid var(--line);background:none;color:var(--muted);padding:7px 12px;cursor:pointer;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;font-family:'Jost',sans-serif;transition:border-color .2s,color .2s}
+  .iban-copy:hover{border-color:var(--gold);color:var(--gold-2)}
+
   /* ---------- CONTACT ---------- */
   .contact{text-align:center}
   .contact-card{max-width:720px;margin:0 auto;border:1px solid var(--line);padding:clamp(40px,7vw,80px) clamp(24px,6vw,60px);position:relative;background:radial-gradient(ellipse 70% 60% at 50% 0%, rgba(200,164,92,.07), transparent 70%)}
@@ -240,6 +278,9 @@
     .burger{display:flex}
     .wa-nav{display:none}
     .nav-links .wa-nav{display:inline-flex}
+  }
+  @media (max-width:900px){
+    .info-grid{grid-template-columns:1fr}
   }
   @media (max-width:640px){
     .styles-grid{grid-template-columns:1fr}
@@ -435,7 +476,7 @@
       <div class="booking-step">
         <span class="step-num">03</span>
         <h4>Conferma con acconto</h4>
-        <p>La data si blocca con un acconto, il resto si salda in studio.</p>
+        <p>La data si blocca con un acconto via bonifico, il resto si salda in studio.</p>
       </div>
     </div>
     <div class="booking-cta reveal">
@@ -447,6 +488,52 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M2 10h20M6 15h4"/></svg>
         Lascia un acconto
       </a>
+    </div>
+
+    <div class="cal-block reveal" id="calendario">
+      <h3>Richiedi una data</h3>
+      <p class="cal-sub">Lun – Sab · 10:00 – 19:00</p>
+      <div class="cal-step">
+        <span class="mono">1 · Scegli il giorno</span>
+        <div class="cal-days" id="calDays"></div>
+      </div>
+      <div class="cal-step">
+        <span class="mono">2 · Scegli l'orario</span>
+        <div class="cal-slots" id="calSlots"></div>
+      </div>
+      <div class="cal-step cal-idea">
+        <span class="mono">3 · La tua idea <span style="text-transform:none;letter-spacing:normal;color:var(--muted-2)">(facoltativo)</span></span>
+        <input type="text" id="calIdea" maxlength="200" placeholder="Es. ritratto realistico sull'avambraccio, circa 15 cm">
+      </div>
+      <div class="cal-send">
+        <a class="btn btn-primary" id="calSend" aria-disabled="true" href="#" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.92 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 18.14h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.24 8.24 0 0 1-1.26-4.37c0-4.55 3.7-8.25 8.26-8.25 2.2 0 4.28.86 5.84 2.42a8.2 8.2 0 0 1 2.42 5.84c0 4.55-3.71 8.22-8.27 8.22zm4.52-6.16c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.24-.64.81-.78.97-.14.17-.29.19-.53.06-.25-.12-1.04-.38-1.98-1.22-.73-.65-1.23-1.46-1.37-1.7-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.14.16-.25.24-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.36-.77-1.86-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.57.12.17 1.75 2.68 4.25 3.75.59.26 1.06.41 1.42.53.6.19 1.14.16 1.57.1.48-.07 1.47-.6 1.68-1.19.21-.58.21-1.08.14-1.19-.06-.1-.22-.16-.47-.28z"/></svg>
+          Invia la richiesta su WhatsApp
+        </a>
+        <p class="cal-note">La richiesta arriva direttamente a Pietro su WhatsApp: conferma la data oppure ti propone un'alternativa.</p>
+      </div>
+    </div>
+
+    <div class="info-grid reveal">
+      <div class="info-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M2 10h20M6 15h4"/></svg>
+        <h4>Acconto</h4>
+        <p>La data si blocca con un acconto tramite bonifico. È rimborsabile se disdici <b>entro 4 giorni</b> prima dell'appuntamento; oltre, non viene restituito.</p>
+        <div class="iban-row">
+          <code id="ibanCode">IT02 L036 6901 6009 1219 4716 873</code>
+          <button class="iban-copy" id="ibanCopy" type="button">Copia</button>
+        </div>
+      </div>
+      <div class="info-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+        <h4>Orari</h4>
+        <p>Dal lunedì al sabato, dalle <b>10:00</b> alle <b>19:00</b>. Si lavora solo su appuntamento: scrivi prima su WhatsApp.</p>
+      </div>
+      <div class="info-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/><path d="M9.5 12l2 2 3.5-3.5"/></svg>
+        <h4>Età minima</h4>
+        <p>Si tatua dai <b>16 anni</b> in su, solo se accompagnati da <b>entrambi i genitori</b> e con firma del consenso informato.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -475,10 +562,15 @@
           <span class="lbl"><b>@darko.tats</b><small>Segui i lavori su Instagram</small></span>
           <span class="arrow">→</span>
         </a>
+        <a class="channel" href="https://www.tiktok.com/@darko.tats" target="_blank" rel="noopener">
+          <svg class="ic" viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 5.82A4.28 4.28 0 0 1 15.54 3h-3.09v12.4a2.59 2.59 0 0 1-2.59 2.5 2.59 2.59 0 0 1 0-5.18c.27 0 .53.04.77.12V9.69a5.76 5.76 0 0 0-.77-.05 5.73 5.73 0 1 0 5.73 5.73V9.3a7.35 7.35 0 0 0 4.3 1.38V7.59a4.31 4.31 0 0 1-3.29-1.77z"/></svg>
+          <span class="lbl"><b>@darko.tats</b><small>Anche su TikTok</small></span>
+          <span class="arrow">→</span>
+        </a>
       </div>
       <div class="contact-loc">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="9" r="2.4"/></svg>
-        Catania
+        Catania · Lun–Sab 10:00–19:00
       </div>
     </div>
   </div>
@@ -492,6 +584,7 @@
       <a href="https://wa.me/message/6XITFZZ7OLKWH1" target="_blank" rel="noopener">WhatsApp</a>
       <a href="tel:+393514891816">Chiama</a>
       <a href="https://www.instagram.com/darko.tats" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.tiktok.com/@darko.tats" target="_blank" rel="noopener">TikTok</a>
     </div>
     <p>© <span id="year"></span> Pietro Salice — Black &amp; Gray Tattoo Artist, Catania</p>
   </div>
@@ -518,6 +611,73 @@
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
   }, { threshold: 0.15 });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  /* ---------- Calendario richieste ---------- */
+  const calDays = document.getElementById('calDays');
+  const calSlots = document.getElementById('calSlots');
+  const calIdea = document.getElementById('calIdea');
+  const calSend = document.getElementById('calSend');
+  let selDate = null, selTime = null;
+
+  const fmtDay = new Intl.DateTimeFormat('it-IT', { weekday: 'short' });
+  const fmtMonth = new Intl.DateTimeFormat('it-IT', { month: 'short' });
+  const fmtFull = new Intl.DateTimeFormat('it-IT', { weekday: 'long', day: 'numeric', month: 'long' });
+
+  const days = [];
+  const d = new Date();
+  d.setDate(d.getDate() + 1);
+  while (days.length < 21) {
+    if (d.getDay() !== 0) days.push(new Date(d)); // domenica chiusa
+    d.setDate(d.getDate() + 1);
+  }
+  days.forEach(date => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'cal-day';
+    b.innerHTML = '<small>' + fmtDay.format(date).replace('.', '') + '</small><b>' + date.getDate() + '</b><span>' + fmtMonth.format(date).replace('.', '') + '</span>';
+    b.addEventListener('click', () => {
+      calDays.querySelectorAll('.sel').forEach(x => x.classList.remove('sel'));
+      b.classList.add('sel');
+      selDate = date;
+      update();
+    });
+    calDays.appendChild(b);
+  });
+
+  for (let h = 10; h <= 18; h++) {
+    const t = h + ':00';
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'cal-slot';
+    b.textContent = t;
+    b.addEventListener('click', () => {
+      calSlots.querySelectorAll('.sel').forEach(x => x.classList.remove('sel'));
+      b.classList.add('sel');
+      selTime = t;
+      update();
+    });
+    calSlots.appendChild(b);
+  }
+
+  function update() {
+    if (selDate && selTime) {
+      const idea = calIdea.value.trim();
+      let msg = 'Ciao Pietro! Vorrei richiedere un appuntamento per ' + fmtFull.format(selDate) + ' alle ' + selTime + '.';
+      if (idea) msg += ' La mia idea: ' + idea;
+      calSend.href = 'https://wa.me/393514891816?text=' + encodeURIComponent(msg);
+      calSend.removeAttribute('aria-disabled');
+    }
+  }
+  calIdea.addEventListener('input', update);
+
+  /* Copia IBAN */
+  const ibanCopy = document.getElementById('ibanCopy');
+  ibanCopy.addEventListener('click', () => {
+    navigator.clipboard.writeText('IT02L0366901600912194716873').then(() => {
+      ibanCopy.textContent = 'Copiato ✓';
+      setTimeout(() => { ibanCopy.textContent = 'Copia'; }, 2000);
+    });
+  });
 </script>
 
 </body>
