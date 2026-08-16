@@ -1,5 +1,6 @@
 -- darko.tats — schema per le richieste di appuntamento
 -- Incolla tutto questo file in Supabase: Project > SQL Editor > New query > Run
+-- Questo script è "sicuro": puoi rilanciarlo più volte senza errori.
 
 create extension if not exists pgcrypto;
 
@@ -20,17 +21,20 @@ alter table public.richieste enable row level security;
 
 -- Chiunque (i clienti dal sito) può creare una richiesta, ma solo "in attesa"
 -- e senza poter impostare da soli l'acconto o lo stato di accettazione.
+drop policy if exists "clienti_possono_inserire" on public.richieste;
 create policy "clienti_possono_inserire" on public.richieste
   for insert
   to anon
   with check (stato = 'in_attesa' and acconto_importo is null);
 
 -- Solo Pietro (autenticato con la sua email) vede e modifica tutte le richieste.
+drop policy if exists "pietro_vede_tutto" on public.richieste;
 create policy "pietro_vede_tutto" on public.richieste
   for select
   to authenticated
   using (auth.email() = 'pietro.salice01@gmail.com');
 
+drop policy if exists "pietro_modifica_tutto" on public.richieste;
 create policy "pietro_modifica_tutto" on public.richieste
   for update
   to authenticated
@@ -54,4 +58,15 @@ $$;
 grant execute on function public.stato_richiesta(uuid) to anon;
 
 -- Abilita gli aggiornamenti in tempo reale per il pannello di Pietro
-alter publication supabase_realtime add table public.richieste;
+-- (solo se non è già stata aggiunta in un run precedente)
+do $$
+begin
+  if not exists (
+    select 1 from pg_publication_tables
+    where pubname = 'supabase_realtime'
+      and schemaname = 'public'
+      and tablename = 'richieste'
+  ) then
+    alter publication supabase_realtime add table public.richieste;
+  end if;
+end $$;
