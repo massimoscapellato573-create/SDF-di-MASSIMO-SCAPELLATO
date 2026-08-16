@@ -94,9 +94,13 @@
   .burger span{width:24px;height:1px;background:var(--gold-2);display:block}
 
   /* ---------- HERO ---------- */
-  .hero{min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:140px 20px 60px;position:relative}
+  .hero{min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:140px 20px 60px;position:relative;
+    background:
+      linear-gradient(180deg, rgba(8,8,9,.60) 0%, rgba(8,8,9,.72) 45%, rgba(8,8,9,.94) 82%, var(--bg) 100%),
+      url("assets/img/lavoro-1.jpg");
+    background-size:cover;background-position:center 18%;background-repeat:no-repeat;}
   .hero::after{content:"";position:absolute;inset:0;z-index:-1;
-    background:radial-gradient(ellipse 60% 50% at 50% 20%, rgba(200,164,92,.10), transparent 70%);}
+    background:radial-gradient(ellipse 60% 50% at 50% 20%, rgba(200,164,92,.14), transparent 70%);}
   .hero-eyebrow{display:flex;align-items:center;gap:14px;margin-bottom:28px;color:var(--gold);}
   .hero-eyebrow .rule{width:40px;height:1px;background:var(--gold-dim)}
   .hero h1{font-family:'Cinzel',serif;font-weight:600;font-size:clamp(2.4rem,7vw,5rem);letter-spacing:.03em;line-height:1.08;color:var(--ink)}
@@ -334,10 +338,6 @@
     </div>
   </div>
   <div class="gallery-grid reveal">
-    <div class="gallery-item">
-      <img src="assets/img/lavoro-1.jpg" alt="Ritratto black and gray, occhio e mano sul volto">
-      <div class="cap">Ritratto — Black &amp; Gray</div>
-    </div>
     <div class="gallery-item">
       <img src="assets/img/lavoro-2.jpg" alt="Ritratto realistico stile Joker, why so serious">
       <div class="cap">Realismo — Ritratto</div>
