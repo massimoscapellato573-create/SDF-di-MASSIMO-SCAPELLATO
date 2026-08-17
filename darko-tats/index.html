@@ -718,24 +718,28 @@
     }
     calSend.setAttribute('aria-disabled', 'true');
     calSend.textContent = 'Invio in corso…';
-    const { data, error } = await sb.from('richieste').insert({
+    // L'id è generato qui nel browser: un cliente anonimo non può rileggere
+    // le richieste altrui, quindi non chiediamo la riga indietro al server
+    // (evita che l'inserimento venga bloccato dalla regola di sicurezza).
+    const newId = crypto.randomUUID();
+    const { error } = await sb.from('richieste').insert({
+      id: newId,
       nome: calNome.value.trim(),
       telefono: calTelefono.value.trim(),
       giorno: isoDate(selDate),
       ora: selTime,
       idea: calIdea.value.trim() || null
-    }).select('id').single();
+    });
 
     if (error) {
       calSend.removeAttribute('aria-disabled');
       calSend.textContent = 'Invia la richiesta';
-      // TODO debug temporaneo: mostra l'errore reale, da togliere una volta risolto
-      calFormNote.textContent = 'Errore debug — code: ' + (error.code || '?') + ' | msg: ' + (error.message || '?') + ' | details: ' + (error.details || '-') + ' | hint: ' + (error.hint || '-');
+      calFormNote.textContent = 'Qualcosa è andato storto. Riprova o scrivimi su WhatsApp.';
       calFormNote.classList.add('err');
       return;
     }
-    localStorage.setItem('darko_richiesta_id', data.id);
-    showStatus(data.id);
+    localStorage.setItem('darko_richiesta_id', newId);
+    showStatus(newId);
   });
 
   function renderStatus(state, info) {
