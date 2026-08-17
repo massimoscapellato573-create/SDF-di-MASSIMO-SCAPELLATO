@@ -200,14 +200,19 @@
   .cal-pending .dot{width:7px;height:7px;border-radius:50%;background:var(--gold);animation:dotpulse 1.4s ease-in-out infinite}
   .cal-step{margin-top:30px}
   .cal-step .mono{color:var(--gold);display:block;margin-bottom:14px}
-  .cal-days{display:flex;gap:10px;overflow-x:auto;padding-bottom:10px;scrollbar-width:thin}
-  .cal-day{flex:none;width:78px;border:1px solid var(--line);background:none;color:var(--ink);padding:12px 0;text-align:center;cursor:pointer;font-family:'Jost',sans-serif;transition:border-color .2s, background .2s}
-  .cal-day small{display:block;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-2);margin-bottom:4px}
-  .cal-day b{font-family:'Cinzel',serif;font-size:1.15rem;font-weight:600;display:block}
-  .cal-day span{display:block;font-size:.66rem;color:var(--muted-2);text-transform:uppercase;letter-spacing:.1em;margin-top:2px}
-  .cal-day:hover{border-color:var(--gold-dim)}
-  .cal-day.sel{border-color:var(--gold);background:rgba(200,164,92,.12)}
-  .cal-day.sel b,.cal-day.sel small,.cal-day.sel span{color:var(--gold-2)}
+  .cal-month{max-width:400px;margin:0 auto}
+  .cal-month-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+  .cal-month-head .lbl{font-family:'Cinzel',serif;font-size:1rem;letter-spacing:.03em;color:var(--gold-2);text-transform:capitalize}
+  .cal-nav{background:none;border:1px solid var(--line);color:var(--ink);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:1.05rem;line-height:1;display:flex;align-items:center;justify-content:center;transition:border-color .2s,color .2s;font-family:'Jost',sans-serif}
+  .cal-nav:hover{border-color:var(--gold);color:var(--gold-2)}
+  .cal-nav:disabled{opacity:.22;cursor:default;pointer-events:none}
+  .cal-weekdays{display:grid;grid-template-columns:repeat(7,1fr);text-align:center;font-size:.64rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted-2);margin-bottom:8px}
+  .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+  .cal-day{aspect-ratio:1;border:1px solid transparent;background:none;color:var(--ink);cursor:pointer;font-family:'Jost',sans-serif;font-size:.86rem;border-radius:5px;transition:border-color .2s,background .2s;display:flex;align-items:center;justify-content:center}
+  .cal-day.empty{visibility:hidden;pointer-events:none}
+  .cal-day:not(.disabled):not(.empty):hover{border-color:var(--gold-dim)}
+  .cal-day.sel{border-color:var(--gold);background:rgba(200,164,92,.14);color:var(--gold-2);font-weight:600}
+  .cal-day.disabled{color:var(--muted-2);opacity:.28;cursor:default;pointer-events:none}
   .cal-slots{display:flex;flex-wrap:wrap;gap:10px}
   .cal-slot{border:1px solid var(--line);background:none;color:var(--ink);padding:10px 18px;cursor:pointer;font-family:'Jost',sans-serif;font-size:.88rem;letter-spacing:.06em;transition:border-color .2s, background .2s}
   .cal-slot:hover{border-color:var(--gold-dim)}
@@ -507,7 +512,15 @@
         </a>
         <div class="cal-step">
           <span class="mono">1 · Scegli il giorno</span>
-          <div class="cal-days" id="calDays"></div>
+          <div class="cal-month">
+            <div class="cal-month-head">
+              <button type="button" class="cal-nav" id="calPrevMonth" aria-label="Mese precedente">‹</button>
+              <span class="lbl" id="calMonthLabel"></span>
+              <button type="button" class="cal-nav" id="calNextMonth" aria-label="Mese successivo">›</button>
+            </div>
+            <div class="cal-weekdays"><span>Lun</span><span>Mar</span><span>Mer</span><span>Gio</span><span>Ven</span><span>Sab</span><span>Dom</span></div>
+            <div class="cal-grid" id="calGrid"></div>
+          </div>
         </div>
         <div class="cal-step">
           <span class="mono">2 · Scegli l'orario</span>
@@ -632,7 +645,10 @@
     ? supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
     : null;
 
-  const calDays = document.getElementById('calDays');
+  const calGrid = document.getElementById('calGrid');
+  const calMonthLabel = document.getElementById('calMonthLabel');
+  const calPrevMonth = document.getElementById('calPrevMonth');
+  const calNextMonth = document.getElementById('calNextMonth');
   const calSlots = document.getElementById('calSlots');
   const calNome = document.getElementById('calNome');
   const calTelefono = document.getElementById('calTelefono');
@@ -641,29 +657,67 @@
   const calFormNote = document.getElementById('calFormNote');
   let selDate = null, selTime = null;
 
-  const fmtDay = new Intl.DateTimeFormat('it-IT', { weekday: 'short' });
-  const fmtMonth = new Intl.DateTimeFormat('it-IT', { month: 'short' });
+  const fmtMonthYear = new Intl.DateTimeFormat('it-IT', { month: 'long', year: 'numeric' });
 
-  const days = [];
-  const d = new Date();
-  d.setDate(d.getDate() + 1);
-  while (days.length < 21) {
-    if (d.getDay() !== 0) days.push(new Date(d)); // domenica chiusa
-    d.setDate(d.getDate() + 1);
+  /* Finestra prenotabile: da domani a +3 mesi. Ricalcolata a ogni
+     caricamento pagina, quindi scorre in avanti da sola giorno per giorno. */
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const minDate = new Date(today); minDate.setDate(minDate.getDate() + 1);
+  const maxDate = new Date(today); maxDate.setMonth(maxDate.getMonth() + 3);
+
+  let viewYear = minDate.getFullYear();
+  let viewMonth = minDate.getMonth();
+
+  function sameMonth(y1, m1, y2, m2) { return y1 === y2 && m1 === m2; }
+
+  function renderMonth() {
+    calGrid.innerHTML = '';
+    calMonthLabel.textContent = fmtMonthYear.format(new Date(viewYear, viewMonth, 1));
+    calPrevMonth.disabled = sameMonth(viewYear, viewMonth, minDate.getFullYear(), minDate.getMonth());
+    calNextMonth.disabled = sameMonth(viewYear, viewMonth, maxDate.getFullYear(), maxDate.getMonth());
+
+    const firstDay = new Date(viewYear, viewMonth, 1);
+    const leadEmpty = (firstDay.getDay() + 6) % 7; // lunedì = 0
+    for (let i = 0; i < leadEmpty; i++) {
+      const e = document.createElement('span');
+      e.className = 'cal-day empty';
+      calGrid.appendChild(e);
+    }
+
+    const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+    for (let day = 1; day <= daysInMonth; day++) {
+      const date = new Date(viewYear, viewMonth, day);
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'cal-day';
+      b.textContent = day;
+      const disabled = date < minDate || date > maxDate || date.getDay() === 0; // domenica chiusa
+      if (disabled) {
+        b.classList.add('disabled');
+        b.disabled = true;
+      } else {
+        if (selDate && selDate.getTime() === date.getTime()) b.classList.add('sel');
+        b.addEventListener('click', () => {
+          selDate = date;
+          renderMonth();
+          checkFormReady();
+        });
+      }
+      calGrid.appendChild(b);
+    }
   }
-  days.forEach(date => {
-    const b = document.createElement('button');
-    b.type = 'button';
-    b.className = 'cal-day';
-    b.innerHTML = '<small>' + fmtDay.format(date).replace('.', '') + '</small><b>' + date.getDate() + '</b><span>' + fmtMonth.format(date).replace('.', '') + '</span>';
-    b.addEventListener('click', () => {
-      calDays.querySelectorAll('.sel').forEach(x => x.classList.remove('sel'));
-      b.classList.add('sel');
-      selDate = date;
-      checkFormReady();
-    });
-    calDays.appendChild(b);
+
+  calPrevMonth.addEventListener('click', () => {
+    viewMonth--;
+    if (viewMonth < 0) { viewMonth = 11; viewYear--; }
+    renderMonth();
   });
+  calNextMonth.addEventListener('click', () => {
+    viewMonth++;
+    if (viewMonth > 11) { viewMonth = 0; viewYear++; }
+    renderMonth();
+  });
+  renderMonth();
 
   for (let h = 10; h <= 18; h++) {
     const t = h + ':00';
