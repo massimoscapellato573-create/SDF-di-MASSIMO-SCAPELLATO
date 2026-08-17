@@ -125,7 +125,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="assets/js/supabase-config.js"></script>
 <script>
-  const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  const sb = (typeof supabase !== 'undefined') ? supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
   const loginScreen = document.getElementById('loginScreen');
   const dash = document.getElementById('dash');
@@ -141,6 +141,11 @@
 
   async function doLogin() {
     loginErr.style.display = 'none';
+    if (!sb) {
+      loginErr.textContent = 'Impossibile connettersi in questo momento. Controlla la connessione e ricarica la pagina.';
+      loginErr.style.display = 'block';
+      return;
+    }
     loginBtn.disabled = true;
     loginBtn.textContent = 'Accesso in corso…';
     const { error } = await sb.auth.signInWithPassword({
@@ -286,9 +291,11 @@
   }
 
   /* Se una sessione è già attiva, entra direttamente */
-  sb.auth.getSession().then(({ data }) => {
-    if (data.session) enterDash();
-  });
+  if (sb) {
+    sb.auth.getSession().then(({ data }) => {
+      if (data.session) enterDash();
+    });
+  }
 </script>
 
 </body>

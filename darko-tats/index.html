@@ -195,6 +195,9 @@
     background:radial-gradient(ellipse 80% 60% at 50% 0%, rgba(200,164,92,.06), transparent 70%)}
   .cal-block h3{font-family:'Cinzel',serif;font-size:1.3rem;font-weight:600;text-align:center;letter-spacing:.02em}
   .cal-block .cal-sub{text-align:center;color:var(--muted-2);font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;margin-top:8px}
+  .cal-pending{display:flex;align-items:center;justify-content:center;gap:10px;margin:22px auto 0;max-width:fit-content;padding:10px 20px;border:1px solid var(--gold-dim);color:var(--gold-2);text-decoration:none;font-size:.8rem;letter-spacing:.03em;border-radius:100px;transition:border-color .2s,background .2s}
+  .cal-pending:hover{border-color:var(--gold);background:rgba(200,164,92,.08)}
+  .cal-pending .dot{width:7px;height:7px;border-radius:50%;background:var(--gold);animation:dotpulse 1.4s ease-in-out infinite}
   .cal-step{margin-top:30px}
   .cal-step .mono{color:var(--gold);display:block;margin-bottom:14px}
   .cal-days{display:flex;gap:10px;overflow-x:auto;padding-bottom:10px;scrollbar-width:thin}
@@ -218,25 +221,7 @@
   .cal-note{margin-top:18px;text-align:center;color:var(--muted-2);font-size:.8rem;font-style:italic;font-family:'Cormorant Garamond',serif;font-size:1.02rem}
   .cal-note.err{color:#e39a9a;font-style:normal;font-family:'Jost',sans-serif;font-size:.8rem}
 
-  /* ---------- CAL STATUS ---------- */
-  .cal-status{text-align:center;padding:10px 0}
-  .cal-status .badge{display:inline-flex;align-items:center;gap:8px;padding:8px 18px;border-radius:100px;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:22px}
-  .cal-status .badge.wait{border:1px solid var(--gold-dim);color:var(--gold-2)}
-  .cal-status .badge.ok{border:1px solid #4caf7d;color:#8fe0b5}
-  .cal-status .badge.no{border:1px solid #8a4141;color:#e39a9a}
-  .cal-status .badge .dot{width:7px;height:7px;border-radius:50%;background:currentColor}
-  .cal-status .badge.wait .dot{animation:dotpulse 1.4s ease-in-out infinite}
   @keyframes dotpulse{0%,100%{opacity:.35}50%{opacity:1}}
-  .cal-status h4{font-family:'Cinzel',serif;font-size:1.15rem;font-weight:600;margin-bottom:12px}
-  .cal-status p{color:var(--muted);font-size:.92rem;max-width:44ch;margin:0 auto}
-  .cal-deposit{max-width:380px;margin:26px auto 0;border:1px solid var(--line);padding:22px;background:var(--bg-2)}
-  .cal-deposit .amt{font-family:'Cinzel',serif;font-size:1.8rem;color:var(--gold-2);margin-bottom:14px}
-  .cal-deposit .iban-row{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap}
-  .cal-deposit code{font-family:monospace;font-size:.78rem;color:var(--gold-2);background:var(--bg);border:1px solid var(--line);padding:7px 10px;letter-spacing:.04em;word-break:break-all}
-  .cal-deposit .iban-copy{border:1px solid var(--line);background:none;color:var(--muted);padding:7px 12px;cursor:pointer;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;font-family:'Jost',sans-serif;transition:border-color .2s,color .2s}
-  .cal-deposit .iban-copy:hover{border-color:var(--gold);color:var(--gold-2)}
-  .cal-status-again{margin-top:26px}
-  .cal-status-again button{background:none;border:0;color:var(--muted-2);font-size:.78rem;letter-spacing:.06em;text-decoration:underline;cursor:pointer;font-family:'Jost',sans-serif}
   @media (max-width:520px){.cal-fields-row{grid-template-columns:1fr}}
 
   /* ---------- INFO UTILI ---------- */
@@ -517,6 +502,9 @@
       <div id="calForm">
         <h3>Richiedi una data</h3>
         <p class="cal-sub">Lun – Sab · 10:00 – 19:00</p>
+        <a href="#" id="calPending" class="cal-pending" style="display:none">
+          <span class="dot"></span> Hai già una richiesta in corso — controlla lo stato
+        </a>
         <div class="cal-step">
           <span class="mono">1 · Scegli il giorno</span>
           <div class="cal-days" id="calDays"></div>
@@ -541,8 +529,6 @@
           <p class="cal-note" id="calFormNote">La richiesta arriva direttamente a Pietro: conferma la data oppure ti propone un'alternativa.</p>
         </div>
       </div>
-
-      <div id="calStatus" style="display:none"></div>
     </div>
 
     <div class="info-grid reveal">
@@ -642,12 +628,10 @@
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
   /* ---------- Calendario richieste ---------- */
-  const sb = (typeof SUPABASE_URL !== 'undefined' && SUPABASE_URL.indexOf('INSERISCI') !== 0)
+  const sb = (typeof supabase !== 'undefined' && typeof SUPABASE_URL !== 'undefined' && SUPABASE_URL.indexOf('INSERISCI') !== 0)
     ? supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
     : null;
 
-  const calForm = document.getElementById('calForm');
-  const calStatusEl = document.getElementById('calStatus');
   const calDays = document.getElementById('calDays');
   const calSlots = document.getElementById('calSlots');
   const calNome = document.getElementById('calNome');
@@ -659,8 +643,6 @@
 
   const fmtDay = new Intl.DateTimeFormat('it-IT', { weekday: 'short' });
   const fmtMonth = new Intl.DateTimeFormat('it-IT', { month: 'short' });
-  const fmtFull = new Intl.DateTimeFormat('it-IT', { weekday: 'long', day: 'numeric', month: 'long' });
-  const fmtEuro = (n) => new Intl.NumberFormat('it-IT', { style: 'currency', currency: 'EUR' }).format(n);
 
   const days = [];
   const d = new Date();
@@ -739,90 +721,16 @@
       return;
     }
     localStorage.setItem('darko_richiesta_id', newId);
-    showStatus(newId);
+    window.location.href = 'conferma.html?id=' + newId;
   });
-
-  function renderStatus(state, info) {
-    calForm.style.display = 'none';
-    calStatusEl.style.display = 'block';
-    if (state === 'in_attesa') {
-      calStatusEl.innerHTML = `
-        <div class="cal-status">
-          <span class="badge wait"><span class="dot"></span>In attesa di conferma</span>
-          <h4>Richiesta inviata per ${fmtFull.format(new Date(info.giorno + 'T00:00:00'))} alle ${info.ora}</h4>
-          <p>Pietro riceverà la tua richiesta e la confermerà a breve. Questa pagina si aggiorna da sola: puoi lasciarla aperta o tornare più tardi.</p>
-          <div class="cal-status-again"><button type="button" id="calReset">Annulla e fai un'altra richiesta</button></div>
-        </div>`;
-    } else if (state === 'accettata') {
-      calStatusEl.innerHTML = `
-        <div class="cal-status">
-          <span class="badge ok"><span class="dot"></span>Appuntamento confermato</span>
-          <h4>${fmtFull.format(new Date(info.giorno + 'T00:00:00'))} alle ${info.ora}</h4>
-          <p>Per bloccare la data versa l'acconto indicato tramite bonifico, indicando il tuo nome nella causale.</p>
-          <div class="cal-deposit">
-            <div class="amt">${fmtEuro(info.acconto_importo)}</div>
-            <div class="iban-row">
-              <code id="calIban">IT02 L036 6901 6009 1219 4716 873</code>
-              <button class="iban-copy" id="calIbanCopy" type="button">Copia</button>
-            </div>
-          </div>
-          <div class="cal-status-again"><button type="button" id="calReset">Fai un'altra richiesta</button></div>
-        </div>`;
-      document.getElementById('calIbanCopy').addEventListener('click', () => {
-        navigator.clipboard.writeText('IT02L0366901600912194716873').then(() => {
-          const btn = document.getElementById('calIbanCopy');
-          btn.textContent = 'Copiato ✓';
-          setTimeout(() => { btn.textContent = 'Copia'; }, 2000);
-        });
-      });
-    } else if (state === 'rifiutata') {
-      calStatusEl.innerHTML = `
-        <div class="cal-status">
-          <span class="badge no"><span class="dot"></span>Data non disponibile</span>
-          <h4>Pietro non può confermare questa data</h4>
-          <p>Prova a scegliere un altro giorno o orario, oppure scrivimi direttamente su WhatsApp.</p>
-          <div class="cal-status-again"><button type="button" id="calReset">Prova un'altra data</button></div>
-        </div>`;
-    }
-    const resetBtn = document.getElementById('calReset');
-    if (resetBtn) resetBtn.addEventListener('click', resetCal);
-  }
-
-  function resetCal() {
-    localStorage.removeItem('darko_richiesta_id');
-    if (pollTimer) clearInterval(pollTimer);
-    calStatusEl.style.display = 'none';
-    calStatusEl.innerHTML = '';
-    calForm.style.display = 'block';
-    selDate = null; selTime = null;
-    calDays.querySelectorAll('.sel').forEach(x => x.classList.remove('sel'));
-    calSlots.querySelectorAll('.sel').forEach(x => x.classList.remove('sel'));
-    calNome.value = ''; calTelefono.value = ''; calIdea.value = '';
-    calSend.setAttribute('aria-disabled', 'true');
-    calSend.textContent = 'Invia la richiesta';
-  }
-
-  let pollTimer = null;
-  async function pollStatus(id) {
-    const { data, error } = await sb.rpc('stato_richiesta', { richiesta_id: id });
-    if (error || !data || !data.length) return;
-    const info = data[0];
-    renderStatus(info.stato, info);
-    if (info.stato !== 'in_attesa' && pollTimer) {
-      clearInterval(pollTimer);
-      pollTimer = null;
-    }
-  }
-
-  function showStatus(id) {
-    pollStatus(id);
-    if (pollTimer) clearInterval(pollTimer);
-    pollTimer = setInterval(() => pollStatus(id), 20000);
-  }
 
   if (sb) {
     const savedId = localStorage.getItem('darko_richiesta_id');
-    if (savedId) showStatus(savedId);
+    if (savedId) {
+      const pending = document.getElementById('calPending');
+      pending.href = 'conferma.html?id=' + savedId;
+      pending.style.display = 'inline-flex';
+    }
   }
 </script>
 

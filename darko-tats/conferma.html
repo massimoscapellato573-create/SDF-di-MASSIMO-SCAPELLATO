@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La tua richiesta — darko.tats</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230b0b0c'/%3E%3Ctext x='32' y='42' font-family='Georgia,serif' font-size='26' font-weight='700' fill='%23c8a45c' text-anchor='middle'%3EPS%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,400;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0a0b; --bg-2:#141412; --bg-3:#1b1a17;
+    --gold:#c8a45c; --gold-2:#e8cd8f; --gold-dim:#8a7141;
+    --ink:#f4efe4; --muted:rgba(244,239,228,.62); --muted-2:rgba(244,239,228,.4);
+    --line:rgba(200,164,92,.22);
+    --ok:#4caf7d; --ok-2:#8fe0b5; --no:#c96a6a; --no-2:#e39a9a;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%}
+  body{font-family:'Jost',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  img{max-width:100%;display:block}
+  ::selection{background:var(--gold);color:var(--bg)}
+  :focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+  @media (prefers-reduced-motion: reduce){ *{animation-duration:.001ms!important;animation-iteration-count:1!important} }
+
+  .confirm-wrap{height:100vh;display:grid;grid-template-columns:1.35fr 1fr;overflow:hidden}
+
+  /* ---------- LEFT ---------- */
+  .confirm-left{display:flex;flex-direction:column;justify-content:center;padding:clamp(28px,5vw,80px);position:relative;overflow-y:auto}
+  .confirm-left::before{content:"";position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(ellipse 60% 45% at 20% 15%, rgba(200,164,92,.09), transparent 70%)}
+  .brand-mini{display:inline-flex;align-items:center;gap:.6ch;text-decoration:none;margin-bottom:clamp(40px,7vh,90px);position:relative;z-index:1}
+  .brand-mini .mark{font-family:'Cinzel',serif;font-weight:600;font-size:1.15rem;letter-spacing:.06em;color:var(--gold-2)}
+  .confirm-inner{max-width:520px;position:relative;z-index:1}
+
+  .skeleton{opacity:.5}
+  .skeleton .badge{width:170px;height:30px;background:var(--bg-3);border-radius:100px}
+  .skeleton .ln{height:14px;background:var(--bg-3);border-radius:2px;margin-top:14px}
+  .skeleton .ln.w1{width:80%}
+  .skeleton .ln.w2{width:60%}
+
+  .badge{display:inline-flex;align-items:center;gap:9px;padding:9px 20px;border-radius:100px;font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:28px}
+  .badge.wait{border:1px solid var(--gold-dim);color:var(--gold-2)}
+  .badge.ok{border:1px solid var(--ok);color:var(--ok-2)}
+  .badge.no{border:1px solid var(--no);color:var(--no-2)}
+  .badge .dot{width:7px;height:7px;border-radius:50%;background:currentColor}
+  .badge.wait .dot{animation:dotpulse 1.4s ease-in-out infinite}
+  @keyframes dotpulse{0%,100%{opacity:.35}50%{opacity:1}}
+
+  .confirm-inner h1{font-family:'Cinzel',serif;font-weight:600;font-size:clamp(1.6rem,3.2vw,2.3rem);letter-spacing:.01em;line-height:1.25;margin-bottom:18px}
+  .confirm-inner p.lede{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--muted);font-size:1.2rem;max-width:46ch;margin-bottom:8px}
+
+  .deposit-box{margin-top:34px;border:1px solid var(--line);padding:clamp(22px,3vw,32px);background:var(--bg-2);max-width:400px}
+  .deposit-box .lbl{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted-2)}
+  .deposit-box .amt{font-family:'Cinzel',serif;font-size:2.4rem;color:var(--gold-2);margin:8px 0 18px}
+  .deposit-box .iban-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .deposit-box code{font-family:monospace;font-size:.8rem;color:var(--gold-2);background:var(--bg);border:1px solid var(--line);padding:8px 11px;letter-spacing:.03em;word-break:break-all;flex:1}
+  .iban-copy{border:1px solid var(--line);background:none;color:var(--muted);padding:8px 14px;cursor:pointer;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;font-family:'Jost',sans-serif;transition:border-color .2s,color .2s;flex:none}
+  .iban-copy:hover{border-color:var(--gold);color:var(--gold-2)}
+  .deposit-note{margin-top:16px;color:var(--muted-2);font-size:.8rem}
+
+  .confirm-actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:38px}
+  .btn{display:inline-flex;align-items:center;gap:9px;padding:13px 26px;border-radius:2px;font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;font-weight:500;text-decoration:none;transition:transform .25s, border-color .2s, background .2s;cursor:pointer;border:1px solid var(--gold-dim);background:transparent;color:var(--gold-2);font-family:'Jost',sans-serif}
+  .btn:hover{border-color:var(--gold);background:rgba(200,164,92,.08);transform:translateY(-1px)}
+  .btn-wa{border-color:transparent;background:#25D366;color:#07321c}
+  .btn-wa:hover{background:#2ee076}
+  .btn svg{width:16px;height:16px;flex:none}
+
+  .back-link{display:inline-block;margin-top:52px;color:var(--muted-2);font-size:.8rem;text-decoration:none;letter-spacing:.03em}
+  .back-link:hover{color:var(--gold-2)}
+
+  /* ---------- RIGHT: scrolling photos ---------- */
+  .confirm-right{position:relative;overflow:hidden;display:flex;gap:3px;background:var(--bg-2)}
+  .confirm-right::before,.confirm-right::after{content:"";position:absolute;left:0;right:0;height:90px;z-index:2;pointer-events:none}
+  .confirm-right::before{top:0;background:linear-gradient(var(--bg),transparent)}
+  .confirm-right::after{bottom:0;background:linear-gradient(transparent,var(--bg))}
+  .scroll-col{flex:1;display:flex;flex-direction:column;gap:3px;will-change:transform}
+  .scroll-col img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block}
+  .scroll-col-a{animation:scrollUp 46s linear infinite}
+  .scroll-col-b{animation:scrollDown 38s linear infinite}
+  @keyframes scrollUp{from{transform:translateY(0)}to{transform:translateY(-50%)}}
+  @keyframes scrollDown{from{transform:translateY(-50%)}to{transform:translateY(0)}}
+
+  @media (max-width:900px){
+    .confirm-wrap{height:auto;min-height:100vh;grid-template-columns:1fr;grid-template-rows:auto 1fr;overflow:visible}
+    .confirm-right{height:34vh;order:-1}
+    .confirm-left{padding:36px 22px 60px;overflow-y:visible}
+    .brand-mini{margin-bottom:34px}
+  }
+</style>
+</head>
+<body>
+
+<div class="confirm-wrap">
+  <div class="confirm-left">
+    <a href="index.html" class="brand-mini">
+      <span class="mark">Pietro Salice</span>
+    </a>
+    <div class="confirm-inner">
+      <div id="confirmStatus">
+        <div class="skeleton">
+          <div class="badge"></div>
+          <div class="ln w1"></div>
+          <div class="ln w2"></div>
+        </div>
+      </div>
+      <a href="index.html" class="back-link">← Torna al sito</a>
+    </div>
+  </div>
+
+  <div class="confirm-right" aria-hidden="true">
+    <div class="scroll-col scroll-col-a">
+      <img src="assets/img/lavoro-9.jpg" alt="" loading="lazy">
+      <img src="assets/img/lavoro-2.jpg" alt="" loading="lazy">
+      <img src="assets/img/lavoro-6.jpg" alt="" loading="lazy">
+      <img src="assets/img/lavoro-4.jpg" alt="" loading="lazy">
+      <img src="assets/img/lavoro-10.jpg" alt="" loading="lazy">
+      <img src="assets/img/lavoro-9.jpg" alt="" loading="lazy">
+      <img src="assets/img/lavoro-2.jpg" alt="" loading="lazy">
+      <img src="assets/img/lavoro-6.jpg" alt="" loading="lazy">
+      <img src="assets/img/lavoro-4.jpg" alt="" loading="lazy">
+      <img src="assets/img/lavoro-10.jpg" alt="" loading="lazy">
+    </div>
+    <div class="scroll-col scroll-col-b">
+      <img src="assets/img/lavoro-7.jpg" alt="" loading="lazy">
+      <img src="assets/img/lavoro-3.jpg" alt="" loading="lazy">
+      <img src="assets/img/lavoro-8.jpg" alt="" loading="lazy">
+      <img src="assets/img/lavoro-5.jpg" alt="" loading="lazy">
+      <img src="assets/img/lavoro-1.jpg" alt="" loading="lazy">
+      <img src="assets/img/lavoro-7.jpg" alt="" loading="lazy">
+      <img src="assets/img/lavoro-3.jpg" alt="" loading="lazy">
+      <img src="assets/img/lavoro-8.jpg" alt="" loading="lazy">
+      <img src="assets/img/lavoro-5.jpg" alt="" loading="lazy">
+      <img src="assets/img/lavoro-1.jpg" alt="" loading="lazy">
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/js/supabase-config.js"></script>
+<script>
+  const sb = (typeof supabase !== 'undefined' && typeof SUPABASE_URL !== 'undefined' && SUPABASE_URL.indexOf('INSERISCI') !== 0)
+    ? supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+    : null;
+
+  const confirmStatus = document.getElementById('confirmStatus');
+  const fmtFull = new Intl.DateTimeFormat('it-IT', { weekday: 'long', day: 'numeric', month: 'long' });
+  const fmtEuro = (n) => new Intl.NumberFormat('it-IT', { style: 'currency', currency: 'EUR' }).format(n);
+
+  const params = new URLSearchParams(location.search);
+  const id = params.get('id') || localStorage.getItem('darko_richiesta_id');
+
+  function render(html) { confirmStatus.innerHTML = html; }
+
+  function renderNotFound() {
+    render(`
+      <h1>Nessuna richiesta trovata</h1>
+      <p class="lede">Non troviamo nessuna richiesta di appuntamento collegata a questa pagina.</p>
+      <div class="confirm-actions">
+        <a class="btn" href="index.html#calendario">Fai una richiesta</a>
+      </div>`);
+  }
+
+  function renderError() {
+    render(`
+      <h1>Non riesco a controllare lo stato</h1>
+      <p class="lede">Qualcosa non ha funzionato. Riprova tra poco o scrivimi su WhatsApp.</p>
+      <div class="confirm-actions">
+        <a class="btn btn-wa" href="https://wa.me/message/6XITFZZ7OLKWH1" target="_blank" rel="noopener">Scrivimi su WhatsApp</a>
+      </div>`);
+  }
+
+  function renderState(info) {
+    const when = fmtFull.format(new Date(info.giorno + 'T00:00:00'));
+    if (info.stato === 'in_attesa') {
+      render(`
+        <span class="badge wait"><span class="dot"></span>In attesa di conferma</span>
+        <h1>Richiesta inviata per ${when} alle ${info.ora}</h1>
+        <p class="lede">Pietro la sta guardando: questa pagina si aggiorna da sola appena la conferma. Puoi lasciarla aperta o tornare più tardi.</p>
+        <div class="confirm-actions">
+          <a class="btn" href="index.html#calendario">Cambia data</a>
+        </div>`);
+    } else if (info.stato === 'accettata') {
+      render(`
+        <span class="badge ok"><span class="dot"></span>Appuntamento confermato</span>
+        <h1>${when} alle ${info.ora}</h1>
+        <p class="lede">Per bloccare la data versa l'acconto qui sotto tramite bonifico, indicando il tuo nome nella causale.</p>
+        <div class="deposit-box">
+          <div class="lbl">Acconto da versare</div>
+          <div class="amt">${fmtEuro(info.acconto_importo)}</div>
+          <div class="iban-row">
+            <code id="ibanCode">IT02 L036 6901 6009 1219 4716 873</code>
+            <button class="iban-copy" id="ibanCopyBtn" type="button">Copia</button>
+          </div>
+          <p class="deposit-note">L'acconto è rimborsabile se disdici entro 4 giorni prima dell'appuntamento.</p>
+        </div>`);
+      document.getElementById('ibanCopyBtn').addEventListener('click', () => {
+        navigator.clipboard.writeText('IT02L0366901600912194716873').then(() => {
+          const btn = document.getElementById('ibanCopyBtn');
+          btn.textContent = 'Copiato ✓';
+          setTimeout(() => { btn.textContent = 'Copia'; }, 2000);
+        });
+      });
+    } else if (info.stato === 'rifiutata') {
+      render(`
+        <span class="badge no"><span class="dot"></span>Data non disponibile</span>
+        <h1>Pietro non può confermare questa data</h1>
+        <p class="lede">Prova a scegliere un altro giorno o orario, oppure scrivimi direttamente su WhatsApp.</p>
+        <div class="confirm-actions">
+          <a class="btn" href="index.html#calendario">Prova un'altra data</a>
+          <a class="btn btn-wa" href="https://wa.me/message/6XITFZZ7OLKWH1" target="_blank" rel="noopener">Scrivimi su WhatsApp</a>
+        </div>`);
+    }
+  }
+
+  let pollTimer = null;
+  async function poll() {
+    const { data, error } = await sb.rpc('stato_richiesta', { richiesta_id: id });
+    if (error) { renderError(); return; }
+    if (!data || !data.length) { renderNotFound(); return; }
+    const info = data[0];
+    renderState(info);
+    if (info.stato !== 'in_attesa' && pollTimer) {
+      clearInterval(pollTimer);
+      pollTimer = null;
+    }
+    if (info.stato === 'rifiutata') localStorage.removeItem('darko_richiesta_id');
+  }
+
+  if (!sb || !id) {
+    renderNotFound();
+  } else {
+    localStorage.setItem('darko_richiesta_id', id);
+    poll();
+    pollTimer = setInterval(poll, 20000);
+  }
+</script>
+
+</body>
+</html>
