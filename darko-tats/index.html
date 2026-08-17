@@ -729,7 +729,8 @@
     if (error) {
       calSend.removeAttribute('aria-disabled');
       calSend.textContent = 'Invia la richiesta';
-      calFormNote.textContent = 'Qualcosa è andato storto. Riprova o scrivimi su WhatsApp.';
+      // TODO debug temporaneo: mostra l'errore reale, da togliere una volta risolto
+      calFormNote.textContent = 'Errore debug — code: ' + (error.code || '?') + ' | msg: ' + (error.message || '?') + ' | details: ' + (error.details || '-') + ' | hint: ' + (error.hint || '-');
       calFormNote.classList.add('err');
       return;
     }
