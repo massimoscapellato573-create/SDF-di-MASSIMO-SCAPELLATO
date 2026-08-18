@@ -109,6 +109,27 @@ $$;
 
 grant execute on function public.slot_occupati() to anon, authenticated;
 
+-- ---------- Notifiche push (telefono di Pietro) ----------
+-- Ogni riga è un dispositivo/browser su cui Pietro ha attivato le notifiche.
+create table if not exists public.push_subscriptions (
+  id uuid primary key default gen_random_uuid(),
+  created_at timestamptz not null default now(),
+  endpoint text not null unique,
+  p256dh text not null,
+  auth text not null
+);
+
+alter table public.push_subscriptions enable row level security;
+
+grant select, insert, delete on public.push_subscriptions to authenticated;
+
+drop policy if exists "pietro_gestisce_iscrizioni" on public.push_subscriptions;
+create policy "pietro_gestisce_iscrizioni" on public.push_subscriptions
+  for all
+  to public
+  using (auth.role() = 'authenticated' and auth.email() = 'pietro.salice01@gmail.com')
+  with check (auth.role() = 'authenticated' and auth.email() = 'pietro.salice01@gmail.com');
+
 -- Abilita gli aggiornamenti in tempo reale per il pannello di Pietro
 -- (solo se non è già stata aggiunta in un run precedente)
 do $$

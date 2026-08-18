@@ -5,6 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pannello prenotazioni — darko.tats</title>
 <meta name="robots" content="noindex, nofollow">
+<link rel="manifest" href="admin-manifest.json">
+<link rel="apple-touch-icon" href="assets/icons/icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0a0a0b">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230b0b0c'/%3E%3Ctext x='32' y='42' font-family='Georgia,serif' font-size='26' font-weight='700' fill='%23c8a45c' text-anchor='middle'%3EPS%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -45,6 +50,12 @@
   header.dash-head .sub{color:var(--muted-2);font-size:.78rem;letter-spacing:.06em}
   .logout{background:none;border:1px solid var(--line);color:var(--muted);padding:9px 16px;font-size:.76rem;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:border-color .2s,color .2s}
   .logout:hover{border-color:var(--gold);color:var(--gold-2)}
+  .head-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .push-btn{background:var(--gold);color:var(--bg);border:0;padding:9px 16px;font-size:.76rem;font-weight:600;letter-spacing:.03em;cursor:pointer;font-family:'Jost',sans-serif}
+  .push-btn:hover{background:var(--gold-2)}
+  .push-btn:disabled{opacity:.5;cursor:default}
+  .push-btn.on{background:none;border:1px solid var(--ok);color:var(--ok-2)}
+  .push-note{color:var(--muted-2);font-size:.78rem;margin:-4px 0 14px;max-width:480px}
 
   .tabs{display:flex;gap:8px;margin:28px 0 22px;flex-wrap:wrap}
   .tab{background:none;border:1px solid var(--line);color:var(--muted);padding:9px 16px;font-size:.78rem;letter-spacing:.04em;cursor:pointer;transition:border-color .2s,color .2s,background .2s}
@@ -172,8 +183,12 @@
         <h1>Richieste appuntamento</h1>
         <p class="sub"><span class="live-dot"></span>aggiornamento in tempo reale</p>
       </div>
-      <button class="logout" id="logoutBtn">Esci</button>
+      <div class="head-actions">
+        <button class="push-btn" id="pushBtn" style="display:none">🔔 Attiva notifiche</button>
+        <button class="logout" id="logoutBtn">Esci</button>
+      </div>
     </header>
+    <p class="push-note" id="pushNote" style="display:none"></p>
 
     <div class="tabs">
       <button class="tab active" data-tab="in_attesa">In attesa <span class="n" id="cWait">0</span></button>
@@ -298,6 +313,85 @@
         notify();
       })
       .subscribe();
+    setupPush();
+  }
+
+  /* ---------- Notifiche push (funzionano anche a pannello chiuso) ---------- */
+  const pushBtn = document.getElementById('pushBtn');
+  const pushNote = document.getElementById('pushNote');
+
+  function urlBase64ToUint8Array(base64) {
+    const padding = '='.repeat((4 - (base64.length % 4)) % 4);
+    const b64 = (base64 + padding).replace(/-/g, '+').replace(/_/g, '/');
+    const raw = atob(b64);
+    return Uint8Array.from([...raw].map(c => c.charCodeAt(0)));
+  }
+
+  function isStandalone() {
+    return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+  }
+  const isIos = /iphone|ipad|ipod/i.test(navigator.userAgent);
+
+  async function setupPush() {
+    if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
+      pushNote.textContent = 'Le notifiche push non sono supportate su questo browser.';
+      pushNote.style.display = 'block';
+      return;
+    }
+    if (isIos && !isStandalone()) {
+      pushNote.textContent = 'Per attivare le notifiche su iPhone: tocca "Condividi" in Safari → "Aggiungi a Home", poi apri il pannello dall\'icona sulla schermata Home e torna qui.';
+      pushNote.style.display = 'block';
+      return;
+    }
+
+    pushBtn.style.display = 'inline-block';
+    const reg = await navigator.serviceWorker.register('sw.js');
+    const existing = await reg.pushManager.getSubscription();
+    setPushBtnState(!!existing);
+
+    pushBtn.addEventListener('click', async () => {
+      const sub = await reg.pushManager.getSubscription();
+      if (sub) {
+        pushBtn.disabled = true;
+        await sb.from('push_subscriptions').delete().eq('endpoint', sub.endpoint);
+        await sub.unsubscribe();
+        setPushBtnState(false);
+        pushBtn.disabled = false;
+        return;
+      }
+      pushBtn.disabled = true;
+      pushBtn.textContent = 'Attivazione…';
+      try {
+        const permission = await Notification.requestPermission();
+        if (permission !== 'granted') {
+          pushNote.textContent = 'Permesso negato: attiva le notifiche per questo sito dalle impostazioni del browser.';
+          pushNote.style.display = 'block';
+          setPushBtnState(false);
+          return;
+        }
+        const newSub = await reg.pushManager.subscribe({
+          userVisibleOnly: true,
+          applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY)
+        });
+        const json = newSub.toJSON();
+        const { error } = await sb.from('push_subscriptions').insert({
+          endpoint: json.endpoint, p256dh: json.keys.p256dh, auth: json.keys.auth
+        });
+        if (error && error.code !== '23505') throw error;
+        setPushBtnState(true);
+      } catch (e) {
+        pushNote.textContent = 'Non sono riuscito ad attivare le notifiche. Riprova tra poco.';
+        pushNote.style.display = 'block';
+        setPushBtnState(false);
+      } finally {
+        pushBtn.disabled = false;
+      }
+    });
+  }
+
+  function setPushBtnState(active) {
+    pushBtn.classList.toggle('on', active);
+    pushBtn.textContent = active ? '🔔 Notifiche attive' : '🔔 Attiva notifiche';
   }
 
   function notify() {
