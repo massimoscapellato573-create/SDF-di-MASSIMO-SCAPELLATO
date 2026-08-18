@@ -120,6 +120,15 @@
   .a-unblock{background:none;border:1px solid var(--no);color:var(--no-2);padding:7px 14px;font-size:.76rem;letter-spacing:.03em;cursor:pointer}
   .a-unblock:hover{background:rgba(201,106,106,.1)}
 
+  .day-tools{display:flex;flex-direction:column;gap:12px;padding:16px;margin-bottom:18px;border:1px solid var(--line);background:var(--bg)}
+  .a-block-day{background:var(--gold);color:var(--bg);border:0;padding:10px 16px;font-size:.8rem;font-weight:600;letter-spacing:.03em;cursor:pointer;align-self:flex-start}
+  .a-block-day:hover{background:var(--gold-2)}
+  .range-tools{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .range-lbl{font-size:.78rem;color:var(--muted-2)}
+  .range-tools select{background:var(--bg-2);border:1px solid var(--line);color:var(--ink);padding:7px 8px;font-size:.82rem;font-family:'Jost',sans-serif}
+  .a-block-range{background:none;border:1px solid var(--gold-dim);color:var(--gold-2);padding:8px 14px;font-size:.78rem;letter-spacing:.03em;cursor:pointer}
+  .a-block-range:hover{border-color:var(--gold);background:rgba(200,164,92,.08)}
+
   /* ---------- MODALE (al posto di confirm()/prompt() nativi, non affidabili
      nei browser interni tipo WhatsApp) ---------- */
   .modal-overlay{position:fixed;inset:0;z-index:200;background:rgba(6,6,7,.82);display:none;align-items:center;justify-content:center;padding:20px}
@@ -502,12 +511,14 @@
   function renderAgenda(dateKey, items) {
     const agenda = document.getElementById('calAgenda');
     const dateObj = new Date(dateKey + 'T00:00:00');
+    const freeSlots = [];
     let rows = '';
     for (let h = 10; h <= 18; h++) {
       const t = h + ':00';
       const match = items.find(r => r.ora === t);
       let info;
       if (!match) {
+        freeSlots.push(t);
         info = `<span class="agenda-free">Libero</span> <button type="button" class="a-block" data-block-date="${dateKey}" data-block-time="${t}">Blocca</button>`;
       } else if (match.stato === 'bloccato') {
         info = `<span class="tag block">Bloccato</span>${escapeHtml(match.idea || 'nessun motivo indicato')} <button type="button" class="a-unblock" data-unblock-id="${match.id}">Sblocca</button>`;
@@ -520,7 +531,55 @@
       }
       rows += `<div class="agenda-row"><span class="agenda-time">${t}</span><span class="agenda-info">${info}</span></div>`;
     }
-    agenda.innerHTML = `<div class="agenda"><h3>${fmtDayFull.format(dateObj)}</h3>${rows}</div>`;
+    const hourOptions = () => {
+      let o = '';
+      for (let h = 10; h <= 18; h++) o += `<option value="${h}">${h}:00</option>`;
+      return o;
+    };
+    const dayTools = freeSlots.length ? `
+      <div class="day-tools">
+        <button type="button" class="a-block-day" id="blockWholeDay">Blocca tutta la giornata</button>
+        <div class="range-tools">
+          <span class="range-lbl">oppure da</span>
+          <select id="rangeFrom">${hourOptions()}</select>
+          <span class="range-lbl">a</span>
+          <select id="rangeTo">${hourOptions()}</select>
+          <button type="button" class="a-block-range" id="blockRangeBtn">Blocca intervallo</button>
+        </div>
+      </div>` : '';
+    agenda.innerHTML = `<div class="agenda"><h3>${fmtDayFull.format(dateObj)}</h3>${dayTools}${rows}</div>`;
+
+    async function blockSlots(hours, question) {
+      const motivo = await showPromptModal(question, 'Es. Sessione lunga, ferie…');
+      if (motivo === undefined) return; // annullato
+      let skipped = 0;
+      for (const h of hours) {
+        const t = h + ':00';
+        const { error } = await sb.from('richieste').insert({ giorno: dateKey, ora: t, idea: motivo, stato: 'bloccato' });
+        if (error) skipped++;
+      }
+      if (skipped) alert(`${skipped} orario/i risultavano già occupati e non sono stati bloccati.`);
+      refresh();
+    }
+
+    const rangeToSel = document.getElementById('rangeTo');
+    if (rangeToSel) rangeToSel.value = '18';
+
+    const wholeDayBtn = document.getElementById('blockWholeDay');
+    if (wholeDayBtn) wholeDayBtn.addEventListener('click', () => {
+      const hours = freeSlots.map(t => parseInt(t, 10));
+      blockSlots(hours, `Bloccare tutti i ${freeSlots.length} orari liberi di ${fmtDayFull.format(dateObj)}? Utile per un tatuaggio lungo che occupa più ore.`);
+    });
+
+    const rangeBtn = document.getElementById('blockRangeBtn');
+    if (rangeBtn) rangeBtn.addEventListener('click', () => {
+      const from = parseInt(document.getElementById('rangeFrom').value, 10);
+      const to = parseInt(document.getElementById('rangeTo').value, 10);
+      if (from > to) { alert('L\'orario "da" deve essere prima o uguale a "a".'); return; }
+      const hours = [];
+      for (let h = from; h <= to; h++) hours.push(h);
+      blockSlots(hours, `Bloccare gli orari dalle ${from}:00 alle ${to}:00 di ${fmtDayFull.format(dateObj)}?`);
+    });
 
     agenda.querySelectorAll('[data-block-date]').forEach(btn => {
       btn.addEventListener('click', async () => {
