@@ -119,6 +119,22 @@
   .a-block:hover{border-color:var(--gold);color:var(--gold-2)}
   .a-unblock{background:none;border:1px solid var(--no);color:var(--no-2);padding:7px 14px;font-size:.76rem;letter-spacing:.03em;cursor:pointer}
   .a-unblock:hover{background:rgba(201,106,106,.1)}
+
+  /* ---------- MODALE (al posto di confirm()/prompt() nativi, non affidabili
+     nei browser interni tipo WhatsApp) ---------- */
+  .modal-overlay{position:fixed;inset:0;z-index:200;background:rgba(6,6,7,.82);display:none;align-items:center;justify-content:center;padding:20px}
+  .modal-overlay.open{display:flex}
+  .modal-box{width:100%;max-width:380px;border:1px solid var(--line);background:var(--bg-2);padding:26px}
+  .modal-box p{font-size:.92rem;color:var(--ink);line-height:1.5;margin-bottom:18px}
+  .modal-box input{width:100%;background:var(--bg);border:1px solid var(--line);color:var(--ink);padding:11px 13px;font-size:.9rem;margin-bottom:18px}
+  .modal-box input:focus{outline:none;border-color:var(--gold)}
+  .modal-actions{display:flex;gap:10px;justify-content:flex-end}
+  .modal-actions button{border:0;padding:10px 18px;font-size:.8rem;letter-spacing:.03em;cursor:pointer;font-family:'Jost',sans-serif}
+  .modal-cancel{background:none;border:1px solid var(--line) !important;color:var(--muted)}
+  .modal-cancel:hover{border-color:var(--gold-dim) !important}
+  .modal-ok{background:var(--gold);color:var(--bg);font-weight:600}
+  .modal-ok:hover{background:var(--gold-2)}
+  .modal-ok.danger{background:var(--no);color:#2a0d0d}
 </style>
 </head>
 <body>
@@ -164,6 +180,17 @@
   </div>
 </div>
 
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-box">
+    <p id="modalMsg"></p>
+    <input type="text" id="modalInput" style="display:none">
+    <div class="modal-actions">
+      <button type="button" class="modal-cancel" id="modalCancel">Annulla</button>
+      <button type="button" class="modal-ok" id="modalOk">Conferma</button>
+    </div>
+  </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="assets/js/supabase-config.js"></script>
 <script>
@@ -180,6 +207,47 @@
 
   let allReqs = [];
   let activeTab = 'in_attesa';
+
+  /* Sostituiscono confirm()/prompt() nativi: non sempre affidabili nei
+     browser interni (es. quello di WhatsApp). Restituiscono una Promise. */
+  const modalOverlay = document.getElementById('modalOverlay');
+  const modalMsg = document.getElementById('modalMsg');
+  const modalInput = document.getElementById('modalInput');
+  const modalCancel = document.getElementById('modalCancel');
+  const modalOk = document.getElementById('modalOk');
+
+  function openModal({ message, withInput, placeholder, danger, okLabel }) {
+    return new Promise((resolve) => {
+      modalMsg.textContent = message;
+      modalInput.style.display = withInput ? 'block' : 'none';
+      modalInput.value = '';
+      modalInput.placeholder = placeholder || '';
+      modalOk.textContent = okLabel || 'Conferma';
+      modalOk.classList.toggle('danger', !!danger);
+      modalOverlay.classList.add('open');
+      if (withInput) setTimeout(() => modalInput.focus(), 50);
+
+      function cleanup(result) {
+        modalOverlay.classList.remove('open');
+        modalOk.removeEventListener('click', onOk);
+        modalCancel.removeEventListener('click', onCancel);
+        modalOverlay.removeEventListener('click', onOverlay);
+        resolve(result);
+      }
+      function onOk() { cleanup(withInput ? (modalInput.value.trim() || null) : true); }
+      function onCancel() { cleanup(withInput ? undefined : false); }
+      function onOverlay(e) { if (e.target === modalOverlay) onCancel(); }
+      modalOk.addEventListener('click', onOk);
+      modalCancel.addEventListener('click', onCancel);
+      modalOverlay.addEventListener('click', onOverlay);
+    });
+  }
+  function showConfirm(message, danger) {
+    return openModal({ message, danger, okLabel: danger ? 'Sì, procedi' : 'Conferma' });
+  }
+  function showPromptModal(message, placeholder) {
+    return openModal({ message, withInput: true, placeholder, okLabel: 'Blocca' });
+  }
 
   async function doLogin() {
     loginErr.style.display = 'none';
@@ -343,19 +411,19 @@
     });
     const rejectEl = document.querySelector(`[data-id="${r.id}"][data-action="reject"]`);
     if (rejectEl) rejectEl.addEventListener('click', async () => {
-      if (!confirm(`Rifiutare la richiesta di ${r.nome}?`)) return;
+      if (!(await showConfirm(`Rifiutare la richiesta di ${r.nome}?`))) return;
       await sb.from('richieste').update({ stato: 'rifiutata' }).eq('id', r.id);
       refresh();
     });
     const paidEl = document.querySelector(`[data-id="${r.id}"][data-action="mark-paid"]`);
     if (paidEl) paidEl.addEventListener('click', async () => {
-      if (!confirm(`Confermare che ${r.nome} ha versato l'acconto di ${fmtEuro(r.acconto_importo)}?`)) return;
+      if (!(await showConfirm(`Confermare che ${r.nome} ha versato l'acconto di ${fmtEuro(r.acconto_importo)}?`))) return;
       await sb.from('richieste').update({ stato: 'confermata' }).eq('id', r.id);
       refresh();
     });
     const delEl = document.querySelector(`[data-id="${r.id}"][data-action="delete"]`);
     if (delEl) delEl.addEventListener('click', async () => {
-      if (!confirm(`Eliminare definitivamente la richiesta di ${r.nome || 'questo appuntamento'}?`)) return;
+      if (!(await showConfirm(`Eliminare definitivamente la richiesta di ${r.nome || 'questo appuntamento'}?`, true))) return;
       await sb.from('richieste').delete().eq('id', r.id);
       refresh();
     });
@@ -451,7 +519,8 @@
 
     agenda.querySelectorAll('[data-block-date]').forEach(btn => {
       btn.addEventListener('click', async () => {
-        const motivo = prompt('Motivo del blocco (facoltativo, es. "Ferie", "Impegno personale"):') || null;
+        const motivo = await showPromptModal('Motivo del blocco (facoltativo):', 'Es. Ferie, impegno personale…');
+        if (motivo === undefined) return; // annullato
         const { error } = await sb.from('richieste').insert({
           giorno: btn.dataset.blockDate, ora: btn.dataset.blockTime, idea: motivo, stato: 'bloccato'
         });
@@ -461,7 +530,7 @@
     });
     agenda.querySelectorAll('[data-unblock-id]').forEach(btn => {
       btn.addEventListener('click', async () => {
-        if (!confirm('Sbloccare questo orario?')) return;
+        if (!(await showConfirm('Sbloccare questo orario?'))) return;
         await sb.from('richieste').delete().eq('id', btn.dataset.unblockId);
         refresh();
       });
