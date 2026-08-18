@@ -65,14 +65,18 @@
   .req-meta{color:var(--muted-2);font-size:.7rem;letter-spacing:.04em;margin-top:10px}
   .req-status{display:inline-flex;align-items:center;gap:6px;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;padding:5px 12px;border-radius:100px;margin-top:10px}
   .req-status.ok{border:1px solid var(--ok);color:var(--ok-2)}
+  .req-status.wait{border:1px solid var(--gold-dim);color:var(--gold-2)}
   .req-status.no{border:1px solid var(--no);color:var(--no-2)}
   .req-status b{font-family:'Jost',sans-serif}
 
   .req-actions{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;align-items:center}
   .a-accept{background:var(--ok);color:#0c2417;border:0;padding:10px 18px;font-size:.8rem;font-weight:600;letter-spacing:.04em;cursor:pointer}
   .a-reject{background:none;border:1px solid var(--no);color:var(--no-2);padding:10px 18px;font-size:.8rem;letter-spacing:.04em;cursor:pointer}
-  .a-accept:hover{opacity:.9}
+  .a-paid{background:var(--gold);color:var(--bg);border:0;padding:10px 18px;font-size:.8rem;font-weight:600;letter-spacing:.04em;cursor:pointer}
+  .a-accept:hover,.a-paid:hover{opacity:.9}
   .a-reject:hover{background:rgba(201,106,106,.1)}
+  .a-delete{background:none;border:0;color:var(--muted-2);font-size:.74rem;letter-spacing:.03em;text-decoration:underline;cursor:pointer;padding:10px 4px}
+  .a-delete:hover{color:var(--no-2)}
   .accept-form{display:none;gap:10px;align-items:center;margin-top:14px;padding-top:14px;border-top:1px dashed var(--line);flex-wrap:wrap}
   .accept-form input{width:130px;background:var(--bg);border:1px solid var(--line);color:var(--ink);padding:9px 12px;font-size:.88rem}
   .accept-form .confirm{background:var(--ok);color:#0c2417;border:0;padding:9px 16px;font-size:.8rem;font-weight:600;cursor:pointer}
@@ -80,6 +84,41 @@
 
   .live-dot{width:8px;height:8px;border-radius:50%;background:var(--ok);display:inline-block;margin-right:8px;animation:pulse 1.8s ease-in-out infinite}
   @keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
+
+  /* ---------- CALENDARIO ---------- */
+  .cal-wrap{border:1px solid var(--line);padding:clamp(18px,3vw,30px);background:var(--bg-2)}
+  .cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+  .cal-head .lbl{font-family:'Cinzel',serif;font-size:1.1rem;color:var(--gold-2);text-transform:capitalize}
+  .cal-nav{background:none;border:1px solid var(--line);color:var(--ink);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:1.05rem;display:flex;align-items:center;justify-content:center;transition:border-color .2s,color .2s}
+  .cal-nav:hover{border-color:var(--gold);color:var(--gold-2)}
+  .cal-weekdays{display:grid;grid-template-columns:repeat(7,1fr);text-align:center;font-size:.64rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted-2);margin-bottom:8px}
+  .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+  .cal-day-cell{aspect-ratio:1;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer;font-family:'Jost',sans-serif;font-size:.86rem;border-radius:5px;transition:border-color .2s,background .2s;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;position:relative}
+  .cal-day-cell.empty{visibility:hidden;pointer-events:none;border:0}
+  .cal-day-cell.sun{opacity:.35;cursor:default}
+  .cal-day-cell:hover:not(.sun){border-color:var(--gold-dim)}
+  .cal-day-cell.sel{border-color:var(--gold);background:rgba(200,164,92,.14)}
+  .cal-day-cell .dots{display:flex;gap:2px}
+  .cal-day-cell .dots span{width:5px;height:5px;border-radius:50%}
+  .dot-wait{background:var(--gold-dim)}
+  .dot-ok{background:var(--ok)}
+  .dot-block{background:var(--no)}
+
+  .agenda{margin-top:26px;padding-top:22px;border-top:1px solid var(--line)}
+  .agenda h3{font-family:'Cinzel',serif;font-size:1rem;margin-bottom:16px;text-transform:capitalize}
+  .agenda-row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:11px 0;border-bottom:1px dashed var(--line);flex-wrap:wrap}
+  .agenda-row:last-child{border-bottom:0}
+  .agenda-time{font-family:'Cinzel',serif;color:var(--gold-2);font-size:.9rem;width:60px;flex:none}
+  .agenda-info{flex:1;font-size:.86rem;color:var(--muted)}
+  .agenda-info .tag{font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;margin-right:8px}
+  .agenda-info .tag.ok{color:var(--ok-2)}
+  .agenda-info .tag.wait{color:var(--gold-2)}
+  .agenda-info .tag.block{color:var(--no-2)}
+  .agenda-free{color:var(--muted-2);font-style:italic;font-size:.86rem}
+  .a-block{background:none;border:1px solid var(--line);color:var(--muted);padding:7px 14px;font-size:.76rem;letter-spacing:.03em;cursor:pointer;transition:border-color .2s,color .2s}
+  .a-block:hover{border-color:var(--gold);color:var(--gold-2)}
+  .a-unblock{background:none;border:1px solid var(--no);color:var(--no-2);padding:7px 14px;font-size:.76rem;letter-spacing:.03em;cursor:pointer}
+  .a-unblock:hover{background:rgba(201,106,106,.1)}
 </style>
 </head>
 <body>
@@ -113,12 +152,15 @@
 
     <div class="tabs">
       <button class="tab active" data-tab="in_attesa">In attesa <span class="n" id="cWait">0</span></button>
-      <button class="tab" data-tab="accettata">Accettate <span class="n" id="cOk">0</span></button>
+      <button class="tab" data-tab="accettata">Da pagare <span class="n" id="cToPay">0</span></button>
+      <button class="tab" data-tab="confermata">Confermate <span class="n" id="cConfirmed">0</span></button>
       <button class="tab" data-tab="rifiutata">Rifiutate <span class="n" id="cNo">0</span></button>
       <button class="tab" data-tab="tutte">Tutte</button>
+      <button class="tab" data-tab="calendario">Calendario</button>
     </div>
 
     <div id="list"></div>
+    <div id="calView" style="display:none"></div>
   </div>
 </div>
 
@@ -202,7 +244,8 @@
     if (error) { console.error(error); return; }
     allReqs = data || [];
     document.getElementById('cWait').textContent = allReqs.filter(r => r.stato === 'in_attesa').length;
-    document.getElementById('cOk').textContent = allReqs.filter(r => r.stato === 'accettata').length;
+    document.getElementById('cToPay').textContent = allReqs.filter(r => r.stato === 'accettata').length;
+    document.getElementById('cConfirmed').textContent = allReqs.filter(r => r.stato === 'confermata').length;
     document.getElementById('cNo').textContent = allReqs.filter(r => r.stato === 'rifiutata').length;
     render();
   }
@@ -216,7 +259,18 @@
 
   function render() {
     const list = document.getElementById('list');
-    const items = activeTab === 'tutte' ? allReqs : allReqs.filter(r => r.stato === activeTab);
+    const calView = document.getElementById('calView');
+    if (activeTab === 'calendario') {
+      list.style.display = 'none';
+      calView.style.display = 'block';
+      renderCalendar();
+      return;
+    }
+    list.style.display = 'block';
+    calView.style.display = 'none';
+
+    const clientReqs = allReqs.filter(r => r.stato !== 'bloccato');
+    const items = activeTab === 'tutte' ? clientReqs : clientReqs.filter(r => r.stato === activeTab);
     if (!items.length) {
       list.innerHTML = '<p class="empty">Nessuna richiesta qui.</p>';
       return;
@@ -230,6 +284,9 @@
     let statusBadge = '';
     let actions = '';
     if (r.stato === 'accettata') {
+      statusBadge = `<span class="req-status wait">In attesa di pagamento · acconto <b>${fmtEuro(r.acconto_importo)}</b></span>`;
+      actions = `<div class="req-actions"><button class="a-paid" data-id="${r.id}" data-action="mark-paid">Segna come pagato</button></div>`;
+    } else if (r.stato === 'confermata') {
       statusBadge = `<span class="req-status ok">Confermata · acconto <b>${fmtEuro(r.acconto_importo)}</b></span>`;
     } else if (r.stato === 'rifiutata') {
       statusBadge = `<span class="req-status no">Rifiutata</span>`;
@@ -258,6 +315,7 @@
         <p class="req-meta">Richiesta inviata il ${fmtWhen(r.created_at)}</p>
         ${statusBadge}
         ${actions}
+        <div class="req-actions"><button class="a-delete" data-id="${r.id}" data-action="delete">Elimina richiesta</button></div>
       </div>`;
   }
 
@@ -279,7 +337,8 @@
       const val = parseFloat(document.getElementById(`amt-${r.id}`).value);
       if (!val || val <= 0) { alert('Inserisci un importo valido.'); return; }
       confirmEl.disabled = true;
-      await sb.from('richieste').update({ stato: 'accettata', acconto_importo: val }).eq('id', r.id);
+      const { error } = await sb.from('richieste').update({ stato: 'accettata', acconto_importo: val }).eq('id', r.id);
+      if (error) { alert(error.code === '23505' ? 'Questo orario è già occupato da un\'altra richiesta accettata o bloccata.' : 'Errore, riprova.'); confirmEl.disabled = false; return; }
       refresh();
     });
     const rejectEl = document.querySelector(`[data-id="${r.id}"][data-action="reject"]`);
@@ -287,6 +346,125 @@
       if (!confirm(`Rifiutare la richiesta di ${r.nome}?`)) return;
       await sb.from('richieste').update({ stato: 'rifiutata' }).eq('id', r.id);
       refresh();
+    });
+    const paidEl = document.querySelector(`[data-id="${r.id}"][data-action="mark-paid"]`);
+    if (paidEl) paidEl.addEventListener('click', async () => {
+      if (!confirm(`Confermare che ${r.nome} ha versato l'acconto di ${fmtEuro(r.acconto_importo)}?`)) return;
+      await sb.from('richieste').update({ stato: 'confermata' }).eq('id', r.id);
+      refresh();
+    });
+    const delEl = document.querySelector(`[data-id="${r.id}"][data-action="delete"]`);
+    if (delEl) delEl.addEventListener('click', async () => {
+      if (!confirm(`Eliminare definitivamente la richiesta di ${r.nome || 'questo appuntamento'}?`)) return;
+      await sb.from('richieste').delete().eq('id', r.id);
+      refresh();
+    });
+  }
+
+  /* ---------- Vista Calendario ---------- */
+  const fmtMonthYear = new Intl.DateTimeFormat('it-IT', { month: 'long', year: 'numeric' });
+  const fmtDayFull = new Intl.DateTimeFormat('it-IT', { weekday: 'long', day: 'numeric', month: 'long' });
+  let calViewYear = new Date().getFullYear();
+  let calViewMonth = new Date().getMonth();
+  let calSelDate = null;
+
+  function renderCalendar() {
+    const calView = document.getElementById('calView');
+    const iso = (d) => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+    const byDay = {};
+    allReqs.forEach(r => {
+      if (r.stato === 'rifiutata') return;
+      (byDay[r.giorno] = byDay[r.giorno] || []).push(r);
+    });
+
+    const firstDay = new Date(calViewYear, calViewMonth, 1);
+    const leadEmpty = (firstDay.getDay() + 6) % 7;
+    const daysInMonth = new Date(calViewYear, calViewMonth + 1, 0).getDate();
+
+    let cells = '';
+    for (let i = 0; i < leadEmpty; i++) cells += `<div class="cal-day-cell empty"></div>`;
+    for (let day = 1; day <= daysInMonth; day++) {
+      const date = new Date(calViewYear, calViewMonth, day);
+      const key = iso(date);
+      const isSun = date.getDay() === 0;
+      const items = byDay[key] || [];
+      const hasWait = items.some(r => r.stato === 'in_attesa');
+      const hasOk = items.some(r => r.stato === 'accettata' || r.stato === 'confermata');
+      const hasBlock = items.some(r => r.stato === 'bloccato');
+      const dots = [hasWait && '<span class="dot-wait"></span>', hasOk && '<span class="dot-ok"></span>', hasBlock && '<span class="dot-block"></span>'].filter(Boolean).join('');
+      const sel = calSelDate === key ? ' sel' : '';
+      cells += `<button type="button" class="cal-day-cell${isSun ? ' sun' : ''}${sel}" data-date="${key}" ${isSun ? 'disabled' : ''}>${day}<span class="dots">${dots}</span></button>`;
+    }
+
+    calView.innerHTML = `
+      <div class="cal-wrap">
+        <div class="cal-head">
+          <button type="button" class="cal-nav" id="calAdminPrev">‹</button>
+          <span class="lbl">${fmtMonthYear.format(firstDay)}</span>
+          <button type="button" class="cal-nav" id="calAdminNext">›</button>
+        </div>
+        <div class="cal-weekdays"><span>Lun</span><span>Mar</span><span>Mer</span><span>Gio</span><span>Ven</span><span>Sab</span><span>Dom</span></div>
+        <div class="cal-grid">${cells}</div>
+        <div id="calAgenda"></div>
+      </div>`;
+
+    document.getElementById('calAdminPrev').addEventListener('click', () => {
+      calViewMonth--; if (calViewMonth < 0) { calViewMonth = 11; calViewYear--; }
+      renderCalendar();
+    });
+    document.getElementById('calAdminNext').addEventListener('click', () => {
+      calViewMonth++; if (calViewMonth > 11) { calViewMonth = 0; calViewYear++; }
+      renderCalendar();
+    });
+    calView.querySelectorAll('.cal-day-cell[data-date]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        calSelDate = btn.dataset.date;
+        renderCalendar();
+      });
+    });
+
+    if (calSelDate) renderAgenda(calSelDate, byDay[calSelDate] || []);
+  }
+
+  function renderAgenda(dateKey, items) {
+    const agenda = document.getElementById('calAgenda');
+    const dateObj = new Date(dateKey + 'T00:00:00');
+    let rows = '';
+    for (let h = 10; h <= 18; h++) {
+      const t = h + ':00';
+      const match = items.find(r => r.ora === t);
+      let info;
+      if (!match) {
+        info = `<span class="agenda-free">Libero</span> <button type="button" class="a-block" data-block-date="${dateKey}" data-block-time="${t}">Blocca</button>`;
+      } else if (match.stato === 'bloccato') {
+        info = `<span class="tag block">Bloccato</span>${escapeHtml(match.idea || 'nessun motivo indicato')} <button type="button" class="a-unblock" data-unblock-id="${match.id}">Sblocca</button>`;
+      } else if (match.stato === 'in_attesa') {
+        info = `<span class="tag wait">Richiesta in attesa</span>${escapeHtml(match.nome)}`;
+      } else if (match.stato === 'accettata') {
+        info = `<span class="tag wait">Da pagare</span>${escapeHtml(match.nome)}`;
+      } else {
+        info = `<span class="tag ok">Confermato</span>${escapeHtml(match.nome)}`;
+      }
+      rows += `<div class="agenda-row"><span class="agenda-time">${t}</span><span class="agenda-info">${info}</span></div>`;
+    }
+    agenda.innerHTML = `<div class="agenda"><h3>${fmtDayFull.format(dateObj)}</h3>${rows}</div>`;
+
+    agenda.querySelectorAll('[data-block-date]').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const motivo = prompt('Motivo del blocco (facoltativo, es. "Ferie", "Impegno personale"):') || null;
+        const { error } = await sb.from('richieste').insert({
+          giorno: btn.dataset.blockDate, ora: btn.dataset.blockTime, idea: motivo, stato: 'bloccato'
+        });
+        if (error) { alert(error.code === '23505' ? 'Questo orario è già occupato.' : 'Errore, riprova.'); return; }
+        refresh();
+      });
+    });
+    agenda.querySelectorAll('[data-unblock-id]').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        if (!confirm('Sbloccare questo orario?')) return;
+        await sb.from('richieste').delete().eq('id', btn.dataset.unblockId);
+        refresh();
+      });
     });
   }
 

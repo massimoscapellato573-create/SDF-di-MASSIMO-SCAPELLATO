@@ -217,6 +217,8 @@
   .cal-slot{border:1px solid var(--line);background:none;color:var(--ink);padding:10px 18px;cursor:pointer;font-family:'Jost',sans-serif;font-size:.88rem;letter-spacing:.06em;transition:border-color .2s, background .2s}
   .cal-slot:hover{border-color:var(--gold-dim)}
   .cal-slot.sel{border-color:var(--gold);background:rgba(200,164,92,.12);color:var(--gold-2)}
+  .cal-slot.disabled{color:var(--muted-2);opacity:.3;cursor:default;text-decoration:line-through}
+  .cal-slots-hint{color:var(--muted-2);font-size:.86rem;font-style:italic;font-family:'Cormorant Garamond',serif}
   .cal-fields input{width:100%;background:var(--bg-2);border:1px solid var(--line);color:var(--ink);padding:14px 16px;font-family:'Jost',sans-serif;font-size:.92rem;letter-spacing:.02em}
   .cal-fields input::placeholder{color:var(--muted-2)}
   .cal-fields input:focus{outline:none;border-color:var(--gold)}
@@ -668,6 +670,17 @@
   let viewYear = minDate.getFullYear();
   let viewMonth = minDate.getMonth();
 
+  /* Orari già occupati (accettati, confermati o bloccati) — chiave "AAAA-MM-GG|HH:MM" */
+  let occupiedSlots = new Set();
+  async function loadOccupiedSlots() {
+    if (!sb) return;
+    const { data, error } = await sb.rpc('slot_occupati');
+    if (error || !data) return;
+    occupiedSlots = new Set(data.map(r => r.giorno + '|' + r.ora));
+    renderMonth();
+    renderSlots();
+  }
+
   function sameMonth(y1, m1, y2, m2) { return y1 === y2 && m1 === m2; }
 
   function renderMonth() {
@@ -691,19 +704,64 @@
       b.type = 'button';
       b.className = 'cal-day';
       b.textContent = day;
-      const disabled = date < minDate || date > maxDate || date.getDay() === 0; // domenica chiusa
+      const outOfRange = date < minDate || date > maxDate || date.getDay() === 0; // domenica chiusa
+      const disabled = outOfRange || isDayFull(date);
       if (disabled) {
         b.classList.add('disabled');
         b.disabled = true;
+        if (!outOfRange) b.title = 'Giornata al completo';
       } else {
         if (selDate && selDate.getTime() === date.getTime()) b.classList.add('sel');
         b.addEventListener('click', () => {
           selDate = date;
+          selTime = null;
           renderMonth();
+          renderSlots();
           checkFormReady();
         });
       }
       calGrid.appendChild(b);
+    }
+  }
+
+  function isDayFull(date) {
+    if (!occupiedSlots.size) return false;
+    const iso = isoDate(date);
+    for (let h = 10; h <= 18; h++) {
+      if (!occupiedSlots.has(iso + '|' + h + ':00')) return false;
+    }
+    return true;
+  }
+
+  function renderSlots() {
+    calSlots.innerHTML = '';
+    if (!selDate) {
+      const hint = document.createElement('p');
+      hint.className = 'cal-slots-hint';
+      hint.textContent = 'Scegli prima un giorno.';
+      calSlots.appendChild(hint);
+      return;
+    }
+    const iso = isoDate(selDate);
+    for (let h = 10; h <= 18; h++) {
+      const t = h + ':00';
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'cal-slot';
+      b.textContent = t;
+      if (occupiedSlots.has(iso + '|' + t)) {
+        b.classList.add('disabled');
+        b.disabled = true;
+      } else {
+        if (selTime === t) b.classList.add('sel');
+        b.addEventListener('click', () => {
+          calSlots.querySelectorAll('.sel').forEach(x => x.classList.remove('sel'));
+          b.classList.add('sel');
+          selTime = t;
+          checkFormReady();
+        });
+      }
+      calSlots.appendChild(b);
     }
   }
 
@@ -718,21 +776,8 @@
     renderMonth();
   });
   renderMonth();
-
-  for (let h = 10; h <= 18; h++) {
-    const t = h + ':00';
-    const b = document.createElement('button');
-    b.type = 'button';
-    b.className = 'cal-slot';
-    b.textContent = t;
-    b.addEventListener('click', () => {
-      calSlots.querySelectorAll('.sel').forEach(x => x.classList.remove('sel'));
-      b.classList.add('sel');
-      selTime = t;
-      checkFormReady();
-    });
-    calSlots.appendChild(b);
-  }
+  renderSlots();
+  loadOccupiedSlots();
 
   function checkFormReady() {
     const ready = selDate && selTime && calNome.value.trim() && calTelefono.value.trim();

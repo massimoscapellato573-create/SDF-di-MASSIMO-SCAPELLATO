@@ -185,9 +185,9 @@
         </div>`);
     } else if (info.stato === 'accettata') {
       render(`
-        <span class="badge ok"><span class="dot"></span>Appuntamento confermato</span>
+        <span class="badge wait"><span class="dot"></span>In attesa di pagamento</span>
         <h1>${when} alle ${info.ora}</h1>
-        <p class="lede">Per bloccare la data versa l'acconto qui sotto tramite bonifico, indicando il tuo nome nella causale.</p>
+        <p class="lede">Pietro ha accettato: per bloccare la data versa l'acconto qui sotto tramite bonifico, indicando il tuo nome nella causale. L'appuntamento sarà confermato non appena il pagamento risulta ricevuto.</p>
         <div class="deposit-box">
           <div class="lbl">Acconto da versare</div>
           <div class="amt">${fmtEuro(info.acconto_importo)}</div>
@@ -195,7 +195,7 @@
             <code id="ibanCode">IT02 L036 6901 6009 1219 4716 873</code>
             <button class="iban-copy" id="ibanCopyBtn" type="button">Copia</button>
           </div>
-          <p class="deposit-note">L'acconto è rimborsabile se disdici entro 4 giorni prima dell'appuntamento.</p>
+          <p class="deposit-note">L'acconto è rimborsabile se disdici entro 4 giorni prima dell'appuntamento. Questa pagina si aggiorna da sola appena Pietro conferma il pagamento ricevuto.</p>
         </div>`);
       document.getElementById('ibanCopyBtn').addEventListener('click', () => {
         navigator.clipboard.writeText('IT02L0366901600912194716873').then(() => {
@@ -204,6 +204,14 @@
           setTimeout(() => { btn.textContent = 'Copia'; }, 2000);
         });
       });
+    } else if (info.stato === 'confermata') {
+      render(`
+        <span class="badge ok"><span class="dot"></span>Appuntamento confermato</span>
+        <h1>${when} alle ${info.ora}</h1>
+        <p class="lede">Pagamento ricevuto, la data è bloccata. Ci vediamo in studio — a Catania, dal lunedì al sabato.</p>
+        <div class="confirm-actions">
+          <a class="btn btn-wa" href="https://wa.me/message/6XITFZZ7OLKWH1" target="_blank" rel="noopener">Scrivimi su WhatsApp</a>
+        </div>`);
     } else if (info.stato === 'rifiutata') {
       render(`
         <span class="badge no"><span class="dot"></span>Data non disponibile</span>
@@ -223,11 +231,12 @@
     if (!data || !data.length) { renderNotFound(); return; }
     const info = data[0];
     renderState(info);
-    if (info.stato !== 'in_attesa' && pollTimer) {
+    const stillWaiting = info.stato === 'in_attesa' || info.stato === 'accettata';
+    if (!stillWaiting && pollTimer) {
       clearInterval(pollTimer);
       pollTimer = null;
     }
-    if (info.stato === 'rifiutata') localStorage.removeItem('darko_richiesta_id');
+    if (!stillWaiting) localStorage.removeItem('darko_richiesta_id');
   }
 
   if (!sb || !id) {
