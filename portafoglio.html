@@ -783,6 +783,7 @@ function entra(){
   $("app").classList.remove("hidden");
   $("barra").classList.remove("hidden");
   pinBuf = ""; messaggio(""); disegna(); resetAutolock();
+  memoriaStabile();
 }
 function blocca(){
   chiave = null; stato = { carte: [], movimenti: [] }; pinBuf = "";
@@ -861,6 +862,16 @@ function dataUmana(iso){
   return new Date(+a, +m - 1, +g).toLocaleDateString("it-IT",
     { day:"numeric", month:"long", year: a === String(new Date().getFullYear()) ? undefined : "numeric" });
 }
+/* Chiede al telefono di NON cancellare i dati per fare spazio.
+   Su iPhone è la differenza fra ritrovare il portafoglio e trovarlo vuoto. */
+async function memoriaStabile(){
+  try {
+    if (!navigator.storage?.persist) return null;
+    if (await navigator.storage.persisted()) return true;
+    return await navigator.storage.persist();
+  } catch { return null; }
+}
+
 function avviso(testo){
   document.querySelectorAll(".toast").forEach(t => t.remove());
   const t = document.createElement("div");
@@ -1368,6 +1379,7 @@ function schedaElimina(id){
 function schedaMenu(){
   const s = apri(`
     <h2>Impostazioni</h2>
+    <div id="statoMem" class="warn-msg" style="display:none"></div>
     <div class="menu-list">
       <button class="menu-item" id="mBackup">
         <svg viewBox="0 0 24 24"><path d="M12 3v12M8 11l4 4 4-4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
@@ -1390,6 +1402,16 @@ function schedaMenu(){
   `);
 
   s.querySelector("#mChiudi").addEventListener("click", () => s.remove());
+
+  /* stato della memoria: avvisa solo quando c'è davvero un rischio */
+  memoriaStabile().then(stabile => {
+    const box = s.querySelector("#statoMem");
+    if (!box || stabile === true) return;
+    box.style.display = "";
+    box.innerHTML = stabile === false
+      ? "Questo telefono <b>non garantisce</b> di tenere i dati salvati per sempre. Aggiungi la pagina alla schermata Home e salva ogni tanto una copia."
+      : "Non riesco a sapere se il telefono terrà i dati al sicuro. Salva ogni tanto una copia, per sicurezza.";
+  });
 
   s.querySelector("#mBackup").addEventListener("click", () => {
     const archivio = localStorage.getItem(STORE_KEY);
