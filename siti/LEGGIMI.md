@@ -26,9 +26,10 @@ separato e il link vecchio resta indietro.
 
 ## Da sapere prima di metterci mano
 
-I dieci file dei mestieri (tutti tranne `cioccolateria-modica.html`) sono nati
-dallo stesso scheletro: cambiano colori, caratteri, testi e l'oggetto 3D, ma
-l'ordine delle sezioni e' identico. Chi li rifa' dovrebbe cambiare proprio la
+Rifatti a mano, con struttura propria: `cioccolateria-modica.html`, `fioraio.html`.
+
+Gli altri nove sono ancora nati dallo stesso scheletro: cambiano colori,
+caratteri, testi e l'oggetto 3D, ma l'ordine delle sezioni e' identico. Chi li rifa' dovrebbe cambiare proprio la
 struttura, non solo la pelle: apertura diversa, sezioni in ordine diverso,
 meccaniche di scorrimento diverse. `cioccolateria-modica.html` e' invece
 costruito a mano ed e' il metro di paragone giusto.
