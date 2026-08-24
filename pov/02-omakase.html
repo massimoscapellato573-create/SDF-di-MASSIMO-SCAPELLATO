@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KOMOREBI — Omakase, dieci posti</title>
+<meta name="description" content="Concept sito per ristorante omakase: menu unico, prenotazione, atmosfera.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0a0c0b">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23D64545'/%3E%3Ctext x='32' y='43' font-size='30' font-family='sans-serif' font-weight='700' fill='%230a0c0b' text-anchor='middle'%3E木%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Manrope:wght@300;400;500;600&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0c0b; --surf:rgba(255,255,255,.028); --text:#f1ebe1; --muted:#98a09a;
+  --acc:#D64545; --acc2:#C9B27C; --line:rgba(241,235,225,.13); --r:2px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{font-family:'Manrope',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.55;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+section{position:relative;z-index:3}
+::selection{background:var(--acc);color:var(--bg)}
+.wrap{max-width:1240px;margin:0 auto;padding:0 clamp(18px,4.4vw,52px)}
+.kick{font-family:'Space Mono',monospace;font-size:.68rem;letter-spacing:.24em;text-transform:uppercase;color:var(--acc)}
+h1,h2,h3,.brand-t{font-family:'Cormorant Garamond',Georgia,serif;text-transform:none;letter-spacing:-.01em;line-height:1.02;font-weight:500}
+h1{font-size:clamp(2.3rem,5.6vw,4.6rem)}
+h2{font-size:clamp(1.9rem,4.4vw,3.3rem)}
+
+/* ---- fondali ---- */
+.bg-layers{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.b1{position:absolute;width:min(58vw,520px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,#D64545,transparent 68%);
+  filter:blur(60px);opacity:.34;top:-8vh;right:6vw}
+.b2{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(201,178,124,.1),transparent 55%)}
+.b3{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 55%,transparent 35%,rgba(3,4,4,.92) 100%)}
+.grain{position:fixed;inset:0;z-index:2;pointer-events:none;opacity:.22;mix-blend-mode:soft-light;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* ---- nav ---- */
+.nav{position:fixed;top:0;left:0;right:0;z-index:60;transition:.35s}
+.nav.on{background:rgba(10,12,11,.82);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:15px}
+.brand{display:flex;align-items:center;gap:11px}
+.brand-m{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:.9rem;font-weight:500;background:var(--acc);color:var(--bg)}
+.brand-t{font-size:1.06rem}
+.brand small{display:block;font-family:'Space Mono',monospace;font-weight:400;font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.menu{display:flex;gap:26px}
+.menu a{font-size:.88rem;color:var(--muted);position:relative;transition:.25s}
+.menu a::after{content:"";position:absolute;left:0;bottom:-5px;width:0;height:1px;background:var(--acc);transition:.3s}
+.menu a:hover{color:var(--text)}.menu a:hover::after{width:100%}
+@media(max-width:900px){.menu{display:none}}
+.btn{display:inline-flex;align-items:center;gap:9px;padding:13px 24px;border-radius:var(--r);font-weight:600;font-size:.9rem;
+  transition:transform .28s,box-shadow .3s,background .3s,color .3s,border-color .3s;white-space:nowrap;border:1px solid transparent;cursor:pointer}
+.btn-1{background:var(--acc);color:var(--bg);box-shadow:0 14px 34px -16px var(--acc)}
+.btn-1:hover{transform:translateY(-3px);box-shadow:0 22px 44px -16px var(--acc)}
+.btn-2{border-color:var(--line);color:var(--text)}
+.btn-2:hover{border-color:var(--acc);color:var(--acc);transform:translateY(-3px)}
+
+/* ---- hero ---- */
+.hero{min-height:100svh;display:flex;align-items:center;padding:120px 0 60px}
+.hero-grid{display:grid;gap:clamp(28px,5vw,64px);align-items:center}
+.hero.split .hero-grid{grid-template-columns:1.04fr .96fr}
+.hero.rev .hero-grid{grid-template-columns:.96fr 1.04fr}
+.hero.rev .hero-copy{order:2}
+.hero.center .hero-grid{grid-template-columns:1fr;text-align:center;justify-items:center}
+.hero.center .lead{margin-inline:auto}
+.hero.center .cta-row{justify-content:center}
+.hero.center .chips{justify-content:center}
+.hero.center .stage{min-height:min(26vh,205px)}
+.hero.center{padding:104px 0 34px}
+.hero.center h1{margin:16px 0 14px}
+@media(min-width:981px){.hero.center .chips{display:none}}
+@media(max-width:980px){.hero .hero-grid{grid-template-columns:1fr!important}.hero.rev .hero-copy{order:0}}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;padding:8px 15px;border-radius:999px;border:1px solid var(--line);
+  color:var(--muted);background:rgba(255,255,255,.025);font-family:'Space Mono',monospace;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase}
+.eyebrow b{width:7px;height:7px;border-radius:50%;background:var(--acc);animation:bl 2s infinite}
+@keyframes bl{50%{opacity:.25}}
+h1{margin:22px 0 20px}
+h1 .acc{color:var(--acc)}
+h1 .out{color:transparent;-webkit-text-stroke:1.4px var(--text)}
+.lead{color:var(--muted);max-width:48ch;font-size:clamp(1rem,1.35vw,1.1rem);font-weight:300}
+.cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+.chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:32px}
+.chips i{font-style:normal;font-size:.72rem;padding:7px 13px;border-radius:999px;border:1px solid var(--line);color:var(--muted)}
+
+/* ---- gadget 3D ---- */
+.stage{perspective:1200px;display:grid;place-items:center;min-height:min(56vh,440px);position:relative}
+.plate-scene{position:relative;transform-style:preserve-3d;will-change:transform;display:grid;place-items:center}
+.plate{width:min(48vw,225px);aspect-ratio:1;border-radius:50%;transform:rotateX(64deg);position:relative;
+  background:radial-gradient(circle at 40% 35%,#2a2f2c,#111413 70%);
+  box-shadow:0 40px 90px -30px #000,inset 0 0 60px rgba(0,0,0,.8),0 0 0 1px rgba(241,235,225,.12);
+  animation:plate-turn 26s linear infinite;transform-style:preserve-3d}
+@keyframes plate-turn{from{transform:rotateX(64deg) rotateZ(0)}to{transform:rotateX(64deg) rotateZ(360deg)}}
+.nig{position:absolute;width:60px;height:30px;border-radius:18px;background:linear-gradient(180deg,#f6f1e6,#d9d1c0);
+  box-shadow:0 8px 16px rgba(0,0,0,.55);transform-style:preserve-3d}
+.nig::after{content:"";position:absolute;left:4px;right:4px;top:-9px;height:20px;border-radius:16px}
+.n1{top:22%;left:24%}.n1::after{background:linear-gradient(180deg,#e8674f,#c33c2c)}
+.n2{top:52%;left:46%}.n2::after{background:linear-gradient(180deg,#f0a35e,#d3762f)}
+.n3{top:28%;left:56%}.n3::after{background:linear-gradient(180deg,#e5d2a8,#c2a86f)}
+.ripple{position:absolute;width:min(62vw,300px);aspect-ratio:1;border:1px solid rgba(214,69,69,.3);border-radius:50%;
+  transform:rotateX(64deg);animation:rip 5s ease-out infinite}
+.ripple.d2{animation-delay:-1.6s}.ripple.d3{animation-delay:-3.2s}
+@keyframes rip{0%{opacity:.8;scale:.55}100%{opacity:0;scale:1.15}}
+.kanji{position:absolute;font-family:'Cormorant Garamond',serif;font-size:clamp(3.4rem,11vw,7rem);color:rgba(241,235,225,.05);
+  top:-6%;left:50%;transform:translateX(-50%);pointer-events:none;user-select:none}
+
+/* ---- marquee ---- */
+.marq{border-block:1px solid var(--line);padding:13px 0;overflow:hidden;background:rgba(255,255,255,.025)}
+.marq-in{display:flex;gap:44px;width:max-content;animation:run 26s linear infinite;font-family:'Cormorant Garamond',Georgia,serif;
+  text-transform:none;letter-spacing:-.01em;font-size:clamp(1.1rem,2.6vw,1.8rem);font-weight:500}
+.marq-in em{font-style:normal;color:var(--acc)}
+@keyframes run{to{transform:translateX(-50%)}}
+
+/* ---- sezioni ---- */
+.sec{padding:clamp(70px,10vw,140px) 0}
+.sec-head{max-width:720px;margin-bottom:clamp(34px,5vw,60px)}
+.sec-head h2{margin:12px 0 14px}
+.sec-head p{color:var(--muted);font-weight:300}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(275px,1fr));gap:18px}
+.card{position:relative;padding:30px 26px;border-radius:var(--r);border:1px solid var(--line);background:var(--surf);
+  overflow:hidden;transition:transform .4s cubic-bezier(.2,.8,.2,1),border-color .35s}
+.card:hover{transform:translateY(-6px);border-color:var(--acc)}
+.card .n{font-family:'Space Mono',monospace;font-size:.66rem;letter-spacing:.22em;color:var(--acc)}
+.card h3{font-size:1.34rem;margin:12px 0 10px}
+.card p{color:var(--muted);font-size:.93rem;font-weight:300}
+.card .halo{position:absolute;width:170px;height:170px;border-radius:50%;filter:blur(52px);opacity:.4;top:-70px;right:-50px;
+  background:var(--acc);pointer-events:none;transition:.4s}
+.card:hover .halo{opacity:.72}
+.list{border-top:1px solid var(--line)}
+.row{display:grid;grid-template-columns:70px 1fr auto;gap:clamp(12px,3vw,34px);align-items:center;padding:clamp(18px,3vw,30px) 0;
+  border-bottom:1px solid var(--line);transition:.4s}
+.row:hover{padding-left:14px}
+.row:hover h3{color:var(--acc)}
+.row .n{font-family:'Space Mono',monospace;color:var(--muted);font-size:.75rem;letter-spacing:.18em}
+.row h3{font-size:clamp(1.15rem,2.6vw,1.7rem);transition:.3s}
+.row p{color:var(--muted);font-size:.9rem;font-weight:300;margin-top:6px;max-width:64ch}
+.row .a{width:46px;height:46px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;transition:.35s}
+.row:hover .a{background:var(--acc);color:var(--bg);border-color:transparent;transform:rotate(-45deg)}
+@media(max-width:700px){.row{grid-template-columns:1fr auto}.row .n{display:none}}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:16px}
+.st{padding:30px 20px;border-radius:var(--r);border:1px solid var(--line);text-align:center;background:var(--surf)}
+.st b{display:block;font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(2rem,5vw,3rem);color:var(--acc);line-height:1;font-weight:500}
+.st small{color:var(--muted);font-family:'Space Mono',monospace;font-size:.66rem;letter-spacing:.18em;text-transform:uppercase}
+.quote{border:1px solid var(--line);border-radius:var(--r);padding:clamp(26px,4vw,52px);background:var(--surf)}
+.quote p{font-size:clamp(1.05rem,2vw,1.42rem);font-weight:300;line-height:1.45}
+.quote p b{color:var(--acc);font-weight:600}
+.who{display:flex;align-items:center;gap:13px;margin-top:24px}
+.who em{font-style:normal;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-weight:700;background:var(--acc);color:var(--bg)}
+.who small{display:block;color:var(--muted);font-size:.78rem}
+.cta-box{position:relative;border-radius:var(--r);padding:clamp(40px,6.5vw,84px);text-align:center;overflow:hidden;
+  border:1px solid var(--line);background:var(--surf)}
+.cta-box h2{max-width:18ch;margin:12px auto 16px}
+.cta-box p{color:var(--muted);max-width:52ch;margin:0 auto 28px;font-weight:300}
+footer{border-top:1px solid var(--line);padding:48px 0 34px;position:relative;z-index:3}
+.f3{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:28px}
+@media(max-width:800px){.f3{grid-template-columns:1fr 1fr}}
+footer p,footer a{color:var(--muted);font-size:.87rem;font-weight:300}
+footer a:hover{color:var(--acc)}
+footer h5{font-family:'Space Mono',monospace;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--text);margin-bottom:11px}
+.fb{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
+  color:var(--muted);font-family:'Space Mono',monospace;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase}
+.rv{opacity:0;transform:translateY(32px);transition:opacity .85s cubic-bezier(.2,.8,.2,1),transform .85s cubic-bezier(.2,.8,.2,1)}
+.rv.in{opacity:1;transform:none}
+@media(max-width:620px){
+  .brand small{display:none}
+  .brand-m{width:34px;height:34px}
+  .nav-in{padding-block:11px}
+  .nav .btn{padding:10px 15px;font-size:.79rem}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="bg-layers"><div class="b1"></div><div class="b2"></div><div class="b3"></div></div>
+<div class="grain"></div>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top"><span class="brand-m">木</span><span class="brand-t">KOMOREBI<small>Omakase · Milano</small></span></a>
+    <nav class="menu"><a href="#servizi">Omakase</a><a href="#storia">La sala</a><a href="#contatti">Prenota</a></nav>
+    <a class="btn btn-1" href="#contatti">Prenota</a>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero center">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <span class="eyebrow"><b></b> Dieci coperti · due turni a sera</span>
+      <h1>Dieci posti.<br>Nessun menu.<br><span class="acc">Solo fiducia.</span></h1>
+      <p class="lead">Omakase significa «lascio decidere a te». Ogni sera lo chef costruisce diciotto passaggi su quello che il mercato ha portato quella mattina. Tu ti siedi e basta.</p>
+      <div class="cta-row">
+        <a class="btn btn-1" href="#contatti">Prenota il tuo posto</a>
+        <a class="btn btn-2" href="#servizi">Come funziona</a>
+      </div>
+      <div class="chips"><i>18 portate</i><i>Due turni: 19:30 / 21:45</i><i>Pesce del giorno</i><i>Sake pairing</i></div>
+    </div>
+    <div class="stage"><span class="kanji">旬</span>
+      <div class="ripple"></div><div class="ripple d2"></div><div class="ripple d3"></div>
+      <div class="plate-scene gad"><div class="plate"><span class="nig n1"></span><span class="nig n2"></span><span class="nig n3"></span></div></div></div>
+  </div>
+</section>
+
+<div class="marq"><div class="marq-in"><span>旬</span><em>Omakase</em><span>刺身</span><em>Nigiri</em><span>出汁</span><em>Sake</em><span>焼き</span><em>Stagione</em><span>旬</span><em>Omakase</em><span>刺身</span><em>Nigiri</em><span>出汁</span><em>Sake</em><span>焼き</span><em>Stagione</em></div></div>
+
+<section class="sec" id="servizi">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="kick">// L'esperienza</span>
+      <h2>Come funziona<br>una sera da noi.</h2>
+      <p>Nessuna carta, nessuna scelta da fare. Solo il ritmo dello chef e il banco di cipresso davanti a te.</p>
+    </div>
+    <div class="cards"><article class="card rv"><div class="halo"></div><span class="n">01</span><h3>Il banco, non il tavolo</h3><p>Otto sedute al banco e un tavolo da due. Vedi ogni gesto: il taglio, la brace, il riso stretto al momento.</p></article>
+      <article class="card rv"><div class="halo"></div><span class="n">02</span><h3>Diciotto passaggi</h3><p>Si comincia leggeri e si chiude con brodo e dolce. Ogni boccone arriva già condito: va mangiato entro dieci secondi.</p></article>
+      <article class="card rv"><div class="halo"></div><span class="n">03</span><h3>Sake in abbinamento</h3><p>Sei calici scelti sul percorso della serata, oppure tè freddo in infusione per chi non beve alcol.</p></article></div>
+  </div>
+</section>
+
+<section class="sec" id="storia">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="kick">// La sala</span>
+      <h2>Silenzio, legno, brace.</h2>
+      <p>Un locale piccolo per scelta: si cucina per dieci persone, non per cento.</p>
+    </div>
+    <div class="list"><a class="row rv" href="#contatti"><span class="n">001</span><div><h3>Pesce comprato la mattina</h3><p>Nessun magazzino: quello che non entra nel percorso della sera non entra nel locale.</p></div><span class="a">&#8599;</span></a>
+      <a class="row rv" href="#contatti"><span class="n">002</span><div><h3>Due turni, orari fissi</h3><p>Il percorso dura due ore esatte. Arrivare in ritardo significa perdere i primi passaggi.</p></div><span class="a">&#8599;</span></a>
+      <a class="row rv" href="#contatti"><span class="n">003</span><div><h3>Prenotazione con acconto</h3><p>Dieci posti sono dieci: l'acconto serve a tenere il banco pieno anche il martedì.</p></div><span class="a">&#8599;</span></a></div>
+    <div class="stats rv" style="margin-top:44px"><div class="st"><b data-count="10" data-suf="">0</b><small>Coperti a turno</small></div>
+      <div class="st"><b data-count="18" data-suf="">0</b><small>Passaggi</small></div>
+      <div class="st"><b data-count="2" data-suf="">0</b><small>Ore di percorso</small></div>
+      <div class="st"><b>2 GG</b><small>Chiuso domenica e lunedì</small></div></div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <div class="quote rv">
+      <span class="kick">// Lo chef</span>
+      <p style="margin-top:14px">«Non scrivo il menu perché non lo decido io: <b>lo decide il mare</b>. Il mio lavoro è togliere tutto quello che non serve al boccone.»</p>
+      <div class="who"><em>RT</em><div><strong>Riccardo Tani</strong><small>Chef · Komorebi</small></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="contatti">
+  <div class="wrap">
+    <div class="cta-box rv">
+      <span class="kick">// Prenotazione</span>
+      <h2>Il banco si prenota con settimane di anticipo.</h2>
+      <p>Scegli la data e il turno: ti mandiamo la conferma con il link per l'acconto. Allergie e intolleranze si comunicano alla prenotazione, non la sera stessa.</p>
+      <div class="cta-row" style="justify-content:center">
+        <a class="btn btn-1" href="#top">Prenota una serata</a>
+        <a class="btn btn-2" href="#servizi">Leggi le regole del banco</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap f3">
+    <div>
+      <a class="brand" href="#top"><span class="brand-m">木</span><span class="brand-t">KOMOREBI<small>Omakase · Milano</small></span></a>
+      <p style="margin-top:14px;max-width:34ch">Ristorante omakase a Milano. Dieci coperti, due turni a sera, percorso di diciotto passaggi.</p>
+    </div>
+    <div><h5>Contatti</h5><p>prenota@komorebi.milano</p><p>Via dei Fiori 4, Milano</p><p>Mar–Sab · 19:30 e 21:45</p></div>
+    <div><h5>Buono a sapersi</h5><p>Acconto alla prenotazione</p><p>Avvisa per allergie</p><p>Niente foto col flash</p></div>
+  </div>
+  <div class="wrap fb"><span>© <span id="y"></span> KOMOREBI</span><span>Concept demo · non è un sito reale</span></div>
+</footer>
+
+<script>
+document.getElementById('y').textContent=new Date().getFullYear();
+addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('on',scrollY>40)},{passive:true});
+const io=new IntersectionObserver(es=>{es.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('in'),i*70);io.unobserve(e.target)}})},{threshold:.13});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+const ci=new IntersectionObserver(es=>{es.forEach(e=>{if(!e.isIntersecting)return;const el=e.target,end=+el.dataset.count;let n=0;
+ (function s(){n+=Math.max(1,end/26);if(n>=end){el.textContent=end+(el.dataset.suf||'');return}el.textContent=Math.floor(n)+(el.dataset.suf||'');requestAnimationFrame(s)})();ci.unobserve(el)})},{threshold:.6});
+document.querySelectorAll('[data-count]').forEach(el=>ci.observe(el));
+(function(){const st=document.querySelector('.stage'),g=document.querySelector('.gad');if(!g)return;let rx=0,ry=0,tx=0,ty=0;
+ addEventListener('mousemove',e=>{ty=((e.clientX/innerWidth)-.5)*14;tx=-((e.clientY/innerHeight)-.5)*14*.7},{passive:true});
+ (function l(){rx+=(tx-rx)*.06;ry+=(ty-ry)*.06;g.style.transform='rotateX('+rx+'deg) rotateY('+ry+'deg)';requestAnimationFrame(l)})();})();
+document.querySelectorAll('.card').forEach(c=>{c.addEventListener('mousemove',e=>{const r=c.getBoundingClientRect();
+ c.style.transform='perspective(900px) rotateY('+(((e.clientX-r.left)/r.width-.5)*6)+'deg) rotateX('+(-((e.clientY-r.top)/r.height-.5)*6)+'deg) translateY(-6px)'});
+ c.addEventListener('mouseleave',()=>c.style.transform='')});
+</script>
+</body>
+</html>

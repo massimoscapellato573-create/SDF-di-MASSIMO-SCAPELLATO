@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NERO INK — Tattoo Studio</title>
+<meta name="description" content="Concept sito per studio di tatuaggi: artisti, prenotazione, portfolio.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#08080a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23E11D48'/%3E%3Ctext x='32' y='43' font-size='30' font-family='sans-serif' font-weight='700' fill='%2308080a' text-anchor='middle'%3EN%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#08080a; --surf:rgba(255,255,255,.035); --text:#f5f5f6; --muted:#8a8a92;
+  --acc:#E11D48; --acc2:#f5f5f6; --line:rgba(245,245,246,.14); --r:0px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.55;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+section{position:relative;z-index:3}
+::selection{background:var(--acc);color:var(--bg)}
+.wrap{max-width:1240px;margin:0 auto;padding:0 clamp(18px,4.4vw,52px)}
+.kick{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.24em;text-transform:uppercase;color:var(--acc)}
+h1,h2,h3,.brand-t{font-family:'Anton',Impact,sans-serif;text-transform:uppercase;letter-spacing:-.005em;line-height:1.02;font-weight:400}
+h1{font-size:clamp(2.3rem,5.6vw,4.6rem)}
+h2{font-size:clamp(1.9rem,4.4vw,3.3rem)}
+
+/* ---- fondali ---- */
+.bg-layers{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.b1{position:absolute;width:62vw;height:62vw;border-radius:50%;filter:blur(130px);opacity:.3;background:#E11D48;top:-22vw;left:-14vw}
+.b2{position:absolute;inset:0;opacity:.32;background-image:radial-gradient(rgba(245,245,246,.22) 1px,transparent 1px);background-size:6px 6px;
+  -webkit-mask:linear-gradient(160deg,#000,transparent 62%);mask:linear-gradient(160deg,#000,transparent 62%)}
+.b3{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 45%,transparent 28%,rgba(0,0,0,.94) 100%)}
+.grain{position:fixed;inset:0;z-index:2;pointer-events:none;opacity:.42;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* ---- nav ---- */
+.nav{position:fixed;top:0;left:0;right:0;z-index:60;transition:.35s}
+.nav.on{background:rgba(8,8,10,.84);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:15px}
+.brand{display:flex;align-items:center;gap:11px}
+.brand-m{width:40px;height:40px;border-radius:0px;display:grid;place-items:center;font-family:'Anton',Impact,sans-serif;
+  font-size:.9rem;font-weight:400;background:var(--acc);color:var(--bg)}
+.brand-t{font-size:1.06rem}
+.brand small{display:block;font-family:'JetBrains Mono',monospace;font-weight:400;font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.menu{display:flex;gap:26px}
+.menu a{font-size:.88rem;color:var(--muted);position:relative;transition:.25s}
+.menu a::after{content:"";position:absolute;left:0;bottom:-5px;width:0;height:1px;background:var(--acc);transition:.3s}
+.menu a:hover{color:var(--text)}.menu a:hover::after{width:100%}
+@media(max-width:900px){.menu{display:none}}
+.btn{display:inline-flex;align-items:center;gap:9px;padding:13px 24px;border-radius:var(--r);font-weight:600;font-size:.9rem;
+  transition:transform .28s,box-shadow .3s,background .3s,color .3s,border-color .3s;white-space:nowrap;border:1px solid transparent;cursor:pointer}
+.btn-1{background:var(--acc);color:var(--bg);box-shadow:0 14px 34px -16px var(--acc)}
+.btn-1:hover{transform:translateY(-3px);box-shadow:0 22px 44px -16px var(--acc)}
+.btn-2{border-color:var(--line);color:var(--text)}
+.btn-2:hover{border-color:var(--acc);color:var(--acc);transform:translateY(-3px)}
+
+/* ---- hero ---- */
+.hero{min-height:100svh;display:flex;align-items:center;padding:120px 0 60px}
+.hero-grid{display:grid;gap:clamp(28px,5vw,64px);align-items:center}
+.hero.split .hero-grid{grid-template-columns:1.04fr .96fr}
+.hero.rev .hero-grid{grid-template-columns:.96fr 1.04fr}
+.hero.rev .hero-copy{order:2}
+.hero.center .hero-grid{grid-template-columns:1fr;text-align:center;justify-items:center}
+.hero.center .lead{margin-inline:auto}
+.hero.center .cta-row{justify-content:center}
+.hero.center .chips{justify-content:center}
+.hero.center .stage{min-height:min(26vh,205px)}
+.hero.center{padding:104px 0 34px}
+.hero.center h1{margin:16px 0 14px}
+@media(min-width:981px){.hero.center .chips{display:none}}
+@media(max-width:980px){.hero .hero-grid{grid-template-columns:1fr!important}.hero.rev .hero-copy{order:0}}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;padding:8px 15px;border-radius:999px;border:1px solid var(--line);
+  color:var(--muted);background:rgba(255,255,255,.03);font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase}
+.eyebrow b{width:7px;height:7px;border-radius:50%;background:var(--acc);animation:bl 2s infinite}
+@keyframes bl{50%{opacity:.25}}
+h1{margin:22px 0 20px}
+h1 .acc{color:var(--acc)}
+h1 .out{color:transparent;-webkit-text-stroke:1.4px var(--text)}
+.lead{color:var(--muted);max-width:48ch;font-size:clamp(1rem,1.35vw,1.1rem);font-weight:300}
+.cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+.chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:32px}
+.chips i{font-style:normal;font-size:.72rem;padding:7px 13px;border-radius:999px;border:1px solid var(--line);color:var(--muted)}
+
+/* ---- gadget 3D ---- */
+.stage{perspective:1200px;display:grid;place-items:center;min-height:min(56vh,440px);position:relative}
+.flash{position:relative;transform-style:preserve-3d;will-change:transform;display:grid;place-items:center}
+.fcard{position:absolute;width:min(46vw,180px);aspect-ratio:.72;border:2px solid #f5f5f6;background:#0d0d10;
+  display:grid;place-items:center;box-shadow:0 30px 60px -26px #000;transform-style:preserve-3d}
+.fcard span{font-size:clamp(3rem,9vw,4.6rem);line-height:1;color:#f5f5f6}
+.fcard::after{content:"";position:absolute;inset:8px;border:1px solid rgba(245,245,246,.32)}
+.fc1{transform:translateZ(70px) rotate(-10deg) translateX(-96px);animation:fl1 9s ease-in-out infinite}
+.fc2{transform:translateZ(20px) rotate(3deg) translateX(14px);border-color:#E11D48;animation:fl2 9s ease-in-out infinite}
+.fc2 span{color:#E11D48}
+.fc3{transform:translateZ(-34px) rotate(13deg) translateX(124px);opacity:.72;animation:fl1 11s ease-in-out infinite reverse}
+@keyframes fl1{50%{transform:translateZ(70px) rotate(-7deg) translateX(-96px) translateY(-18px)}}
+@keyframes fl2{50%{transform:translateZ(20px) rotate(1deg) translateX(14px) translateY(-10px)}}
+.blot{position:absolute;width:min(84vw,400px);aspect-ratio:1;background:radial-gradient(circle,rgba(225,29,72,.5),transparent 62%);
+  filter:blur(30px);animation:blob 12s ease-in-out infinite}
+@keyframes blob{50%{transform:scale(1.18) translate(14px,-10px)}}
+.needle{position:absolute;width:2px;height:min(52vh,340px);background:linear-gradient(180deg,transparent,#f5f5f6,transparent);
+  opacity:.34;animation:nd 6s ease-in-out infinite}
+@keyframes nd{50%{transform:translateY(-16px) scaleY(1.08)}}
+.stamp{position:absolute;bottom:2%;font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.24em;text-transform:uppercase;
+  color:#E11D48;border:1px solid rgba(225,29,72,.5);padding:6px 12px}
+
+/* ---- marquee ---- */
+.marq{border-block:1px solid var(--line);padding:13px 0;overflow:hidden;background:rgba(255,255,255,.03)}
+.marq-in{display:flex;gap:44px;width:max-content;animation:run 26s linear infinite;font-family:'Anton',Impact,sans-serif;
+  text-transform:uppercase;letter-spacing:-.005em;font-size:clamp(1.1rem,2.6vw,1.8rem);font-weight:400}
+.marq-in em{font-style:normal;color:var(--acc)}
+@keyframes run{to{transform:translateX(-50%)}}
+
+/* ---- sezioni ---- */
+.sec{padding:clamp(70px,10vw,140px) 0}
+.sec-head{max-width:720px;margin-bottom:clamp(34px,5vw,60px)}
+.sec-head h2{margin:12px 0 14px}
+.sec-head p{color:var(--muted);font-weight:300}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(275px,1fr));gap:18px}
+.card{position:relative;padding:30px 26px;border-radius:var(--r);border:1px solid var(--line);background:var(--surf);
+  overflow:hidden;transition:transform .4s cubic-bezier(.2,.8,.2,1),border-color .35s}
+.card:hover{transform:translateY(-6px);border-color:var(--acc)}
+.card .n{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.22em;color:var(--acc)}
+.card h3{font-size:1.34rem;margin:12px 0 10px}
+.card p{color:var(--muted);font-size:.93rem;font-weight:300}
+.card .halo{position:absolute;width:170px;height:170px;border-radius:50%;filter:blur(52px);opacity:.4;top:-70px;right:-50px;
+  background:var(--acc);pointer-events:none;transition:.4s}
+.card:hover .halo{opacity:.72}
+.list{border-top:1px solid var(--line)}
+.row{display:grid;grid-template-columns:70px 1fr auto;gap:clamp(12px,3vw,34px);align-items:center;padding:clamp(18px,3vw,30px) 0;
+  border-bottom:1px solid var(--line);transition:.4s}
+.row:hover{padding-left:14px}
+.row:hover h3{color:var(--acc)}
+.row .n{font-family:'JetBrains Mono',monospace;color:var(--muted);font-size:.75rem;letter-spacing:.18em}
+.row h3{font-size:clamp(1.15rem,2.6vw,1.7rem);transition:.3s}
+.row p{color:var(--muted);font-size:.9rem;font-weight:300;margin-top:6px;max-width:64ch}
+.row .a{width:46px;height:46px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;transition:.35s}
+.row:hover .a{background:var(--acc);color:var(--bg);border-color:transparent;transform:rotate(-45deg)}
+@media(max-width:700px){.row{grid-template-columns:1fr auto}.row .n{display:none}}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:16px}
+.st{padding:30px 20px;border-radius:var(--r);border:1px solid var(--line);text-align:center;background:var(--surf)}
+.st b{display:block;font-family:'Anton',Impact,sans-serif;font-size:clamp(2rem,5vw,3rem);color:var(--acc);line-height:1;font-weight:400}
+.st small{color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.18em;text-transform:uppercase}
+.quote{border:1px solid var(--line);border-radius:var(--r);padding:clamp(26px,4vw,52px);background:var(--surf)}
+.quote p{font-size:clamp(1.05rem,2vw,1.42rem);font-weight:300;line-height:1.45}
+.quote p b{color:var(--acc);font-weight:600}
+.who{display:flex;align-items:center;gap:13px;margin-top:24px}
+.who em{font-style:normal;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-weight:700;background:var(--acc);color:var(--bg)}
+.who small{display:block;color:var(--muted);font-size:.78rem}
+.cta-box{position:relative;border-radius:var(--r);padding:clamp(40px,6.5vw,84px);text-align:center;overflow:hidden;
+  border:1px solid var(--line);background:var(--surf)}
+.cta-box h2{max-width:18ch;margin:12px auto 16px}
+.cta-box p{color:var(--muted);max-width:52ch;margin:0 auto 28px;font-weight:300}
+footer{border-top:1px solid var(--line);padding:48px 0 34px;position:relative;z-index:3}
+.f3{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:28px}
+@media(max-width:800px){.f3{grid-template-columns:1fr 1fr}}
+footer p,footer a{color:var(--muted);font-size:.87rem;font-weight:300}
+footer a:hover{color:var(--acc)}
+footer h5{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--text);margin-bottom:11px}
+.fb{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
+  color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase}
+.rv{opacity:0;transform:translateY(32px);transition:opacity .85s cubic-bezier(.2,.8,.2,1),transform .85s cubic-bezier(.2,.8,.2,1)}
+.rv.in{opacity:1;transform:none}
+@media(max-width:620px){
+  .brand small{display:none}
+  .brand-m{width:34px;height:34px}
+  .nav-in{padding-block:11px}
+  .nav .btn{padding:10px 15px;font-size:.79rem}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="bg-layers"><div class="b1"></div><div class="b2"></div><div class="b3"></div></div>
+<div class="grain"></div>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top"><span class="brand-m">N</span><span class="brand-t">NERO INK<small>Tattoo studio</small></span></a>
+    <nav class="menu"><a href="#servizi">Stili</a><a href="#storia">Studio</a><a href="#contatti">Prenota</a></nav>
+    <a class="btn btn-1" href="#contatti">Prenota</a>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero split">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <span class="eyebrow"><b></b> Torino · Borgo Vanchiglia</span>
+      <h1>La pelle<br><span class="acc">è la tela.</span></h1>
+      <p class="lead">Quattro artisti, quattro stili, zero copia-incolla da Pinterest. Portaci un'idea, anche confusa: la disegniamo da zero e te la mostriamo prima di accendere la macchinetta.</p>
+      <div class="cta-row">
+        <a class="btn btn-1" href="#contatti">Richiedi un preventivo</a>
+        <a class="btn btn-2" href="#servizi">Guarda gli stili</a>
+      </div>
+      <div class="chips"><i>Disegno originale</i><i>Consulenza gratuita</i><i>Coperture</i><i>Aftercare incluso</i></div>
+    </div>
+    <div class="stage"><div class="blot"></div><div class="needle"></div>
+      <div class="flash gad">
+        <div class="fcard fc3"><span>&#10020;</span></div>
+        <div class="fcard fc1"><span>&#10022;</span></div>
+        <div class="fcard fc2"><span>&#10059;</span></div>
+      </div>
+      <span class="stamp">Walk-in solo il giovedì</span></div>
+  </div>
+</section>
+
+<div class="marq"><div class="marq-in"><span>Blackwork</span><em>Fine line</em><span>Old school</span><em>Realismo</em><span>Giapponese</span><em>Lettering</em><span>Cover up</span><em>Geometrico</em><span>Blackwork</span><em>Fine line</em><span>Old school</span><em>Realismo</em><span>Giapponese</span><em>Lettering</em><span>Cover up</span><em>Geometrico</em></div></div>
+
+<section class="sec" id="servizi">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="kick">// Stili</span>
+      <h2>Quattro mani,<br>quattro linguaggi.</h2>
+      <p>Ogni artista lavora su appuntamento e disegna solo i pezzi che sa fare meglio. Se il tuo progetto è di un altro, te lo passiamo.</p>
+    </div>
+    <div class="cards"><article class="card rv"><div class="halo"></div><span class="n">01</span><h3>Blackwork &amp; geometrico</h3><p>Nero pieno, linee dure e simmetrie. Pezzi grandi costruiti su più sedute, con prova a matita sul corpo.</p></article>
+      <article class="card rv"><div class="halo"></div><span class="n">02</span><h3>Fine line &amp; micro</h3><p>Tratti sottili, botanica, scritte. Bellissimi da vicino: ti spieghiamo anche come invecchiano negli anni.</p></article>
+      <article class="card rv"><div class="halo"></div><span class="n">03</span><h3>Cover up e restauri</h3><p>Ricopriamo vecchi tatuaggi mal riusciti. Prima valutiamo se ha senso: a volte conviene la rimozione parziale.</p></article></div>
+  </div>
+</section>
+
+<section class="sec" id="storia">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="kick">// Lo studio</span>
+      <h2>Regole semplici,<br>niente sorprese.</h2>
+      <p>Ambiente sterile, materiale monouso, tutto in regola. E prezzi detti prima, non a lavoro finito.</p>
+    </div>
+    <div class="list"><a class="row rv" href="#contatti"><span class="n">001</span><div><h3>Consulenza gratuita, anche solo per capire</h3><p>Vieni con un'idea, esci con un disegno e un preventivo scritto. Non ti chiediamo niente per parlarne.</p></div><span class="a">&#8599;</span></a>
+      <a class="row rv" href="#contatti"><span class="n">002</span><div><h3>Acconto e disegno</h3><p>L'acconto blocca la data e paga il disegno. Se il progetto non ti convince, si modifica finché non è tuo.</p></div><span class="a">&#8599;</span></a>
+      <a class="row rv" href="#contatti"><span class="n">003</span><div><h3>Aftercare compreso</h3><p>Pellicola, crema e istruzioni scritte. Prima seduta di ritocco gratuita entro tre mesi.</p></div><span class="a">&#8599;</span></a></div>
+    <div class="stats rv" style="margin-top:44px"><div class="st"><b data-count="4" data-suf="">0</b><small>Artisti residenti</small></div>
+      <div class="st"><b data-count="11" data-suf="">0</b><small>Anni di studio</small></div>
+      <div class="st"><b data-count="0" data-suf="">0</b><small>Copie da Pinterest</small></div>
+      <div class="st"><b>1°</b><small>Ritocco incluso</small></div></div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <div class="quote rv">
+      <span class="kick">// Il fondatore</span>
+      <p style="margin-top:14px">«Un tatuaggio te lo porti trent'anni. <b>Se non sono convinto io, non lo faccio</b>: preferisco rimandarti a casa a pensarci una settimana.»</p>
+      <div class="who"><em>DR</em><div><strong>Davide Ruggeri</strong><small>Fondatore · Nero Ink</small></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="contatti">
+  <div class="wrap">
+    <div class="cta-box rv">
+      <span class="kick">// Prenota</span>
+      <h2>Portaci la tua idea.</h2>
+      <p>Mandaci riferimenti, zona del corpo e dimensione indicativa. Rispondiamo con artista consigliato, preventivo e prima data disponibile.</p>
+      <div class="cta-row" style="justify-content:center">
+        <a class="btn btn-1" href="#top">Manda l'idea</a>
+        <a class="btn btn-2" href="#servizi">Vedi il portfolio</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap f3">
+    <div>
+      <a class="brand" href="#top"><span class="brand-m">N</span><span class="brand-t">NERO INK<small>Tattoo studio</small></span></a>
+      <p style="margin-top:14px;max-width:34ch">Studio di tatuaggi a Torino. Progetti su misura, coperture e restauri, quattro artisti residenti.</p>
+    </div>
+    <div><h5>Contatti</h5><p>studio@neroink.it</p><p>Via Bava 27, Torino</p><p>Mar–Sab 12:00–20:00</p></div>
+    <div><h5>Regole</h5><p>Solo maggiorenni</p><p>Acconto alla prenotazione</p><p>Walk-in il giovedì</p></div>
+  </div>
+  <div class="wrap fb"><span>© <span id="y"></span> NERO INK</span><span>Concept demo · non è un sito reale</span></div>
+</footer>
+
+<script>
+document.getElementById('y').textContent=new Date().getFullYear();
+addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('on',scrollY>40)},{passive:true});
+const io=new IntersectionObserver(es=>{es.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('in'),i*70);io.unobserve(e.target)}})},{threshold:.13});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+const ci=new IntersectionObserver(es=>{es.forEach(e=>{if(!e.isIntersecting)return;const el=e.target,end=+el.dataset.count;let n=0;
+ (function s(){n+=Math.max(1,end/26);if(n>=end){el.textContent=end+(el.dataset.suf||'');return}el.textContent=Math.floor(n)+(el.dataset.suf||'');requestAnimationFrame(s)})();ci.unobserve(el)})},{threshold:.6});
+document.querySelectorAll('[data-count]').forEach(el=>ci.observe(el));
+(function(){const st=document.querySelector('.stage'),g=document.querySelector('.gad');if(!g)return;let rx=0,ry=0,tx=0,ty=0;
+ addEventListener('mousemove',e=>{ty=((e.clientX/innerWidth)-.5)*22;tx=-((e.clientY/innerHeight)-.5)*22*.7},{passive:true});
+ (function l(){rx+=(tx-rx)*.06;ry+=(ty-ry)*.06;g.style.transform='rotateX('+rx+'deg) rotateY('+ry+'deg)';requestAnimationFrame(l)})();})();
+document.querySelectorAll('.card').forEach(c=>{c.addEventListener('mousemove',e=>{const r=c.getBoundingClientRect();
+ c.style.transform='perspective(900px) rotateY('+(((e.clientX-r.left)/r.width-.5)*6)+'deg) rotateX('+(-((e.clientY-r.top)/r.height-.5)*6)+'deg) translateY(-6px)'});
+ c.addEventListener('mouseleave',()=>c.style.transform='')});
+</script>
+</body>
+</html>

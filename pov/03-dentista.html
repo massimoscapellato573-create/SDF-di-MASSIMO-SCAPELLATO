@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clinica Aurora — Odontoiatria</title>
+<meta name="description" content="Concept sito per studio dentistico: prima visita, trattamenti, prenotazione.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#f1f7fc">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231877F2'/%3E%3Ctext x='32' y='43' font-size='30' font-family='sans-serif' font-weight='700' fill='%23ffffff' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f1f7fc; --surf:#ffffff; --text:#0f2436; --muted:#5c7386;
+  --acc:#1877F2; --acc2:#18c9a4; --line:rgba(15,36,54,.12); --r:20px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{font-family:'Outfit',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.55;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+section{position:relative;z-index:3}
+::selection{background:var(--acc);color:var(--bg)}
+.wrap{max-width:1240px;margin:0 auto;padding:0 clamp(18px,4.4vw,52px)}
+.kick{font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.24em;text-transform:uppercase;color:var(--acc)}
+h1,h2,h3,.brand-t{font-family:'Outfit',system-ui,sans-serif;text-transform:none;letter-spacing:-.035em;line-height:1.02;font-weight:800}
+h1{font-size:clamp(2.3rem,5.6vw,4.6rem)}
+h2{font-size:clamp(1.9rem,4.4vw,3.3rem)}
+
+/* ---- fondali ---- */
+.bg-layers{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.b1{position:absolute;width:58vw;height:58vw;border-radius:50%;filter:blur(110px);opacity:.5;background:#9fd0ff;top:-16vw;right:-10vw}
+.b2{position:absolute;width:44vw;height:44vw;border-radius:50%;filter:blur(110px);opacity:.42;background:#a8f0e0;bottom:-12vw;left:-8vw}
+.b3{position:absolute;inset:0;opacity:.5;background-image:radial-gradient(rgba(15,36,54,.1) 1px,transparent 1px);background-size:26px 26px;
+  -webkit-mask:radial-gradient(ellipse at 50% 40%,#000,transparent 72%);mask:radial-gradient(ellipse at 50% 40%,#000,transparent 72%)}
+.grain{position:fixed;inset:0;z-index:2;pointer-events:none;opacity:.12;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* ---- nav ---- */
+.nav{position:fixed;top:0;left:0;right:0;z-index:60;transition:.35s}
+.nav.on{background:rgba(241,247,252,.85);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:15px}
+.brand{display:flex;align-items:center;gap:11px}
+.brand-m{width:40px;height:40px;border-radius:14px;display:grid;place-items:center;font-family:'Outfit',system-ui,sans-serif;
+  font-size:.9rem;font-weight:800;background:var(--acc);color:var(--bg)}
+.brand-t{font-size:1.06rem}
+.brand small{display:block;font-family:'IBM Plex Mono',monospace;font-weight:400;font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.menu{display:flex;gap:26px}
+.menu a{font-size:.88rem;color:var(--muted);position:relative;transition:.25s}
+.menu a::after{content:"";position:absolute;left:0;bottom:-5px;width:0;height:1px;background:var(--acc);transition:.3s}
+.menu a:hover{color:var(--text)}.menu a:hover::after{width:100%}
+@media(max-width:900px){.menu{display:none}}
+.btn{display:inline-flex;align-items:center;gap:9px;padding:13px 24px;border-radius:var(--r);font-weight:600;font-size:.9rem;
+  transition:transform .28s,box-shadow .3s,background .3s,color .3s,border-color .3s;white-space:nowrap;border:1px solid transparent;cursor:pointer}
+.btn-1{background:var(--acc);color:var(--bg);box-shadow:0 14px 34px -16px var(--acc)}
+.btn-1:hover{transform:translateY(-3px);box-shadow:0 22px 44px -16px var(--acc)}
+.btn-2{border-color:var(--line);color:var(--text)}
+.btn-2:hover{border-color:var(--acc);color:var(--acc);transform:translateY(-3px)}
+
+/* ---- hero ---- */
+.hero{min-height:100svh;display:flex;align-items:center;padding:120px 0 60px}
+.hero-grid{display:grid;gap:clamp(28px,5vw,64px);align-items:center}
+.hero.split .hero-grid{grid-template-columns:1.04fr .96fr}
+.hero.rev .hero-grid{grid-template-columns:.96fr 1.04fr}
+.hero.rev .hero-copy{order:2}
+.hero.center .hero-grid{grid-template-columns:1fr;text-align:center;justify-items:center}
+.hero.center .lead{margin-inline:auto}
+.hero.center .cta-row{justify-content:center}
+.hero.center .chips{justify-content:center}
+.hero.center .stage{min-height:min(26vh,205px)}
+.hero.center{padding:104px 0 34px}
+.hero.center h1{margin:16px 0 14px}
+@media(min-width:981px){.hero.center .chips{display:none}}
+@media(max-width:980px){.hero .hero-grid{grid-template-columns:1fr!important}.hero.rev .hero-copy{order:0}}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;padding:8px 15px;border-radius:999px;border:1px solid var(--line);
+  color:var(--muted);background:rgba(24,119,242,.06);font-family:'IBM Plex Mono',monospace;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase}
+.eyebrow b{width:7px;height:7px;border-radius:50%;background:var(--acc);animation:bl 2s infinite}
+@keyframes bl{50%{opacity:.25}}
+h1{margin:22px 0 20px}
+h1 .acc{color:var(--acc)}
+h1 .out{color:transparent;-webkit-text-stroke:1.4px var(--text)}
+.lead{color:var(--muted);max-width:48ch;font-size:clamp(1rem,1.35vw,1.1rem);font-weight:300}
+.cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+.chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:32px}
+.chips i{font-style:normal;font-size:.72rem;padding:7px 13px;border-radius:999px;border:1px solid var(--line);color:var(--muted)}
+
+/* ---- gadget 3D ---- */
+.stage{perspective:1200px;display:grid;place-items:center;min-height:min(56vh,440px);position:relative}
+.tooth-scene{position:relative;transform-style:preserve-3d;will-change:transform;display:grid;place-items:center}
+.tooth{width:clamp(120px,26vw,168px);height:clamp(150px,32vw,205px);position:relative;
+  animation:tfloat 7s ease-in-out infinite;filter:drop-shadow(0 26px 34px rgba(24,119,242,.32))}
+.tooth b{position:absolute;top:0;left:0;right:0;height:56%;display:block;
+  border-radius:48% 48% 32% 32%/56% 56% 26% 26%;background:linear-gradient(158deg,#ffffff,#dbe9f6);
+  box-shadow:inset -12px -12px 26px rgba(24,119,242,.18)}
+.tooth i{position:absolute;bottom:0;width:34%;height:52%;display:block;
+  background:linear-gradient(180deg,#f2f7fd,#cddff0);box-shadow:inset -6px -6px 14px rgba(24,119,242,.16)}
+.tooth i.l{left:8%;clip-path:polygon(0 0,100% 0,72% 100%,26% 96%);transform:rotate(3deg)}
+.tooth i.r{right:8%;clip-path:polygon(0 0,100% 0,74% 96%,28% 100%);transform:rotate(-3deg)}
+.tooth em{position:absolute;top:12%;left:18%;width:22%;height:18%;border-radius:50%;background:rgba(255,255,255,.9);filter:blur(3px)}
+@keyframes tfloat{50%{transform:translateY(-18px) rotate(2deg)}}
+.ring-a{position:absolute;width:min(80vw,340px);aspect-ratio:1;border-radius:50%;border:1.5px dashed rgba(24,119,242,.35);
+  transform:rotateX(72deg);animation:rota 20s linear infinite}
+.ring-a.two{width:min(64vw,265px);border-color:rgba(24,201,164,.4);animation-duration:14s;animation-direction:reverse}
+@keyframes rota{from{transform:rotateX(72deg) rotateZ(0)}to{transform:rotateX(72deg) rotateZ(360deg)}}
+.spark{position:absolute;width:10px;height:10px;background:#18c9a4;border-radius:50%;box-shadow:0 0 16px #18c9a4;animation:sp 4s ease-in-out infinite}
+.spark.s1{top:10%;left:6%}.spark.s2{bottom:16%;right:6%;background:#1877F2;box-shadow:0 0 16px #1877F2;animation-delay:-1.4s}
+.spark.s3{top:30%;right:12%;animation-delay:-2.6s}
+@keyframes sp{50%{transform:scale(.4);opacity:.35}}
+.badge-f{position:absolute;background:#fff;border:1px solid rgba(15,36,54,.1);border-radius:16px;padding:10px 14px;
+  box-shadow:0 18px 34px -18px rgba(15,36,54,.4);font-size:.76rem;font-weight:500;animation:tfloat 8s ease-in-out infinite}
+.badge-f b{display:block;font-family:'IBM Plex Mono',monospace;font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:#1877F2}
+.bf1{top:6%;left:0}.bf2{bottom:8%;right:0;animation-delay:-2.5s}
+
+/* ---- marquee ---- */
+.marq{border-block:1px solid var(--line);padding:13px 0;overflow:hidden;background:rgba(24,119,242,.06)}
+.marq-in{display:flex;gap:44px;width:max-content;animation:run 26s linear infinite;font-family:'Outfit',system-ui,sans-serif;
+  text-transform:none;letter-spacing:-.035em;font-size:clamp(1.1rem,2.6vw,1.8rem);font-weight:800}
+.marq-in em{font-style:normal;color:var(--acc)}
+@keyframes run{to{transform:translateX(-50%)}}
+
+/* ---- sezioni ---- */
+.sec{padding:clamp(70px,10vw,140px) 0}
+.sec-head{max-width:720px;margin-bottom:clamp(34px,5vw,60px)}
+.sec-head h2{margin:12px 0 14px}
+.sec-head p{color:var(--muted);font-weight:300}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(275px,1fr));gap:18px}
+.card{position:relative;padding:30px 26px;border-radius:var(--r);border:1px solid var(--line);background:var(--surf);
+  overflow:hidden;transition:transform .4s cubic-bezier(.2,.8,.2,1),border-color .35s}
+.card:hover{transform:translateY(-6px);border-color:var(--acc)}
+.card .n{font-family:'IBM Plex Mono',monospace;font-size:.66rem;letter-spacing:.22em;color:var(--acc)}
+.card h3{font-size:1.34rem;margin:12px 0 10px}
+.card p{color:var(--muted);font-size:.93rem;font-weight:300}
+.card .halo{position:absolute;width:170px;height:170px;border-radius:50%;filter:blur(52px);opacity:.4;top:-70px;right:-50px;
+  background:var(--acc);pointer-events:none;transition:.4s}
+.card:hover .halo{opacity:.72}
+.list{border-top:1px solid var(--line)}
+.row{display:grid;grid-template-columns:70px 1fr auto;gap:clamp(12px,3vw,34px);align-items:center;padding:clamp(18px,3vw,30px) 0;
+  border-bottom:1px solid var(--line);transition:.4s}
+.row:hover{padding-left:14px}
+.row:hover h3{color:var(--acc)}
+.row .n{font-family:'IBM Plex Mono',monospace;color:var(--muted);font-size:.75rem;letter-spacing:.18em}
+.row h3{font-size:clamp(1.15rem,2.6vw,1.7rem);transition:.3s}
+.row p{color:var(--muted);font-size:.9rem;font-weight:300;margin-top:6px;max-width:64ch}
+.row .a{width:46px;height:46px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;transition:.35s}
+.row:hover .a{background:var(--acc);color:var(--bg);border-color:transparent;transform:rotate(-45deg)}
+@media(max-width:700px){.row{grid-template-columns:1fr auto}.row .n{display:none}}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:16px}
+.st{padding:30px 20px;border-radius:var(--r);border:1px solid var(--line);text-align:center;background:var(--surf)}
+.st b{display:block;font-family:'Outfit',system-ui,sans-serif;font-size:clamp(2rem,5vw,3rem);color:var(--acc);line-height:1;font-weight:800}
+.st small{color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:.66rem;letter-spacing:.18em;text-transform:uppercase}
+.quote{border:1px solid var(--line);border-radius:var(--r);padding:clamp(26px,4vw,52px);background:var(--surf)}
+.quote p{font-size:clamp(1.05rem,2vw,1.42rem);font-weight:300;line-height:1.45}
+.quote p b{color:var(--acc);font-weight:600}
+.who{display:flex;align-items:center;gap:13px;margin-top:24px}
+.who em{font-style:normal;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-weight:700;background:var(--acc);color:var(--bg)}
+.who small{display:block;color:var(--muted);font-size:.78rem}
+.cta-box{position:relative;border-radius:var(--r);padding:clamp(40px,6.5vw,84px);text-align:center;overflow:hidden;
+  border:1px solid var(--line);background:var(--surf)}
+.cta-box h2{max-width:18ch;margin:12px auto 16px}
+.cta-box p{color:var(--muted);max-width:52ch;margin:0 auto 28px;font-weight:300}
+footer{border-top:1px solid var(--line);padding:48px 0 34px;position:relative;z-index:3}
+.f3{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:28px}
+@media(max-width:800px){.f3{grid-template-columns:1fr 1fr}}
+footer p,footer a{color:var(--muted);font-size:.87rem;font-weight:300}
+footer a:hover{color:var(--acc)}
+footer h5{font-family:'IBM Plex Mono',monospace;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--text);margin-bottom:11px}
+.fb{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
+  color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase}
+.rv{opacity:0;transform:translateY(32px);transition:opacity .85s cubic-bezier(.2,.8,.2,1),transform .85s cubic-bezier(.2,.8,.2,1)}
+.rv.in{opacity:1;transform:none}
+@media(max-width:620px){
+  .brand small{display:none}
+  .brand-m{width:34px;height:34px}
+  .nav-in{padding-block:11px}
+  .nav .btn{padding:10px 15px;font-size:.79rem}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="bg-layers"><div class="b1"></div><div class="b2"></div><div class="b3"></div></div>
+<div class="grain"></div>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top"><span class="brand-m">A</span><span class="brand-t">Aurora<small>Clinica odontoiatrica</small></span></a>
+    <nav class="menu"><a href="#servizi">Trattamenti</a><a href="#storia">Lo studio</a><a href="#contatti">Contatti</a></nav>
+    <a class="btn btn-1" href="#contatti">Prenota visita</a>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero split">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <span class="eyebrow"><b></b> Studio a Bologna · parcheggio interno</span>
+      <h1>Sorridere<br>senza pensarci<br><span class="acc">due volte.</span></h1>
+      <p class="lead">Prima visita gratuita, preventivo scritto prima di iniziare e nessuna sorpresa in fattura. Dai controlli di routine all'implantologia, con anestesia gestita da chi ti sta parlando.</p>
+      <div class="cta-row">
+        <a class="btn btn-1" href="#contatti">Prenota la prima visita</a>
+        <a class="btn btn-2" href="#servizi">Vedi i trattamenti</a>
+      </div>
+      <div class="chips"><i>Prima visita gratuita</i><i>Preventivo scritto</i><i>Pagamento a rate</i><i>Urgenze in giornata</i></div>
+    </div>
+    <div class="stage"><div class="ring-a"></div><div class="ring-a two"></div>
+      <div class="tooth-scene gad"><div class="tooth"><b></b><em></em><i class="l"></i><i class="r"></i></div>
+      <span class="spark s1"></span><span class="spark s2"></span><span class="spark s3"></span></div>
+      <div class="badge-f bf1"><b>Prima visita</b>gratuita e senza impegno</div>
+      <div class="badge-f bf2"><b>Urgenze</b>stesso giorno, se c'è dolore</div></div>
+  </div>
+</section>
+
+<div class="marq"><div class="marq-in"><span>Igiene</span><em>Implantologia</em><span>Ortodonzia invisibile</span><em>Sbiancamento</em><span>Pedodonzia</span><em>Protesi</em><span>Endodonzia</span><em>Urgenze</em><span>Igiene</span><em>Implantologia</em><span>Ortodonzia invisibile</span><em>Sbiancamento</em><span>Pedodonzia</span><em>Protesi</em><span>Endodonzia</span><em>Urgenze</em></div></div>
+
+<section class="sec" id="servizi">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="kick">// Trattamenti</span>
+      <h2>Quello di cui hai bisogno,<br>spiegato in italiano.</h2>
+      <p>Niente nomi complicati per farti sentire piccolo: ti mostriamo la radiografia e ti diciamo cosa faremmo noi al posto tuo.</p>
+    </div>
+    <div class="cards"><article class="card rv"><div class="halo"></div><span class="n">01</span><h3>Igiene e prevenzione</h3><p>Seduta di igiene professionale ogni sei mesi, con richiamo automatico. È la cosa che fa risparmiare di più negli anni.</p></article>
+      <article class="card rv"><div class="halo"></div><span class="n">02</span><h3>Ortodonzia invisibile</h3><p>Allineatori trasparenti con simulazione digitale: vedi il risultato finale prima ancora di iniziare.</p></article>
+      <article class="card rv"><div class="halo"></div><span class="n">03</span><h3>Implantologia</h3><p>Impianto e corona con progettazione guidata al computer, per ridurre i tempi in poltrona e il gonfiore dopo.</p></article></div>
+  </div>
+</section>
+
+<section class="sec" id="storia">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="kick">// Lo studio</span>
+      <h2>Uno studio che non ti fa aspettare.</h2>
+      <p>Tre sale, sterilizzazione a vista e appuntamenti distanziati per non accavallare le persone in sala d'attesa.</p>
+    </div>
+    <div class="list"><a class="row rv" href="#contatti"><span class="n">001</span><div><h3>Prima visita gratuita, davvero</h3><p>Visita, radiografia panoramica e piano di cura scritto. Se non serve nulla, te lo diciamo e non paghi niente.</p></div><span class="a">&#8599;</span></a>
+      <a class="row rv" href="#contatti"><span class="n">002</span><div><h3>Il preventivo è un documento</h3><p>Cifre, numero di sedute e materiali usati. Non cambia in corsa a meno che non lo decidiamo insieme.</p></div><span class="a">&#8599;</span></a>
+      <a class="row rv" href="#contatti"><span class="n">003</span><div><h3>Pagamenti a rate senza interessi</h3><p>Fino a 24 mesi con finanziamento in studio: la pratica si chiude nella stessa giornata.</p></div><span class="a">&#8599;</span></a></div>
+    <div class="stats rv" style="margin-top:44px"><div class="st"><b data-count="14" data-suf="">0</b><small>Anni di studio</small></div>
+      <div class="st"><b data-count="3" data-suf="">0</b><small>Sale operative</small></div>
+      <div class="st"><b data-count="0" data-suf="">0</b><small>Liste d'attesa</small></div>
+      <div class="st"><b>FREE</b><small>Prima visita</small></div></div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <div class="quote rv">
+      <span class="kick">// La direzione sanitaria</span>
+      <p style="margin-top:14px">«La maggior parte delle persone arriva da noi dopo anni di rinvii, quasi scusandosi. <b>Il nostro lavoro comincia lì</b>: spiegare, mostrare, e solo dopo curare.»</p>
+      <div class="who"><em>GL</em><div><strong>Dott.ssa Giulia Landi</strong><small>Direzione sanitaria · Clinica Aurora</small></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="contatti">
+  <div class="wrap">
+    <div class="cta-box rv">
+      <span class="kick">// Appuntamenti</span>
+      <h2>Prenota la prima visita: è gratuita.</h2>
+      <p>Scegli giorno e fascia oraria, pensiamo noi al resto. Se hai dolore adesso, chiama e ti troviamo un posto in giornata.</p>
+      <div class="cta-row" style="justify-content:center">
+        <a class="btn btn-1" href="#top">Prenota online</a>
+        <a class="btn btn-2" href="#servizi">Scrivici un messaggio</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap f3">
+    <div>
+      <a class="brand" href="#top"><span class="brand-m">A</span><span class="brand-t">Aurora<small>Clinica odontoiatrica</small></span></a>
+      <p style="margin-top:14px;max-width:34ch">Clinica odontoiatrica a Bologna. Prevenzione, ortodonzia invisibile, implantologia e urgenze.</p>
+    </div>
+    <div><h5>Contatti</h5><p>info@clinicaaurora.it</p><p>Via Mazzini 210, Bologna</p><p>Lun–Ven 9:00–19:00</p></div>
+    <div><h5>Informazioni</h5><p>Dir. sanitario: Dott.ssa G. Landi</p><p>Parcheggio interno gratuito</p><p>Studio accessibile</p></div>
+  </div>
+  <div class="wrap fb"><span>© <span id="y"></span> Aurora</span><span>Concept demo · non è un sito reale</span></div>
+</footer>
+
+<script>
+document.getElementById('y').textContent=new Date().getFullYear();
+addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('on',scrollY>40)},{passive:true});
+const io=new IntersectionObserver(es=>{es.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('in'),i*70);io.unobserve(e.target)}})},{threshold:.13});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+const ci=new IntersectionObserver(es=>{es.forEach(e=>{if(!e.isIntersecting)return;const el=e.target,end=+el.dataset.count;let n=0;
+ (function s(){n+=Math.max(1,end/26);if(n>=end){el.textContent=end+(el.dataset.suf||'');return}el.textContent=Math.floor(n)+(el.dataset.suf||'');requestAnimationFrame(s)})();ci.unobserve(el)})},{threshold:.6});
+document.querySelectorAll('[data-count]').forEach(el=>ci.observe(el));
+(function(){const st=document.querySelector('.stage'),g=document.querySelector('.gad');if(!g)return;let rx=0,ry=0,tx=0,ty=0;
+ addEventListener('mousemove',e=>{ty=((e.clientX/innerWidth)-.5)*20;tx=-((e.clientY/innerHeight)-.5)*20*.7},{passive:true});
+ (function l(){rx+=(tx-rx)*.06;ry+=(ty-ry)*.06;g.style.transform='rotateX('+rx+'deg) rotateY('+ry+'deg)';requestAnimationFrame(l)})();})();
+document.querySelectorAll('.card').forEach(c=>{c.addEventListener('mousemove',e=>{const r=c.getBoundingClientRect();
+ c.style.transform='perspective(900px) rotateY('+(((e.clientX-r.left)/r.width-.5)*6)+'deg) rotateX('+(-((e.clientY-r.top)/r.height-.5)*6)+'deg) translateY(-6px)'});
+ c.addEventListener('mouseleave',()=>c.style.transform='')});
+</script>
+</body>
+</html>

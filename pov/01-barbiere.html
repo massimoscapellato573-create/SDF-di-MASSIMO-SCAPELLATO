@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SANTORO — Barbieri dal 1978</title>
+<meta name="description" content="Concept sito per barbershop: prenotazione, servizi, stile old school.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0d0a08">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23C9A227'/%3E%3Ctext x='32' y='43' font-size='30' font-family='sans-serif' font-weight='700' fill='%230d0a08' text-anchor='middle'%3ES%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;800&family=Jost:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0d0a08; --surf:rgba(255,255,255,.035); --text:#f4ece0; --muted:#a3968a;
+  --acc:#C9A227; --acc2:#8d2f2a; --line:rgba(244,236,224,.14); --r:6px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{font-family:'Jost',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.55;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+section{position:relative;z-index:3}
+::selection{background:var(--acc);color:var(--bg)}
+.wrap{max-width:1240px;margin:0 auto;padding:0 clamp(18px,4.4vw,52px)}
+.kick{font-family:'Space Mono',monospace;font-size:.68rem;letter-spacing:.24em;text-transform:uppercase;color:var(--acc)}
+h1,h2,h3,.brand-t{font-family:'Playfair Display',Georgia,serif;text-transform:none;letter-spacing:-.015em;line-height:1.02;font-weight:800}
+h1{font-size:clamp(2.3rem,5.6vw,4.6rem)}
+h2{font-size:clamp(1.9rem,4.4vw,3.3rem)}
+
+/* ---- fondali ---- */
+.bg-layers{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.b1{position:absolute;inset:0;background:repeating-linear-gradient(115deg,rgba(201,162,39,.06) 0 2px,transparent 2px 22px)}
+.b2{position:absolute;width:56vw;height:56vw;border-radius:50%;filter:blur(120px);opacity:.3;background:#C9A227;top:-18vw;right:-14vw}
+.b3{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,transparent 30%,rgba(5,3,2,.9) 100%)}
+.grain{position:fixed;inset:0;z-index:2;pointer-events:none;opacity:.3;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* ---- nav ---- */
+.nav{position:fixed;top:0;left:0;right:0;z-index:60;transition:.35s}
+.nav.on{background:rgba(13,10,8,.8);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:15px}
+.brand{display:flex;align-items:center;gap:11px}
+.brand-m{width:40px;height:40px;border-radius:8px;display:grid;place-items:center;font-family:'Playfair Display',Georgia,serif;
+  font-size:.9rem;font-weight:800;background:var(--acc);color:var(--bg)}
+.brand-t{font-size:1.06rem}
+.brand small{display:block;font-family:'Space Mono',monospace;font-weight:400;font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.menu{display:flex;gap:26px}
+.menu a{font-size:.88rem;color:var(--muted);position:relative;transition:.25s}
+.menu a::after{content:"";position:absolute;left:0;bottom:-5px;width:0;height:1px;background:var(--acc);transition:.3s}
+.menu a:hover{color:var(--text)}.menu a:hover::after{width:100%}
+@media(max-width:900px){.menu{display:none}}
+.btn{display:inline-flex;align-items:center;gap:9px;padding:13px 24px;border-radius:var(--r);font-weight:600;font-size:.9rem;
+  transition:transform .28s,box-shadow .3s,background .3s,color .3s,border-color .3s;white-space:nowrap;border:1px solid transparent;cursor:pointer}
+.btn-1{background:var(--acc);color:var(--bg);box-shadow:0 14px 34px -16px var(--acc)}
+.btn-1:hover{transform:translateY(-3px);box-shadow:0 22px 44px -16px var(--acc)}
+.btn-2{border-color:var(--line);color:var(--text)}
+.btn-2:hover{border-color:var(--acc);color:var(--acc);transform:translateY(-3px)}
+
+/* ---- hero ---- */
+.hero{min-height:100svh;display:flex;align-items:center;padding:120px 0 60px}
+.hero-grid{display:grid;gap:clamp(28px,5vw,64px);align-items:center}
+.hero.split .hero-grid{grid-template-columns:1.04fr .96fr}
+.hero.rev .hero-grid{grid-template-columns:.96fr 1.04fr}
+.hero.rev .hero-copy{order:2}
+.hero.center .hero-grid{grid-template-columns:1fr;text-align:center;justify-items:center}
+.hero.center .lead{margin-inline:auto}
+.hero.center .cta-row{justify-content:center}
+.hero.center .chips{justify-content:center}
+.hero.center .stage{min-height:min(26vh,205px)}
+.hero.center{padding:104px 0 34px}
+.hero.center h1{margin:16px 0 14px}
+@media(min-width:981px){.hero.center .chips{display:none}}
+@media(max-width:980px){.hero .hero-grid{grid-template-columns:1fr!important}.hero.rev .hero-copy{order:0}}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;padding:8px 15px;border-radius:999px;border:1px solid var(--line);
+  color:var(--muted);background:rgba(255,255,255,.03);font-family:'Space Mono',monospace;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase}
+.eyebrow b{width:7px;height:7px;border-radius:50%;background:var(--acc);animation:bl 2s infinite}
+@keyframes bl{50%{opacity:.25}}
+h1{margin:22px 0 20px}
+h1 .acc{color:var(--acc)}
+h1 .out{color:transparent;-webkit-text-stroke:1.4px var(--text)}
+.lead{color:var(--muted);max-width:48ch;font-size:clamp(1rem,1.35vw,1.1rem);font-weight:300}
+.cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+.chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:32px}
+.chips i{font-style:normal;font-size:.72rem;padding:7px 13px;border-radius:999px;border:1px solid var(--line);color:var(--muted)}
+
+/* ---- gadget 3D ---- */
+.stage{perspective:1200px;display:grid;place-items:center;min-height:min(56vh,440px);position:relative}
+.pole-wrap{display:grid;place-items:center;gap:0;transform-style:preserve-3d;will-change:transform}
+.cap{width:96px;height:22px;border-radius:6px;background:linear-gradient(180deg,#e8dcc0,#8e7c4e);box-shadow:0 6px 18px rgba(0,0,0,.6)}
+.pole{width:78px;height:min(42vh,280px);border-radius:44px;overflow:hidden;position:relative;
+  box-shadow:0 30px 70px -25px #000,inset -18px 0 30px -20px rgba(0,0,0,.9)}
+.pole::before{content:"";position:absolute;inset:-60% -10%;
+  background:repeating-linear-gradient(58deg,#fff 0 16px,#c1272d 16px 32px,#fff 32px 48px,#1f4fa0 48px 64px);
+  animation:spin-stripes 3.4s linear infinite}
+.pole::after{content:"";position:absolute;inset:0;border-radius:44px;
+  background:linear-gradient(90deg,rgba(255,255,255,.55),transparent 34%,rgba(0,0,0,.45) 78%)}
+@keyframes spin-stripes{to{transform:translateY(-64px)}}
+.halo-r{position:absolute;width:min(74vw,360px);aspect-ratio:1;border:1px solid rgba(201,162,39,.35);border-radius:50%;
+  transform:rotateX(74deg);animation:rot 22s linear infinite}
+.halo-r.two{width:min(60vw,290px);border-color:rgba(244,236,224,.16);animation-duration:15s;animation-direction:reverse}
+@keyframes rot{from{transform:rotateX(74deg) rotateZ(0)}to{transform:rotateX(74deg) rotateZ(360deg)}}
+.tag-f{position:absolute;font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;
+  color:#C9A227;border:1px solid rgba(201,162,39,.4);padding:6px 12px;border-radius:99px;background:rgba(13,10,8,.7);animation:fl 6s ease-in-out infinite}
+.t1{top:12%;left:2%}.t2{bottom:16%;right:0;animation-delay:-2s}.t3{top:44%;right:4%;animation-delay:-4s}
+@keyframes fl{50%{transform:translateY(-14px)}}
+
+/* ---- marquee ---- */
+.marq{border-block:1px solid var(--line);padding:13px 0;overflow:hidden;background:rgba(255,255,255,.03)}
+.marq-in{display:flex;gap:44px;width:max-content;animation:run 26s linear infinite;font-family:'Playfair Display',Georgia,serif;
+  text-transform:none;letter-spacing:-.015em;font-size:clamp(1.1rem,2.6vw,1.8rem);font-weight:800}
+.marq-in em{font-style:normal;color:var(--acc)}
+@keyframes run{to{transform:translateX(-50%)}}
+
+/* ---- sezioni ---- */
+.sec{padding:clamp(70px,10vw,140px) 0}
+.sec-head{max-width:720px;margin-bottom:clamp(34px,5vw,60px)}
+.sec-head h2{margin:12px 0 14px}
+.sec-head p{color:var(--muted);font-weight:300}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(275px,1fr));gap:18px}
+.card{position:relative;padding:30px 26px;border-radius:var(--r);border:1px solid var(--line);background:var(--surf);
+  overflow:hidden;transition:transform .4s cubic-bezier(.2,.8,.2,1),border-color .35s}
+.card:hover{transform:translateY(-6px);border-color:var(--acc)}
+.card .n{font-family:'Space Mono',monospace;font-size:.66rem;letter-spacing:.22em;color:var(--acc)}
+.card h3{font-size:1.34rem;margin:12px 0 10px}
+.card p{color:var(--muted);font-size:.93rem;font-weight:300}
+.card .halo{position:absolute;width:170px;height:170px;border-radius:50%;filter:blur(52px);opacity:.4;top:-70px;right:-50px;
+  background:var(--acc);pointer-events:none;transition:.4s}
+.card:hover .halo{opacity:.72}
+.list{border-top:1px solid var(--line)}
+.row{display:grid;grid-template-columns:70px 1fr auto;gap:clamp(12px,3vw,34px);align-items:center;padding:clamp(18px,3vw,30px) 0;
+  border-bottom:1px solid var(--line);transition:.4s}
+.row:hover{padding-left:14px}
+.row:hover h3{color:var(--acc)}
+.row .n{font-family:'Space Mono',monospace;color:var(--muted);font-size:.75rem;letter-spacing:.18em}
+.row h3{font-size:clamp(1.15rem,2.6vw,1.7rem);transition:.3s}
+.row p{color:var(--muted);font-size:.9rem;font-weight:300;margin-top:6px;max-width:64ch}
+.row .a{width:46px;height:46px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;transition:.35s}
+.row:hover .a{background:var(--acc);color:var(--bg);border-color:transparent;transform:rotate(-45deg)}
+@media(max-width:700px){.row{grid-template-columns:1fr auto}.row .n{display:none}}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:16px}
+.st{padding:30px 20px;border-radius:var(--r);border:1px solid var(--line);text-align:center;background:var(--surf)}
+.st b{display:block;font-family:'Playfair Display',Georgia,serif;font-size:clamp(2rem,5vw,3rem);color:var(--acc);line-height:1;font-weight:800}
+.st small{color:var(--muted);font-family:'Space Mono',monospace;font-size:.66rem;letter-spacing:.18em;text-transform:uppercase}
+.quote{border:1px solid var(--line);border-radius:var(--r);padding:clamp(26px,4vw,52px);background:var(--surf)}
+.quote p{font-size:clamp(1.05rem,2vw,1.42rem);font-weight:300;line-height:1.45}
+.quote p b{color:var(--acc);font-weight:600}
+.who{display:flex;align-items:center;gap:13px;margin-top:24px}
+.who em{font-style:normal;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-weight:700;background:var(--acc);color:var(--bg)}
+.who small{display:block;color:var(--muted);font-size:.78rem}
+.cta-box{position:relative;border-radius:var(--r);padding:clamp(40px,6.5vw,84px);text-align:center;overflow:hidden;
+  border:1px solid var(--line);background:var(--surf)}
+.cta-box h2{max-width:18ch;margin:12px auto 16px}
+.cta-box p{color:var(--muted);max-width:52ch;margin:0 auto 28px;font-weight:300}
+footer{border-top:1px solid var(--line);padding:48px 0 34px;position:relative;z-index:3}
+.f3{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:28px}
+@media(max-width:800px){.f3{grid-template-columns:1fr 1fr}}
+footer p,footer a{color:var(--muted);font-size:.87rem;font-weight:300}
+footer a:hover{color:var(--acc)}
+footer h5{font-family:'Space Mono',monospace;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--text);margin-bottom:11px}
+.fb{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
+  color:var(--muted);font-family:'Space Mono',monospace;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase}
+.rv{opacity:0;transform:translateY(32px);transition:opacity .85s cubic-bezier(.2,.8,.2,1),transform .85s cubic-bezier(.2,.8,.2,1)}
+.rv.in{opacity:1;transform:none}
+@media(max-width:620px){
+  .brand small{display:none}
+  .brand-m{width:34px;height:34px}
+  .nav-in{padding-block:11px}
+  .nav .btn{padding:10px 15px;font-size:.79rem}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="bg-layers"><div class="b1"></div><div class="b2"></div><div class="b3"></div></div>
+<div class="grain"></div>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top"><span class="brand-m">S</span><span class="brand-t">SANTORO<small>Barbieri dal 1978</small></span></a>
+    <nav class="menu"><a href="#servizi">Servizi</a><a href="#storia">Il negozio</a><a href="#contatti">Contatti</a></nav>
+    <a class="btn btn-1" href="#contatti">Prenota</a>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero split">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <span class="eyebrow"><b></b> Via Etnea 118 · Catania</span>
+      <h1>Rasoio, forbici,<br><span class="acc">rispetto.</span></h1>
+      <p class="lead">Tre poltrone, nessuna fretta. Tagliamo capelli e barbe come si faceva una volta, con panno caldo, rasoio a mano libera e la stessa cura da quarant'anni.</p>
+      <div class="cta-row">
+        <a class="btn btn-1" href="#contatti">Prenota una poltrona</a>
+        <a class="btn btn-2" href="#servizi">Guarda i servizi</a>
+      </div>
+      <div class="chips"><i>Prenotazione online</i><i>Panno caldo</i><i>Rasoio a mano libera</i><i>Aperti il lunedì</i></div>
+    </div>
+    <div class="stage"><div class="halo-r"></div><div class="halo-r two"></div>
+      <div class="pole-wrap gad"><div class="cap"></div><div class="pole"></div><div class="cap"></div></div>
+      <span class="tag-f t1">Taglio classico</span><span class="tag-f t2">Rasatura</span><span class="tag-f t3">Barba</span></div>
+  </div>
+</section>
+
+<div class="marq"><div class="marq-in"><span>Taglio</span><em>Barba</em><span>Rasatura</span><em>Panno caldo</em><span>Bambini</span><em>Tinta</em><span>Shampoo</span><em>Cerimonia</em><span>Taglio</span><em>Barba</em><span>Rasatura</span><em>Panno caldo</em><span>Bambini</span><em>Tinta</em><span>Shampoo</span><em>Cerimonia</em></div></div>
+
+<section class="sec" id="servizi">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="kick">// Servizi</span>
+      <h2>Quello che sappiamo fare<br>a occhi chiusi.</h2>
+      <p>Prezzi chiari, tempi rispettati. Se hai fretta te lo diciamo prima, non dopo.</p>
+    </div>
+    <div class="cards"><article class="card rv"><div class="halo"></div><span class="n">01</span><h3>Taglio su misura</h3><p>Consulenza, lavaggio, taglio e piega. Studiamo la forma del viso, non copiamo la foto del calciatore.</p></article>
+      <article class="card rv"><div class="halo"></div><span class="n">02</span><h3>Barba e rasatura</h3><p>Rasatura tradizionale con panno caldo, olio e dopobarba. Quindici minuti di pace assoluta.</p></article>
+      <article class="card rv"><div class="halo"></div><span class="n">03</span><h3>Pacchetto cerimonia</h3><p>Per sposi e testimoni: prova, ritocco il giorno prima e poltrona riservata la mattina.</p></article></div>
+  </div>
+</section>
+
+<section class="sec" id="storia">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="kick">// Il negozio</span>
+      <h2>Un mestiere, tre generazioni.</h2>
+      <p>Stessa insegna, stesso pavimento a scacchi, stessa idea di servizio.</p>
+    </div>
+    <div class="list"><a class="row rv" href="#contatti"><span class="n">001</span><div><h3>Dal 1978, sempre qui</h3><p>Aperto da nonno Turi con due poltrone e uno specchio. Le poltrone sono ancora quelle, restaurate.</p></div><span class="a">&#8599;</span></a>
+      <a class="row rv" href="#contatti"><span class="n">002</span><div><h3>Solo su appuntamento</h3><p>Niente sala d'attesa piena: prenoti l'orario, entri e sei tu il cliente di quel momento.</p></div><span class="a">&#8599;</span></a>
+      <a class="row rv" href="#contatti"><span class="n">003</span><div><h3>Prodotti che vendiamo perché li usiamo</h3><p>Oli, cere e dopobarba selezionati uno per uno. Se non li mettiamo in faccia a noi, non li vendiamo.</p></div><span class="a">&#8599;</span></a></div>
+    <div class="stats rv" style="margin-top:44px"><div class="st"><b data-count="47" data-suf="">0</b><small>Anni di attività</small></div>
+      <div class="st"><b data-count="3" data-suf="">0</b><small>Poltrone</small></div>
+      <div class="st"><b data-count="20" data-suf="'">0</b><small>Minuti a taglio</small></div>
+      <div class="st"><b>SOLO</b><small>Su appuntamento</small></div></div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <div class="quote rv">
+      <span class="kick">// Il titolare</span>
+      <p style="margin-top:14px">«Un taglio dura tre settimane, la fiducia dura trent'anni. <b>Preferisco perdere un cliente frettoloso</b> che consegnarne uno scontento allo specchio.»</p>
+      <div class="who"><em>MS</em><div><strong>Massimo Santoro</strong><small>Barbiere · seconda generazione</small></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="contatti">
+  <div class="wrap">
+    <div class="cta-box rv">
+      <span class="kick">// Prenota</span>
+      <h2>La poltrona è libera.</h2>
+      <p>Scegli giorno e orario: ti confermiamo in pochi minuti. Se salti l'appuntamento avvisaci, c'è sempre qualcuno in lista.</p>
+      <div class="cta-row" style="justify-content:center">
+        <a class="btn btn-1" href="#top">Prenota adesso</a>
+        <a class="btn btn-2" href="#servizi">Vedi i prezzi</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap f3">
+    <div>
+      <a class="brand" href="#top"><span class="brand-m">S</span><span class="brand-t">SANTORO<small>Barbieri dal 1978</small></span></a>
+      <p style="margin-top:14px;max-width:34ch">Barbieri a Catania dal 1978. Taglio, barba e rasatura tradizionale su appuntamento.</p>
+    </div>
+    <div><h5>Contatti</h5><p>ciao@santorobarbieri.it</p><p>Via Etnea 118, Catania</p><p>Mar–Sab 9:00–19:30</p></div>
+    <div><h5>Orari</h5><p>Lunedì: 14:00–19:30</p><p>Martedì–Sabato: 9:00–19:30</p><p>Domenica: chiuso</p></div>
+  </div>
+  <div class="wrap fb"><span>© <span id="y"></span> SANTORO</span><span>Concept demo · non è un sito reale</span></div>
+</footer>
+
+<script>
+document.getElementById('y').textContent=new Date().getFullYear();
+addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('on',scrollY>40)},{passive:true});
+const io=new IntersectionObserver(es=>{es.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('in'),i*70);io.unobserve(e.target)}})},{threshold:.13});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+const ci=new IntersectionObserver(es=>{es.forEach(e=>{if(!e.isIntersecting)return;const el=e.target,end=+el.dataset.count;let n=0;
+ (function s(){n+=Math.max(1,end/26);if(n>=end){el.textContent=end+(el.dataset.suf||'');return}el.textContent=Math.floor(n)+(el.dataset.suf||'');requestAnimationFrame(s)})();ci.unobserve(el)})},{threshold:.6});
+document.querySelectorAll('[data-count]').forEach(el=>ci.observe(el));
+(function(){const st=document.querySelector('.stage'),g=document.querySelector('.gad');if(!g)return;let rx=0,ry=0,tx=0,ty=0;
+ addEventListener('mousemove',e=>{ty=((e.clientX/innerWidth)-.5)*18;tx=-((e.clientY/innerHeight)-.5)*18*.7},{passive:true});
+ (function l(){rx+=(tx-rx)*.06;ry+=(ty-ry)*.06;g.style.transform='rotateX('+rx+'deg) rotateY('+ry+'deg)';requestAnimationFrame(l)})();})();
+document.querySelectorAll('.card').forEach(c=>{c.addEventListener('mousemove',e=>{const r=c.getBoundingClientRect();
+ c.style.transform='perspective(900px) rotateY('+(((e.clientX-r.left)/r.width-.5)*6)+'deg) rotateX('+(-((e.clientY-r.top)/r.height-.5)*6)+'deg) translateY(-6px)'});
+ c.addEventListener('mouseleave',()=>c.style.transform='')});
+</script>
+</body>
+</html>

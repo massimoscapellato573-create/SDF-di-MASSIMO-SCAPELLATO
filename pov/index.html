@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>POV — 10 concept di siti per TikTok</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0b0c10">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;900&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b0c10;--card:#14161d;--text:#f2f3f7;--muted:#8b90a3;--line:rgba(242,243,247,.13);--acc:#7b5cff;--acc2:#3ce0ff}
+*{margin:0;padding:0;box-sizing:border-box}
+html{overflow-x:hidden;scroll-behavior:smooth}
+body{font-family:'Outfit',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1180px;margin:0 auto;padding:0 clamp(16px,4vw,44px)}
+.mono{font-family:'IBM Plex Mono',monospace;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase}
+header{padding:clamp(44px,8vw,88px) 0 32px;position:relative;overflow:hidden}
+header::after{content:"";position:absolute;width:70vw;height:70vw;border-radius:50%;filter:blur(120px);opacity:.25;
+  background:radial-gradient(circle,var(--acc),transparent 66%);top:-34vw;right:-20vw;pointer-events:none}
+h1{font-size:clamp(2rem,6.4vw,3.6rem);font-weight:900;letter-spacing:-.035em;line-height:1.02;margin:12px 0 14px}
+h1 span{background:linear-gradient(100deg,var(--acc2),var(--acc));-webkit-background-clip:text;background-clip:text;color:transparent}
+header p{color:var(--muted);max-width:60ch;font-weight:300}
+.note{border:1px dashed var(--line);border-radius:14px;padding:16px 18px;margin:26px 0 30px;color:var(--muted);font-size:.88rem;font-weight:300}
+.note b{color:var(--text);font-weight:600}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:16px;padding-bottom:60px}
+.card{border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--card);display:flex;flex-direction:column;transition:.3s}
+.card:hover{transform:translateY(-4px);border-color:rgba(123,92,255,.5)}
+.thumb{aspect-ratio:16/9;display:grid;place-items:center;position:relative;border-bottom:1px solid var(--line);overflow:hidden}
+.thumb b{font-size:clamp(1.1rem,3.4vw,1.5rem);font-weight:900;letter-spacing:-.02em;z-index:2;text-align:center;padding:0 12px}
+.thumb i{position:absolute;border-radius:50%;border:1px solid rgba(255,255,255,.28);width:76%;aspect-ratio:1;transform:rotate(-12deg) scaleY(.32)}
+.thumb i.b{width:104%;opacity:.55;transform:rotate(9deg) scaleY(.28)}
+.body{padding:18px 18px 20px;display:flex;flex-direction:column;gap:8px;flex:1}
+.body .set{color:var(--acc2)}
+.body h2{font-size:1.1rem;font-weight:600;letter-spacing:-.015em}
+.hook{color:var(--muted);font-size:.9rem;font-weight:300;background:rgba(255,255,255,.03);border:1px solid var(--line);
+  border-radius:10px;padding:10px 12px}
+.acts{display:flex;gap:8px;margin-top:auto;padding-top:14px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:10px 15px;border-radius:10px;font-size:.83rem;font-weight:600;
+  border:none;font-family:inherit;cursor:pointer;transition:.22s}
+.b1{background:linear-gradient(120deg,var(--acc),var(--acc2));color:#0a0b16}
+.b2{border:1px solid var(--line);color:var(--text);background:transparent}
+.b2:hover{border-color:var(--acc2);color:var(--acc2)}
+.b2.done{border-color:#4ade80;color:#4ade80}
+footer{border-top:1px solid var(--line);padding:22px 0 40px;color:var(--muted);font-size:.78rem;display:flex;
+  justify-content:space-between;flex-wrap:wrap;gap:10px}
+</style>
+</head>
+<body>
+<header class="wrap">
+  <span class="mono" style="color:var(--acc2)">// serie POV per TikTok</span>
+  <h1>«Il sito che farei<br><span>per un ___»</span></h1>
+  <p>Dieci concept pronti da filmare, uno per settore, tutti diversi tra loro: colori, font, layout e un elemento 3D animato diverso in ogni hero. Nessuno di questi tocca i siti e le bozze già fatte.</p>
+</header>
+
+<div class="wrap">
+  <p class="note"><b>Come si usano:</b> apri il sito a schermo intero, registra lo schermo mentre scrolli piano, e usa la frase POV come primo testo a schermo. Il tasto <b>Copia frase</b> ti mette la caption negli appunti — comodo dal telefono.</p>
+  <div class="grid" id="grid"></div>
+</div>
+
+<div class="wrap"><footer>
+  <span>10 concept · file singoli, autonomi</span>
+  <span class="mono">demo — attività inventate</span>
+</footer></div>
+
+<script>
+const S=[
+ {f:"01-barbiere",n:"SANTORO",set:"Barbiere",hook:"POV: il sito che farei per il tuo barbiere 💈",g:"linear-gradient(140deg,#3a2a10,#0d0a08 65%)"},
+ {f:"02-omakase",n:"KOMOREBI",set:"Ristorante giapponese",hook:"POV: il sito che farei per un omakase da 10 posti 🍣",g:"radial-gradient(ellipse at 60% 30%,#5d1a1a,#0a0c0b 66%)"},
+ {f:"03-dentista",n:"CLINICA AURORA",set:"Studio dentistico",hook:"POV: il sito che farei per il tuo studio dentistico 🦷",g:"linear-gradient(140deg,#cfe6ff,#eef6ff 70%)",dark:1},
+ {f:"04-immobiliare",n:"MARE & PIETRA",set:"Immobiliare di lusso",hook:"POV: il sito che farei per un'agenzia immobiliare di lusso 🏛️",g:"linear-gradient(140deg,#3a2f12,#0c0e11 66%)"},
+ {f:"05-tattoo",n:"NERO INK",set:"Studio di tatuaggi",hook:"POV: il sito che farei per il tuo tatuatore 🖤",g:"radial-gradient(ellipse at 30% 25%,#6b0f28,#08080a 66%)"},
+ {f:"06-pasticceria",n:"DOLCE ORA",set:"Pasticceria e gelateria",hook:"POV: il sito che farei per una pasticceria 🍦",g:"linear-gradient(140deg,#ffd6e0,#fff3e8 70%)",dark:1},
+ {f:"07-avvocato",n:"VITALE & PARTNERS",set:"Studio legale",hook:"POV: il sito che farei per uno studio legale ⚖️",g:"linear-gradient(140deg,#123054,#0a1728 68%)"},
+ {f:"08-cantina",n:"TENUTA CIRNECO",set:"Cantina vinicola",hook:"POV: il sito che farei per una cantina sull'Etna 🍷",g:"radial-gradient(ellipse at 35% 30%,#63182f,#120a0e 68%)"},
+ {f:"09-hotel-spa",n:"VELABLU",set:"Hotel & spa sul mare",hook:"POV: il sito che farei per un hotel sul mare 🌊",g:"linear-gradient(140deg,#0d5c66,#061a24 68%)"},
+ {f:"10-fotografo",n:"ELIA MORO",set:"Fotografo di matrimoni",hook:"POV: il sito che farei per un fotografo di matrimoni 📷",g:"linear-gradient(140deg,#e7c8ae,#f6f1ea 70%)",dark:1}
+];
+const g=document.getElementById('grid');
+S.forEach((s,i)=>{
+  const el=document.createElement('article');
+  el.className='card';
+  el.innerHTML=`
+    <div class="thumb" style="background:${s.g};${s.dark?'color:#1a1a22':''}">
+      <i></i><i class="b"></i><b>${s.n}</b>
+    </div>
+    <div class="body">
+      <span class="mono set">${String(i+1).padStart(2,'0')} · ${s.set}</span>
+      <h2>${s.n}</h2>
+      <p class="hook">${s.hook}</p>
+      <div class="acts">
+        <a class="btn b1" href="${s.f}.html" target="_blank" rel="noopener">Apri il sito ↗</a>
+        <button class="btn b2" data-copy="${s.hook}">Copia frase</button>
+      </div>
+    </div>`;
+  g.appendChild(el);
+});
+g.addEventListener('click',async e=>{
+  const b=e.target.closest('[data-copy]'); if(!b)return;
+  try{await navigator.clipboard.writeText(b.dataset.copy)}
+  catch(_){const t=document.createElement('textarea');t.value=b.dataset.copy;document.body.appendChild(t);t.select();
+    try{document.execCommand('copy')}catch(e2){}t.remove()}
+  const old=b.textContent;b.textContent='Copiata ✓';b.classList.add('done');
+  setTimeout(()=>{b.textContent=old;b.classList.remove('done')},1600);
+});
+</script>
+</body>
+</html>
