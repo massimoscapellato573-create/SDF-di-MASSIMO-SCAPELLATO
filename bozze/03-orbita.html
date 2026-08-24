@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SDF · ORBITA — bozza sito con cursore interattivo</title>
+<meta name="description" content="Bozza concept &quot;Orbita&quot; per SDF di Massimo Scapellato: cursore personalizzato con satelliti, particelle che seguono il mouse, hero 3D reattivo.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#07080b">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;900&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07080b;
+  --ink:#0d0f14;
+  --text:#f2f4f0;
+  --muted:#8f958c;
+  --acid:#c8ff3d;
+  --amber:#ff9436;
+  --sky:#59e8ff;
+  --line:rgba(242,244,240,.12);
+  --mx:50vw; --my:50vh;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{
+  font-family:'Outfit',system-ui,sans-serif;background:var(--bg);color:var(--text);
+  line-height:1.55;overflow-x:hidden;-webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+.wrap{max-width:1280px;margin:0 auto;padding:0 clamp(18px,4vw,54px)}
+.mono{font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.22em;text-transform:uppercase}
+section{position:relative;z-index:3}
+::selection{background:var(--acid);color:#0a0c06}
+
+/* ================= CURSORE PERSONALIZZATO ================= */
+body.cursorized,body.cursorized a,body.cursorized button{cursor:none}
+.cur{position:fixed;top:0;left:0;z-index:999;pointer-events:none;will-change:transform;display:none}
+body.cursorized .cur{display:block}
+.cur-dot{
+  width:9px;height:9px;border-radius:50%;background:var(--acid);
+  transform:translate(-50%,-50%);box-shadow:0 0 16px var(--acid);
+}
+.cur-ring{
+  width:46px;height:46px;border-radius:50%;border:1px solid rgba(200,255,61,.6);
+  transform:translate(-50%,-50%);transition:width .3s,height .3s,border-color .3s,background .3s;
+  display:grid;place-items:center;
+}
+.cur-ring.big{width:96px;height:96px;background:rgba(200,255,61,.12);border-color:var(--acid)}
+.cur-ring .lbl{
+  font-family:'IBM Plex Mono',monospace;font-size:.56rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--acid);opacity:0;transition:.25s;white-space:nowrap;
+}
+.cur-ring.big .lbl{opacity:1}
+.cur-orb{width:0;height:0;transform:translate(-50%,-50%)}
+.cur-orb i{
+  position:absolute;width:5px;height:5px;border-radius:50%;background:var(--amber);
+  box-shadow:0 0 10px var(--amber);transform:translate(-50%,-50%);
+}
+.cur-orb i:nth-child(2){background:var(--sky);box-shadow:0 0 10px var(--sky)}
+.cur-orb i:nth-child(3){background:var(--text);box-shadow:0 0 10px rgba(255,255,255,.6)}
+
+/* ================= FONDALI ================= */
+#field{position:fixed;inset:0;z-index:1;display:block}
+.spot{
+  position:fixed;inset:0;z-index:2;pointer-events:none;
+  background:radial-gradient(340px circle at var(--mx) var(--my),rgba(200,255,61,.13),transparent 70%);
+  transition:opacity .4s;
+}
+.reticolo{
+  position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.5;
+  background-image:
+    repeating-linear-gradient(90deg,rgba(242,244,240,.07) 0 1px,transparent 1px 72px),
+    repeating-linear-gradient(0deg,rgba(242,244,240,.07) 0 1px,transparent 1px 72px);
+  -webkit-mask:radial-gradient(420px circle at var(--mx) var(--my),#000 10%,transparent 72%);
+  mask:radial-gradient(420px circle at var(--mx) var(--my),#000 10%,transparent 72%);
+}
+.glowbg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.glowbg i{position:absolute;border-radius:50%;filter:blur(110px);opacity:.34}
+.g1{width:46vw;height:46vw;background:#4a6b12;top:-10vw;right:-6vw}
+.g2{width:38vw;height:38vw;background:#7a3a10;bottom:-8vw;left:-6vw}
+.g3{width:30vw;height:30vw;background:#0f4e63;top:44%;left:38%}
+
+/* ================= NAV ================= */
+.nav{position:fixed;top:0;left:0;right:0;z-index:60;padding:14px 0;transition:.4s}
+.nav.on{background:rgba(7,8,11,.78);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.logo{display:flex;align-items:center;gap:11px;font-weight:900;letter-spacing:-.01em;font-size:1.15rem}
+.logo em{
+  font-style:normal;width:38px;height:38px;border-radius:11px;display:grid;place-items:center;font-size:.74rem;
+  background:var(--acid);color:#0a0c06;box-shadow:0 0 24px rgba(200,255,61,.45);
+}
+.logo small{display:block;font-weight:300;font-size:.63rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.menu{display:flex;gap:26px}
+.menu a{font-size:.88rem;color:var(--muted);transition:.25s;position:relative}
+.menu a::after{content:"";position:absolute;left:0;bottom:-5px;width:0;height:1px;background:var(--acid);transition:.3s}
+.menu a:hover{color:var(--text)}.menu a:hover::after{width:100%}
+@media(max-width:900px){.menu{display:none}}
+.btn{
+  display:inline-flex;align-items:center;gap:9px;padding:13px 24px;border-radius:14px;font-weight:600;font-size:.9rem;
+  transition:transform .25s,box-shadow .3s,background .3s,color .3s;white-space:nowrap;
+}
+.btn-acid{background:var(--acid);color:#0a0c06;box-shadow:0 12px 34px -14px rgba(200,255,61,.9)}
+.btn-acid:hover{box-shadow:0 18px 44px -14px rgba(200,255,61,1)}
+.btn-line{border:1px solid var(--line);color:var(--text)}
+.btn-line:hover{border-color:var(--acid);color:var(--acid)}
+
+/* ================= HERO ================= */
+.hero{min-height:100svh;display:flex;align-items:center;padding:130px 0 70px}
+.hero-grid{display:grid;grid-template-columns:1.02fr .98fr;gap:clamp(28px,5vw,64px);align-items:center}
+@media(max-width:980px){.hero-grid{grid-template-columns:1fr}}
+.tag{
+  display:inline-flex;align-items:center;gap:9px;padding:8px 15px;border-radius:999px;border:1px solid var(--line);
+  color:var(--muted);background:rgba(242,244,240,.03);backdrop-filter:blur(8px);
+}
+.tag b{width:7px;height:7px;border-radius:50%;background:var(--acid);box-shadow:0 0 12px var(--acid);animation:blink 2s infinite}
+@keyframes blink{50%{opacity:.25}}
+h1{font-size:clamp(2.3rem,5.4vw,4.5rem);line-height:1;font-weight:900;letter-spacing:-.04em;margin:22px 0 20px}
+h1 .acid{color:var(--acid)}
+h1 .out{color:transparent;-webkit-text-stroke:1.5px var(--text)}
+.hero p.lead{color:var(--muted);font-weight:300;max-width:50ch;font-size:clamp(1rem,1.4vw,1.12rem)}
+.hero-cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:32px}
+.trust{display:flex;flex-wrap:wrap;gap:10px;margin-top:38px}
+.trust i{font-style:normal;font-size:.72rem;padding:7px 13px;border-radius:999px;border:1px solid var(--line);color:var(--muted)}
+
+/* ---- OGGETTO 3D CHE SEGUE IL CURSORE ---- */
+.obj-scene{perspective:1100px;display:grid;place-items:center;min-height:min(58vh,460px);position:relative}
+.obj{transform-style:preserve-3d;will-change:transform;position:relative;width:min(58vw,250px);aspect-ratio:.92}
+.sheet{
+  position:absolute;inset:0;border-radius:18px;border:1px solid rgba(242,244,240,.22);
+  background:linear-gradient(150deg,rgba(200,255,61,.2),rgba(13,15,20,.95));
+  backdrop-filter:blur(6px);box-shadow:0 30px 60px -40px #000;
+  display:grid;place-content:center;text-align:center;gap:4px;
+}
+.sheet span{font-family:'IBM Plex Mono',monospace;font-size:.6rem;letter-spacing:.2em;color:var(--acid);text-transform:uppercase}
+.sheet strong{font-size:1.05rem;font-weight:700;letter-spacing:-.01em}
+.s1{transform:translateZ(100px) translate(-22px,-36px) rotate(-3deg)}
+.s2{transform:translateZ(30px) translate(26px,-10px) rotate(6deg);background:linear-gradient(150deg,rgba(255,148,54,.2),rgba(13,15,20,.94))}
+.s3{transform:translateZ(-34px) translate(-24px,30px) rotate(-8deg);background:linear-gradient(150deg,rgba(89,232,255,.18),rgba(13,15,20,.94))}
+.s4{transform:translateZ(-100px) translate(36px,60px) rotate(10deg);background:linear-gradient(150deg,rgba(242,244,240,.14),rgba(13,15,20,.95))}
+.s2 span,.s2 strong{opacity:.5}.s3 span,.s3 strong{opacity:.34}.s4 span,.s4 strong{opacity:.2}
+.s2 span{color:var(--amber)}.s3 span{color:var(--sky)}.s4 span{color:var(--muted)}
+.obj-ring{
+  position:absolute;width:min(88vw,430px);aspect-ratio:1;border:1px dashed rgba(200,255,61,.3);border-radius:50%;
+  transform:rotateX(74deg);animation:ring 24s linear infinite;pointer-events:none;
+}
+@keyframes ring{from{transform:rotateX(74deg) rotateZ(0)}to{transform:rotateX(74deg) rotateZ(360deg)}}
+.obj-hint{position:absolute;bottom:4px;left:50%;transform:translateX(-50%);color:var(--muted);text-align:center}
+
+/* ================= SEZIONI ================= */
+.sec{padding:clamp(76px,11vw,150px) 0}
+.sec-head{max-width:720px;margin-bottom:clamp(36px,6vw,66px)}
+.sec-head .mono{color:var(--acid)}
+h2{font-size:clamp(2rem,4.8vw,3.6rem);line-height:1.02;font-weight:900;letter-spacing:-.035em;margin:14px 0 16px}
+.sec-head p{color:var(--muted);font-weight:300}
+
+/* ---- CARD CON BAGLIORE CHE SEGUE IL MOUSE ---- */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(272px,1fr));gap:18px}
+.gcard{
+  position:relative;padding:30px 26px;border-radius:20px;border:1px solid var(--line);overflow:hidden;
+  background:rgba(13,15,20,.62);backdrop-filter:blur(10px);transition:border-color .35s,transform .35s;
+  --cx:50%;--cy:50%;
+}
+.gcard::before{
+  content:"";position:absolute;inset:0;opacity:0;transition:opacity .35s;pointer-events:none;
+  background:radial-gradient(240px circle at var(--cx) var(--cy),rgba(200,255,61,.18),transparent 62%);
+}
+.gcard:hover::before{opacity:1}
+.gcard:hover{border-color:rgba(200,255,61,.5);transform:translateY(-5px)}
+.gcard .k{font-family:'IBM Plex Mono',monospace;font-size:.66rem;letter-spacing:.22em;color:var(--acid)}
+.gcard h3{font-size:1.3rem;font-weight:700;margin:12px 0 9px;letter-spacing:-.015em}
+.gcard p{color:var(--muted);font-size:.92rem;font-weight:300}
+.gcard .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:16px}
+.gcard .chips i{font-style:normal;font-size:.68rem;padding:5px 10px;border-radius:999px;border:1px solid var(--line);color:var(--muted)}
+.gcard .go{display:inline-flex;gap:8px;margin-top:18px;font-size:.84rem;color:var(--acid);font-weight:600;transition:gap .25s}
+.gcard:hover .go{gap:14px}
+
+/* ---- TIMELINE ---- */
+.tl{display:grid;gap:0}
+.tl-item{
+  display:grid;grid-template-columns:120px 1fr;gap:clamp(16px,3vw,42px);padding:30px 0;border-top:1px solid var(--line);
+  transition:.4s;position:relative;
+}
+.tl-item:last-child{border-bottom:1px solid var(--line)}
+.tl-item:hover{padding-left:16px}
+.tl-item:hover h4{color:var(--acid)}
+.tl-item .yr{font-family:'IBM Plex Mono',monospace;color:var(--muted);font-size:.78rem;letter-spacing:.16em;padding-top:5px}
+.tl-item h4{font-size:clamp(1.2rem,2.6vw,1.8rem);font-weight:700;letter-spacing:-.02em;transition:.3s}
+.tl-item p{color:var(--muted);font-weight:300;margin-top:8px;max-width:66ch}
+@media(max-width:680px){.tl-item{grid-template-columns:1fr}}
+
+/* ---- QUOTE ---- */
+.quote-box{
+  border:1px solid var(--line);border-radius:26px;padding:clamp(28px,4vw,56px);
+  background:linear-gradient(160deg,rgba(200,255,61,.07),rgba(13,15,20,.7));backdrop-filter:blur(12px);
+}
+.quote-box p{font-size:clamp(1.06rem,2.1vw,1.5rem);font-weight:300;line-height:1.42}
+.quote-box p b{font-weight:700;color:var(--acid)}
+.who{display:flex;align-items:center;gap:14px;margin-top:26px}
+.who em{font-style:normal;width:50px;height:50px;border-radius:50%;display:grid;place-items:center;font-weight:700;background:var(--acid);color:#0a0c06}
+.who small{display:block;color:var(--muted);font-size:.78rem}
+
+/* ---- STATS ---- */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px;margin-top:34px}
+.st{padding:28px 20px;border-radius:18px;border:1px solid var(--line);text-align:center;background:rgba(13,15,20,.55)}
+.st b{display:block;font-size:clamp(2rem,5vw,3rem);font-weight:900;color:var(--acid);line-height:1}
+.st small{color:var(--muted);font-size:.72rem;letter-spacing:.16em;text-transform:uppercase}
+
+/* ---- CTA ---- */
+.cta{
+  position:relative;border-radius:30px;padding:clamp(40px,7vw,86px);text-align:center;overflow:hidden;
+  border:1px solid var(--line);background:linear-gradient(160deg,rgba(200,255,61,.12),rgba(13,15,20,.8));backdrop-filter:blur(14px);
+}
+.cta h2{max-width:17ch;margin-inline:auto}
+.cta p{color:var(--muted);max-width:54ch;margin:0 auto 30px;font-weight:300}
+.cta .hero-cta{justify-content:center}
+
+/* ---- FOOTER ---- */
+footer{border-top:1px solid var(--line);padding:52px 0 36px;position:relative;z-index:3;background:rgba(7,8,11,.72)}
+.f3{display:grid;grid-template-columns:1.35fr 1fr 1fr;gap:30px}
+@media(max-width:800px){.f3{grid-template-columns:1fr 1fr}}
+footer p,footer a{color:var(--muted);font-size:.88rem;font-weight:300}
+footer a:hover{color:var(--acid)}
+footer h5{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;margin-bottom:12px;color:var(--text)}
+.fb{margin-top:36px;padding-top:20px;border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;color:var(--muted);font-size:.74rem}
+
+.fab{
+  position:fixed;right:18px;bottom:18px;z-index:80;width:56px;height:56px;border-radius:50%;display:grid;place-items:center;
+  background:#25D366;color:#042a11;box-shadow:0 14px 34px -12px rgba(37,211,102,.9);transition:transform .3s;
+}
+.fab:hover{transform:scale(1.09) translateY(-3px)}
+.fab svg{width:27px;height:27px}
+
+.rv{opacity:0;transform:translateY(34px);transition:opacity .9s cubic-bezier(.2,.8,.2,1),transform .9s cubic-bezier(.2,.8,.2,1)}
+.rv.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ---------- NAV MOBILE ---------- */
+@media(max-width:620px){
+  .logo small{display:none}
+  .logo{font-size:1rem;gap:9px}
+  .logo em{width:34px;height:34px;border-radius:10px;font-size:.7rem}
+  .nav{padding:10px 0}
+  .nav .btn-acid{padding:10px 15px;font-size:.79rem}
+}
+</style>
+</head>
+<body>
+
+<!-- CURSORE -->
+<div class="cur cur-orb" id="curOrb"><i></i><i></i><i></i></div>
+<div class="cur cur-ring" id="curRing"><span class="lbl" id="curLbl"></span></div>
+<div class="cur cur-dot" id="curDot"></div>
+
+<!-- FONDALI -->
+<div class="glowbg"><i class="g1"></i><i class="g2"></i><i class="g3"></i></div>
+<canvas id="field"></canvas>
+<div class="reticolo"></div>
+<div class="spot"></div>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a class="logo" href="#top"><em>SDF</em><span>SDF<small>di Massimo Scapellato</small></span></a>
+    <nav class="menu">
+      <a href="#prodotti">Prodotti</a>
+      <a href="#storia">Storia</a>
+      <a href="#logo">Il tuo logo</a>
+      <a href="#contatti">Contatti</a>
+    </nav>
+    <a class="btn btn-acid" data-mag data-lbl="Scrivici" href="https://wa.me/393407996635?text=Ciao%20SDF%2C%20vorrei%20un%20preventivo" target="_blank" rel="noopener">Preventivo rapido</a>
+  </div>
+</header>
+
+<main id="top">
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="tag mono"><b></b> San Pietro Clarenza (CT) · Sicilia</span>
+      <h1>Ti seguiamo<br><span class="acid">ovunque</span><br><span class="out">serva.</span></h1>
+      <p class="lead">Ingrosso di packaging alimentare per macellerie, panifici, pizzerie, bar e ristoranti di tutta la Sicilia. Tre generazioni di esperienza, carta certificata PFAS free e il tuo logo su ogni confezione.</p>
+      <div class="hero-cta">
+        <a class="btn btn-acid" data-mag data-lbl="WhatsApp" href="https://wa.me/393407996635?text=Ciao%20SDF%2C%20vorrei%20un%20preventivo" target="_blank" rel="noopener">Chiedi un preventivo</a>
+        <a class="btn btn-line" data-mag data-lbl="Scopri" href="#prodotti">Vedi i prodotti ↓</a>
+      </div>
+      <div class="trust">
+        <i>Carta Esseoquattro · PFAS free</i><i>Spezie Fratelli Pagani</i><i>Consegne in Sicilia</i><i>Personalizzazione logo</i>
+      </div>
+    </div>
+
+    <div class="obj-scene" id="objScene">
+      <div class="obj-ring"></div>
+      <div class="obj" id="obj">
+        <div class="sheet s1"><span>01 · core</span><strong>Carta alimentare</strong></div>
+        <div class="sheet s2"><span>02 · firma</span><strong>Buste personalizzate</strong></div>
+        <div class="sheet s3"><span>03 · sicilia</span><strong>Pistacchio & frutta secca</strong></div>
+        <div class="sheet s4"><span>04 · origine</span><strong>Budella & spezie</strong></div>
+      </div>
+      <span class="obj-hint mono">muovi il mouse: la scena ti segue</span>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="prodotti">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="mono">// Catalogo</span>
+      <h2>Cinque linee, un solo interlocutore.</h2>
+      <p>Dalla materia prima con cui è nata l'azienda alla carta certificata di oggi. Scrivici su WhatsApp e ti prepariamo il preventivo su misura.</p>
+    </div>
+    <div class="grid">
+      <a class="gcard rv" data-lbl="Preventivo" href="https://wa.me/393407996635?text=Ciao%20SDF%2C%20vorrei%20un%20preventivo%20per%3A%20Budella" target="_blank" rel="noopener">
+        <span class="k">01 — L'origine</span><h3>Budella naturali e artificiali</h3>
+        <p>Budella pulite e selezionate per macelleria e salumeria: il prodotto con cui il nonno ha fondato tutto.</p>
+        <div class="chips"><i>Naturali</i><i>Artificiali</i><i>Retine</i><i>Spago</i></div>
+        <span class="go">Richiedi preventivo →</span>
+      </a>
+      <a class="gcard rv" data-lbl="Preventivo" href="https://wa.me/393407996635?text=Ciao%20SDF%2C%20vorrei%20un%20preventivo%20per%3A%20Spezie%20Pagani" target="_blank" rel="noopener">
+        <span class="k">02 — Fratelli Pagani</span><h3>Aromi, spezie e preparati</h3>
+        <p>Miscele professionali per salsicce, insaccati e lavorazioni della carne, con la qualità di uno storico marchio italiano.</p>
+        <div class="chips"><i>Aromi</i><i>Spezie</i><i>Conce</i><i>Preparati</i></div>
+        <span class="go">Richiedi preventivo →</span>
+      </a>
+      <a class="gcard rv" data-lbl="Preventivo" href="https://wa.me/393407996635?text=Ciao%20SDF%2C%20vorrei%20un%20preventivo%20per%3A%20Frutta%20secca" target="_blank" rel="noopener">
+        <span class="k">03 — Il territorio</span><h3>Frutta secca e pistacchio</h3>
+        <p>Pistacchio, mandorle e frutta secca selezionata: il gusto della Sicilia, pronto per la vendita e la trasformazione.</p>
+        <div class="chips"><i>Pistacchio</i><i>Mandorle</i><i>Sgusciata</i><i>In guscio</i></div>
+        <span class="go">Richiedi preventivo →</span>
+      </a>
+      <a class="gcard rv" data-lbl="Preventivo" href="https://wa.me/393407996635?text=Ciao%20SDF%2C%20vorrei%20un%20preventivo%20per%3A%20Packaging" target="_blank" rel="noopener">
+        <span class="k">04 — Il cuore</span><h3>Packaging alimentare</h3>
+        <p>Carta, plastica, sacchetti e buste. Carta alimentare Esseoquattro, linea Ideabrill, PFAS free e sicura al contatto.</p>
+        <div class="chips"><i>Carta</i><i>Sacchetti</i><i>Buste</i><i>PFAS free</i></div>
+        <span class="go">Richiedi preventivo →</span>
+      </a>
+      <a class="gcard rv" data-lbl="Scopri" href="#logo">
+        <span class="k">05 — La firma</span><h3>Packaging personalizzato</h3>
+        <p>Il logo della tua attività su buste, sacchetti e carta: il modo più semplice per farti riconoscere dai clienti.</p>
+        <div class="chips"><i>Logo su misura</i><i>Buste stampate</i><i>Carta brandizzata</i></div>
+        <span class="go">Come funziona →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="storia">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="mono">// Tre generazioni</span>
+      <h2>Una storia di famiglia, non solo un fornitore.</h2>
+      <p>Sappiamo cosa serve ai vostri clienti perché lo facciamo da tre generazioni: nasciamo dentro le macellerie e i banconi della Sicilia.</p>
+    </div>
+    <div class="tl">
+      <div class="tl-item rv"><span class="yr">01 · Il nonno</span><div><h4>Le budella per le macellerie</h4><p>Tutto comincia con la produzione di budella naturali per le macellerie del territorio: un mestiere fatto di manualità, fiducia e rapporti diretti con i clienti.</p></div></div>
+      <div class="tl-item rv"><span class="yr">02 · Il padre</span><div><h4>Le prime buste, quasi per gioco</h4><p>Le prime vendite di buste affiancano la tradizione di famiglia. Da lì nasce l'intuizione: il packaging sarebbe diventato il vero core business.</p></div></div>
+      <div class="tl-item rv"><span class="yr">03 · Oggi</span><div><h4>Un'azienda strutturata nell'ingrosso</h4><p>Partner storici come Fratelli Pagani ed Esseoquattro, al servizio di centinaia di attività HoReCa siciliane, con consegne organizzate in tutta l'isola.</p></div></div>
+    </div>
+
+    <div class="quote-box rv" style="margin-top:44px">
+      <p>«Ho preso in mano l'attività di famiglia con un obiettivo semplice: garantire a ogni macelleria, panificio, pizzeria e ristorante <b>lo stesso rapporto di fiducia</b> che mio padre e mio nonno avevano costruito, cliente dopo cliente.»</p>
+      <div class="who"><em>MS</em><div><strong>Massimo Scapellato</strong><small>Titolare · SDF di Massimo Scapellato</small></div></div>
+    </div>
+
+    <div class="stats rv">
+      <div class="st"><b data-count="3">0</b><small>Generazioni</small></div>
+      <div class="st"><b data-count="5">0</b><small>Linee di prodotto</small></div>
+      <div class="st"><b data-count="2">0</b><small>Partner storici</small></div>
+      <div class="st"><b>Sicilia</b><small>Zona di consegna</small></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="logo">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="mono">// Personalizzazioni</span>
+      <h2>Il tuo logo su ogni sacchetto, busta o foglio di carta.</h2>
+      <p>Per chi vuole farsi riconoscere: stampiamo il tuo marchio su buste, sacchetti e carta alimentare, con quantitativi accessibili anche alle attività piccole e medie.</p>
+    </div>
+    <div class="grid">
+      <div class="gcard rv"><span class="k">Step 01</span><h3>Ci invii il tuo logo</h3><p>Via WhatsApp, email o durante una chiamata con Massimo. Bastano pochi minuti.</p></div>
+      <div class="gcard rv"><span class="k">Step 02</span><h3>Prepariamo un'anteprima</h3><p>Ti mostriamo come apparirà il tuo marchio sul prodotto che hai scelto.</p></div>
+      <div class="gcard rv"><span class="k">Step 03</span><h3>Stampiamo e confezioniamo</h3><p>Materiali certificati per il contatto alimentare, stampa curata, pronti per l'uso quotidiano.</p></div>
+      <div class="gcard rv"><span class="k">Step 04</span><h3>Consegniamo in Sicilia</h3><p>Con la stessa rapidità dei nostri ordini standard, anche in forma ricorrente.</p></div>
+    </div>
+    <div style="margin-top:30px">
+      <a class="btn btn-acid rv" data-mag data-lbl="Invia logo" href="https://wa.me/393407996635?text=Ciao%20SDF%2C%20vorrei%20personalizzare%20il%20packaging%20con%20il%20mio%20logo" target="_blank" rel="noopener">Parla con noi del tuo logo</a>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="contatti">
+  <div class="wrap">
+    <div class="cta rv">
+      <span class="mono" style="color:var(--acid)">// Contatti</span>
+      <h2>Parliamo del tuo prossimo ordine.</h2>
+      <p>Raccontaci di cosa hai bisogno e ti prepariamo un preventivo su misura. Rispondiamo veloci, spesso in giornata — anche fuori dal classico orario d'ufficio, se ci scrivi su WhatsApp.</p>
+      <div class="hero-cta">
+        <a class="btn btn-acid" data-mag data-lbl="WhatsApp" href="https://wa.me/393407996635?text=Ciao%20SDF%2C%20vorrei%20un%20preventivo" target="_blank" rel="noopener">WhatsApp · 340 799 6635</a>
+        <a class="btn btn-line" data-mag data-lbl="Email" href="mailto:sdfdimassimoscapellato@gmail.com?subject=Richiesta%20preventivo%20SDF">Email</a>
+        <a class="btn btn-line" data-mag data-lbl="Chiama" href="tel:+393407996635">Chiamaci</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap f3">
+    <div>
+      <a class="logo" href="#top"><em>SDF</em><span>SDF<small>di Massimo Scapellato</small></span></a>
+      <p style="margin-top:14px;max-width:36ch">Ingrosso packaging alimentare in Sicilia. Tre generazioni al servizio di macellerie, panifici, pizzerie, bar e ristoranti.</p>
+    </div>
+    <div>
+      <h5>Contatti</h5>
+      <p><a href="tel:+393407996635">340 799 6635</a></p>
+      <p><a href="mailto:sdfdimassimoscapellato@gmail.com">sdfdimassimoscapellato@gmail.com</a></p>
+      <p><a href="mailto:sdf2011@pec.it">PEC: sdf2011@pec.it</a></p>
+    </div>
+    <div>
+      <h5>Sede</h5>
+      <p>Via S. Antonio Eremita 2/c<br>95030 San Pietro Clarenza (CT)</p>
+      <p>P.IVA 04868410871</p>
+    </div>
+  </div>
+  <div class="wrap fb">
+    <span>© <span id="year"></span> SDF di Massimo Scapellato</span>
+    <span class="mono">Bozza concept · Orbita</span>
+  </div>
+</footer>
+
+<a class="fab" data-lbl="WhatsApp" href="https://wa.me/393407996635?text=Ciao%20SDF%2C%20vorrei%20informazioni" target="_blank" rel="noopener" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.2-1.7-.9-2-1-.3-.1-.5-.2-.7.1s-.8 1-.9 1.2c-.2.2-.3.2-.6.1s-1.2-.5-2.3-1.4c-.9-.8-1.4-1.7-1.6-2s0-.4.1-.6l.5-.6c.1-.2.2-.3.3-.5s0-.4 0-.6-.7-1.6-.9-2.2c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4s-1 1-1 2.5 1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.4M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2"/></svg>
+</a>
+
+<script>
+document.getElementById('year').textContent=new Date().getFullYear();
+const FINE=matchMedia('(pointer:fine)').matches;
+const REDUCED=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ====== POSIZIONE PUNTATORE CONDIVISA ====== */
+const P={x:innerWidth/2,y:innerHeight/2,has:false};
+addEventListener('pointermove',e=>{
+  P.x=e.clientX;P.y=e.clientY;P.has=true;
+  document.documentElement.style.setProperty('--mx',P.x+'px');
+  document.documentElement.style.setProperty('--my',P.y+'px');
+},{passive:true});
+
+/* ====== CURSORE PERSONALIZZATO CON SATELLITI ====== */
+if(FINE&&!REDUCED){
+  document.body.classList.add('cursorized');
+  const dot=document.getElementById('curDot'),ring=document.getElementById('curRing'),
+        orb=document.getElementById('curOrb'),lbl=document.getElementById('curLbl'),
+        sats=[...orb.children];
+  let rx=P.x,ry=P.y,ox=P.x,oy=P.y,t=0;
+
+  (function loop(){
+    dot.style.transform='translate('+P.x+'px,'+P.y+'px)';
+    rx+=(P.x-rx)*.16;ry+=(P.y-ry)*.16;
+    ring.style.transform='translate('+rx+'px,'+ry+'px)';
+    ox+=(P.x-ox)*.09;oy+=(P.y-oy)*.09;
+    orb.style.transform='translate('+ox+'px,'+oy+'px)';
+    t+=.03;
+    sats.forEach((s,i)=>{
+      const a=t+i*(6.283/sats.length), r=34+Math.sin(t*1.7+i)*7;
+      s.style.left=(Math.cos(a)*r)+'px';
+      s.style.top=(Math.sin(a)*r*.55)+'px';
+      s.style.opacity=.45+.55*((Math.sin(a)+1)/2);
+    });
+    requestAnimationFrame(loop);
+  })();
+
+  /* etichetta + ingrandimento su elementi interattivi */
+  document.querySelectorAll('a,button,.gcard,.tl-item,.obj-scene').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{
+      ring.classList.add('big');
+      lbl.textContent=el.dataset.lbl||(el.classList.contains('obj-scene')?'3D':(el.tagName==='A'?'apri':''));
+    });
+    el.addEventListener('mouseleave',()=>{ring.classList.remove('big');lbl.textContent=''});
+  });
+  addEventListener('mouseout',e=>{if(!e.relatedTarget)document.querySelectorAll('.cur').forEach(c=>c.style.opacity=0)});
+  addEventListener('mouseover',()=>document.querySelectorAll('.cur').forEach(c=>c.style.opacity=1));
+}
+
+/* ====== CAMPO DI PARTICELLE ATTRATTE DAL CURSORE ====== */
+(function(){
+  if(REDUCED)return;
+  const c=document.getElementById('field'),x=c.getContext('2d');
+  let w,h,dpr=Math.min(devicePixelRatio||1,2),ps=[];
+  function resize(){
+    w=c.width=innerWidth*dpr;h=c.height=innerHeight*dpr;
+    c.style.width=innerWidth+'px';c.style.height=innerHeight+'px';
+    const n=Math.min(120,Math.round(innerWidth*innerHeight/13000));
+    ps=[];
+    for(let i=0;i<n;i++)ps.push({
+      x:Math.random()*w,y:Math.random()*h,
+      vx:(Math.random()-.5)*.28*dpr,vy:(Math.random()-.5)*.28*dpr,
+      r:(Math.random()*1.7+.6)*dpr
+    });
+  }
+  function frame(){
+    x.clearRect(0,0,w,h);
+    const mx=P.x*dpr,my=P.y*dpr,R=190*dpr;
+    for(const p of ps){
+      const dx=mx-p.x,dy=my-p.y,d=Math.hypot(dx,dy);
+      if(P.has&&d<R&&d>1){
+        /* attrazione dolce verso il puntatore */
+        p.vx+=(dx/d)*.035*dpr;p.vy+=(dy/d)*.035*dpr;
+        x.globalAlpha=(1-d/R)*.4;
+        x.strokeStyle='#c8ff3d';x.lineWidth=.7*dpr;
+        x.beginPath();x.moveTo(p.x,p.y);x.lineTo(mx,my);x.stroke();
+      }
+      p.vx*=.985;p.vy*=.985;
+      p.x+=p.vx;p.y+=p.vy;
+      if(p.x<0)p.x=w;if(p.x>w)p.x=0;if(p.y<0)p.y=h;if(p.y>h)p.y=0;
+      x.globalAlpha=.55;
+      x.fillStyle= d<R? '#c8ff3d' : 'rgba(242,244,240,.55)';
+      x.beginPath();x.arc(p.x,p.y,p.r,0,6.283);x.fill();
+    }
+    x.globalAlpha=1;requestAnimationFrame(frame);
+  }
+  resize();addEventListener('resize',resize);frame();
+})();
+
+/* ====== OGGETTO 3D CHE INSEGUE IL CURSORE ====== */
+(function(){
+  const obj=document.getElementById('obj');if(!obj)return;
+  let rx=0,ry=0,tx=0,ty=0,auto=0;
+  addEventListener('pointermove',()=>{
+    ty=((P.x/innerWidth)-.5)*54;
+    tx=-((P.y/innerHeight)-.5)*40;
+  },{passive:true});
+  (function l(){
+    if(!P.has){auto+=.006;ty=Math.sin(auto)*26;tx=Math.cos(auto*.8)*12}
+    rx+=(tx-rx)*.07;ry+=(ty-ry)*.07;
+    obj.style.transform='rotateX('+rx+'deg) rotateY('+ry+'deg)';
+    requestAnimationFrame(l);
+  })();
+})();
+
+/* ====== BOTTONI MAGNETICI ====== */
+if(FINE&&!REDUCED){
+  document.querySelectorAll('[data-mag]').forEach(el=>{
+    let mx=0,my=0,cx=0,cy=0,active=false;
+    el.addEventListener('mousemove',e=>{
+      const r=el.getBoundingClientRect();
+      mx=(e.clientX-(r.left+r.width/2))*.32;
+      my=(e.clientY-(r.top+r.height/2))*.4;active=true;
+    });
+    el.addEventListener('mouseleave',()=>{mx=0;my=0;active=false});
+    (function l(){
+      cx+=(mx-cx)*.15;cy+=(my-cy)*.15;
+      el.style.transform='translate('+cx+'px,'+cy+'px)'+(active?' scale(1.04)':'');
+      requestAnimationFrame(l);
+    })();
+  });
+}
+
+/* ====== BAGLIORE CHE SEGUE IL MOUSE NELLE CARD ====== */
+document.querySelectorAll('.gcard').forEach(card=>{
+  card.addEventListener('mousemove',e=>{
+    const r=card.getBoundingClientRect();
+    card.style.setProperty('--cx',(e.clientX-r.left)+'px');
+    card.style.setProperty('--cy',(e.clientY-r.top)+'px');
+  });
+});
+
+/* ====== NAV + REVEAL + CONTATORI ====== */
+addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('on',scrollY>40)},{passive:true});
+
+const io=new IntersectionObserver(es=>{
+  es.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('in'),i*70);io.unobserve(e.target)}})
+},{threshold:.14});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+
+const ci=new IntersectionObserver(es=>{
+  es.forEach(e=>{
+    if(!e.isIntersecting)return;
+    const el=e.target,end=+el.dataset.count;let n=0;
+    (function s(){n+=Math.max(1,end/26);if(n>=end){el.textContent=end;return}el.textContent=Math.floor(n);requestAnimationFrame(s)})();
+    ci.unobserve(el);
+  })
+},{threshold:.6});
+document.querySelectorAll('[data-count]').forEach(el=>ci.observe(el));
+</script>
+</body>
+</html>
