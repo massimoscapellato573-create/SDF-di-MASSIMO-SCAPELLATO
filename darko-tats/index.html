@@ -661,11 +661,12 @@
 
   const fmtMonthYear = new Intl.DateTimeFormat('it-IT', { month: 'long', year: 'numeric' });
 
-  /* Finestra prenotabile: da domani a +3 mesi. Ricalcolata a ogni
-     caricamento pagina, quindi scorre in avanti da sola giorno per giorno. */
+  /* Finestra prenotabile: da domani fino al 31 dicembre dell'anno prossimo.
+     Ricalcolata a ogni caricamento pagina: appena cambia l'anno, il limite
+     si sposta da solo un anno più avanti, quindi non "finisce" mai davvero. */
   const today = new Date(); today.setHours(0, 0, 0, 0);
   const minDate = new Date(today); minDate.setDate(minDate.getDate() + 1);
-  const maxDate = new Date(today); maxDate.setMonth(maxDate.getMonth() + 3);
+  const maxDate = new Date(today.getFullYear() + 1, 11, 31);
 
   let viewYear = minDate.getFullYear();
   let viewMonth = minDate.getMonth();
