@@ -53,7 +53,7 @@
   .confirm-inner h1{font-family:'Cinzel',serif;font-weight:600;font-size:clamp(1.6rem,3.2vw,2.3rem);letter-spacing:.01em;line-height:1.25;margin-bottom:18px}
   .confirm-inner p.lede{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--muted);font-size:1.2rem;max-width:46ch;margin-bottom:8px}
 
-  .deposit-box{margin-top:14px;border:1px solid var(--line);padding:clamp(22px,3vw,32px);background:var(--bg-2);max-width:400px}
+  .deposit-box{margin-top:34px;border:1px solid var(--line);padding:clamp(22px,3vw,32px);background:var(--bg-2);max-width:400px}
   .deposit-box .lbl{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted-2)}
   .deposit-box .amt{font-family:'Cinzel',serif;font-size:2.4rem;color:var(--gold-2);margin:8px 0 18px}
   .deposit-box .iban-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
@@ -61,16 +61,6 @@
   .iban-copy{border:1px solid var(--line);background:none;color:var(--muted);padding:8px 14px;cursor:pointer;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;font-family:'Jost',sans-serif;transition:border-color .2s,color .2s;flex:none}
   .iban-copy:hover{border-color:var(--gold);color:var(--gold-2)}
   .deposit-note{margin-top:16px;color:var(--muted-2);font-size:.8rem}
-
-  .pay-wrap{margin-top:34px;max-width:400px}
-  .pay-note{color:var(--muted-2);font-size:.8rem;margin-bottom:16px}
-  .btn-pay{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;padding:17px 22px;border-radius:2px;border:none;background:var(--gold);color:#1a1408;font-family:'Jost',sans-serif;font-size:.85rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:background .2s,transform .2s}
-  .btn-pay:hover{background:var(--gold-2);transform:translateY(-1px)}
-  .btn-pay:disabled{opacity:.6;cursor:default;transform:none}
-  .pay-error{color:var(--no-2);font-size:.8rem;margin-top:12px}
-  .bonifico-alt{margin-top:24px;max-width:400px}
-  .bonifico-alt summary{cursor:pointer;color:var(--muted-2);font-size:.8rem;letter-spacing:.03em;text-decoration:underline;text-underline-offset:3px}
-  .bonifico-alt summary:hover{color:var(--gold-2)}
 
   .confirm-actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:38px}
   .btn{display:inline-flex;align-items:center;gap:9px;padding:13px 26px;border-radius:2px;font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;font-weight:500;text-decoration:none;transition:transform .25s, border-color .2s, background .2s;cursor:pointer;border:1px solid var(--gold-dim);background:transparent;color:var(--gold-2);font-family:'Jost',sans-serif}
@@ -162,7 +152,6 @@
 
   const params = new URLSearchParams(location.search);
   const id = params.get('id') || localStorage.getItem('darko_richiesta_id');
-  const payParam = params.get('pay');
 
   function render(html) { confirmStatus.innerHTML = html; }
 
@@ -198,42 +187,16 @@
       render(`
         <span class="badge wait"><span class="dot"></span>In attesa di pagamento</span>
         <h1>${when} alle ${info.ora}</h1>
-        <p class="lede">Pietro ha accettato: per bloccare la data versa l'acconto di <strong>${fmtEuro(info.acconto_importo)}</strong>. La pagina si aggiorna da sola e conferma l'appuntamento non appena il pagamento va a buon fine.</p>
-        ${payParam === 'annullato' ? '<p class="pay-note">Pagamento annullato: nessun addebito effettuato, puoi riprovare quando vuoi.</p>' : ''}
-        <div class="pay-wrap">
-          <button class="btn-pay" id="payNowBtn" type="button">Paga ${fmtEuro(info.acconto_importo)} — carta, Apple Pay o Google Pay</button>
-          <p class="pay-error" id="payError" hidden></p>
-        </div>
-        <details class="bonifico-alt">
-          <summary>Preferisci il bonifico bancario?</summary>
-          <div class="deposit-box">
-            <div class="lbl">Acconto da versare</div>
-            <div class="amt">${fmtEuro(info.acconto_importo)}</div>
-            <div class="iban-row">
-              <code id="ibanCode">IT02 L036 6901 6009 1219 4716 873</code>
-              <button class="iban-copy" id="ibanCopyBtn" type="button">Copia</button>
-            </div>
-            <p class="deposit-note">Indica il tuo nome nella causale. Con il bonifico l'appuntamento viene confermato solo dopo che Pietro verifica a mano di aver ricevuto i soldi (può volerci qualche giorno in più rispetto al pagamento immediato qui sopra).</p>
+        <p class="lede">Pietro ha accettato: per bloccare la data versa l'acconto qui sotto tramite bonifico, indicando il tuo nome nella causale. L'appuntamento sarà confermato non appena il pagamento risulta ricevuto.</p>
+        <div class="deposit-box">
+          <div class="lbl">Acconto da versare</div>
+          <div class="amt">${fmtEuro(info.acconto_importo)}</div>
+          <div class="iban-row">
+            <code id="ibanCode">IT02 L036 6901 6009 1219 4716 873</code>
+            <button class="iban-copy" id="ibanCopyBtn" type="button">Copia</button>
           </div>
-        </details>`);
-      document.getElementById('payNowBtn').addEventListener('click', async () => {
-        const payBtn = document.getElementById('payNowBtn');
-        const payError = document.getElementById('payError');
-        payBtn.disabled = true;
-        payBtn.textContent = 'Un attimo…';
-        payError.hidden = true;
-        try {
-          const { data, error: fnError } = await sb.functions.invoke('create-checkout', { body: { richiesta_id: id } });
-          if (fnError || !data || !data.url) throw fnError || new Error('Nessun link di pagamento ricevuto');
-          window.location.href = data.url;
-        } catch (err) {
-          console.error(err);
-          payError.textContent = 'Non riesco ad aprire il pagamento, riprova tra poco o usa il bonifico qui sotto.';
-          payError.hidden = false;
-          payBtn.disabled = false;
-          payBtn.textContent = `Paga ${fmtEuro(info.acconto_importo)} — carta, Apple Pay o Google Pay`;
-        }
-      });
+          <p class="deposit-note">L'acconto è rimborsabile se disdici entro 4 giorni prima dell'appuntamento. Questa pagina si aggiorna da sola appena Pietro conferma il pagamento ricevuto.</p>
+        </div>`);
       document.getElementById('ibanCopyBtn').addEventListener('click', () => {
         navigator.clipboard.writeText('IT02L0366901600912194716873').then(() => {
           const btn = document.getElementById('ibanCopyBtn');
