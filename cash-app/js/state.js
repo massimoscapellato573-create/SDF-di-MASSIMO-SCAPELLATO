@@ -13,6 +13,16 @@ function round2(n) {
   return Math.round((n + Number.EPSILON) * 100) / 100;
 }
 
+// Effetto di una transazione sul saldo del fondo a cui è collegata.
+// allocation/adjustment(+) aumentano il fondo; withdrawal/expense/adjustment(-) lo diminuiscono.
+function fundBalanceDelta(t) {
+  if (t.kind === 'allocation') return t.amount;
+  if (t.kind === 'adjustment') return t.amount;
+  if (t.kind === 'withdrawal') return -t.amount;
+  if (t.kind === 'expense') return -t.amount;
+  return t.amount;
+}
+
 const DEFAULT_SETTINGS = {
   theme: 'auto',
   salaryDefaultAmount: 70,
@@ -123,6 +133,8 @@ const Store = {
       if (t.kind === 'income') total += t.amount;
       else if (t.kind === 'expense') total -= t.amount;
       else if (t.kind === 'allocation') total -= t.amount;
+      else if (t.kind === 'withdrawal') total += t.amount;
+      // 'adjustment' non tocca il disponibile: corregge solo il fondo interessato.
     }
     return round2(total);
   },
@@ -155,7 +167,7 @@ const Store = {
     if (t.fundId) {
       const fund = this.getFund(t.fundId);
       if (fund) {
-        fund.balance = round2(fund.balance + (t.kind === 'allocation' ? t.amount : t.kind === 'expense' ? -t.amount : t.amount));
+        fund.balance = round2(fund.balance + fundBalanceDelta(t));
         await DB.put('funds', fund);
       }
     }
@@ -172,7 +184,7 @@ const Store = {
     if (t.fundId) {
       const fund = this.getFund(t.fundId);
       if (fund) {
-        fund.balance = round2(fund.balance - (t.kind === 'allocation' ? t.amount : t.kind === 'expense' ? -t.amount : t.amount));
+        fund.balance = round2(fund.balance - fundBalanceDelta(t));
         await DB.put('funds', fund);
       }
     }

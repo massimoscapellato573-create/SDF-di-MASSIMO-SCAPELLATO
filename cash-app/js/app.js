@@ -208,7 +208,7 @@
         </div>`;
     }
     return `
-      <div class="card fund-card">
+      <div class="card fund-card" data-action="manage-fund" data-id="${fund.id}" style="cursor:pointer">
         <div class="fund-head">
           <div class="fund-emoji" style="background:${fund.color}22;color:${fund.color}">${fund.emoji}</div>
           <div>
@@ -218,6 +218,7 @@
           <div class="fund-balance">${formatMoney(fund.balance)}</div>
         </div>
         ${goalHtml}
+        <p class="fund-meta" style="text-align:right;margin:0">💶 Tocca per aggiungere o prelevare</p>
       </div>`;
   }
 
@@ -225,8 +226,17 @@
     const fund = t.fundId ? Store.getFund(t.fundId) : null;
     const icon = fund ? fund.emoji : t.kind === 'income' ? '💰' : '🧾';
     const bg = fund ? fund.color : t.kind === 'income' ? 'var(--success)' : 'var(--danger)';
-    const sign = t.kind === 'income' ? '+' : t.kind === 'allocation' ? '→' : '−';
-    const amountClass = t.kind === 'income' ? 'positive' : 'negative';
+    let sign = '−';
+    let amountClass = 'negative';
+    if (t.kind === 'income' || t.kind === 'withdrawal') {
+      sign = t.kind === 'income' ? '+' : '←';
+      amountClass = 'positive';
+    } else if (t.kind === 'allocation') {
+      sign = '→';
+    } else if (t.kind === 'adjustment') {
+      sign = t.amount >= 0 ? '↑' : '↓';
+      amountClass = t.amount >= 0 ? 'positive' : 'negative';
+    }
     return `
       <div class="tx-row">
         <div class="tx-icon" style="background:${bg}22;color:${bg}">${icon}</div>
@@ -328,7 +338,10 @@
               <p class="goal-eta">${etaHtml}</p>
             </div>
           </div>
-          <button class="btn btn-secondary btn-sm" data-action="edit-fund" data-id="${fund.id}">Modifica obiettivo</button>
+          <div style="display:flex;gap:8px">
+            <button class="btn btn-primary btn-sm" style="flex:1" data-action="manage-fund" data-id="${fund.id}">💶 Aggiungi/preleva</button>
+            <button class="btn btn-secondary btn-sm" style="flex:1" data-action="edit-fund" data-id="${fund.id}">Modifica obiettivo</button>
+          </div>
         </div>`;
     }).join('');
 
@@ -500,6 +513,7 @@
         case 'set-theme': Store.settings.theme = actionEl.dataset.theme; await Store.saveSettings(); applyTheme(); break;
         case 'add-fund': openFundModal(null); break;
         case 'edit-fund': openFundModal(actionEl.dataset.id); break;
+        case 'manage-fund': openManageFundModal(actionEl.dataset.id); break;
         case 'export-json': Sync.exportJSON(); break;
         case 'import-json': document.getElementById('importFileInput').click(); break;
         case 'reset-data': await resetAllData(); break;
@@ -757,6 +771,85 @@
         });
       }
     });
+  }
+
+  /* ---------------------------- Manage fund balance (deposit / withdraw / correct) ---------------------------- */
+  function openManageFundModal(fundId) {
+    const fund = Store.getFund(fundId);
+    if (!fund) return;
+    const body = `
+      <p class="settings-row-desc">Saldo attuale: <strong style="color:var(--text)">${formatMoney(fund.balance)}</strong></p>
+      <div class="segmented">
+        <button type="button" class="is-active" data-mode="deposit">Aggiungi</button>
+        <button type="button" data-mode="withdraw">Preleva</button>
+        <button type="button" data-mode="adjust">Correggi saldo</button>
+      </div>
+      <div id="manageFundFields"></div>
+      <button class="btn btn-primary" data-action="save-manage-fund" type="button">Conferma</button>
+    `;
+    openModal('manageFundModal', `${fund.emoji} ${escapeHtml(fund.name)}`, body, {
+      onMount: (modal) => mountManageFund(modal, fund)
+    });
+  }
+
+  function mountManageFund(modal, fund) {
+    let mode = 'deposit';
+    const fieldsEl = modal.querySelector('#manageFundFields');
+
+    function renderFields() {
+      if (mode === 'deposit') {
+        fieldsEl.innerHTML = `
+          <div class="field"><label>Importo da aggiungere</label><input type="number" inputmode="decimal" id="mfAmount" min="0" step="0.01" /></div>
+          <div class="field"><label>Descrizione</label><input type="text" id="mfDesc" placeholder="Es. Versamento extra" /></div>
+          <p class="settings-row-desc">Verrà sottratto dal disponibile (attualmente ${formatMoney(Store.availableCash())}).</p>`;
+      } else if (mode === 'withdraw') {
+        fieldsEl.innerHTML = `
+          <div class="field"><label>Importo da prelevare</label><input type="number" inputmode="decimal" id="mfAmount" min="0" step="0.01" /></div>
+          <div class="field"><label>Descrizione</label><input type="text" id="mfDesc" placeholder="Es. Ho ripreso questi soldi" /></div>
+          <p class="settings-row-desc">Verrà aggiunto al disponibile. Massimo prelevabile: ${formatMoney(fund.balance)}.</p>`;
+      } else {
+        fieldsEl.innerHTML = `
+          <div class="field"><label>Nuovo saldo esatto del fondo</label><input type="number" inputmode="decimal" id="mfAmount" step="0.01" value="${fund.balance}" /></div>
+          <div class="field"><label>Descrizione</label><input type="text" id="mfDesc" placeholder="Es. Ho ricontato i contanti" /></div>
+          <p class="settings-row-desc">Corregge solo questo fondo: non tocca il disponibile.</p>`;
+      }
+    }
+
+    modal.querySelectorAll('.segmented button').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        mode = btn.dataset.mode;
+        modal.querySelectorAll('.segmented button').forEach((b) => b.classList.toggle('is-active', b === btn));
+        renderFields();
+      });
+    });
+
+    modal.querySelector('[data-action="save-manage-fund"]').addEventListener('click', async () => {
+      const amountInput = modal.querySelector('#mfAmount');
+      const descInput = modal.querySelector('#mfDesc');
+      const value = parseFloat(amountInput.value);
+
+      if (mode === 'adjust') {
+        if (isNaN(value)) { shake(amountInput); return; }
+        const delta = round2(value - fund.balance);
+        if (Math.abs(delta) < 0.005) { closeModal(); return; }
+        await Store.addTransaction({ kind: 'adjustment', amount: delta, fundId: fund.id, description: descInput.value.trim() || 'Rettifica saldo', category: 'rettifica' });
+        showToast('Saldo corretto', formatMoney(value));
+      } else {
+        if (!value || value <= 0) { shake(amountInput); return; }
+        if (mode === 'withdraw' && value > fund.balance + 0.005) {
+          shake(amountInput);
+          showToast('Importo troppo alto', `Il fondo ha solo ${formatMoney(fund.balance)}.`);
+          return;
+        }
+        const kind = mode === 'deposit' ? 'allocation' : 'withdrawal';
+        const desc = descInput.value.trim() || (mode === 'deposit' ? 'Versamento manuale' : 'Prelievo');
+        await Store.addTransaction({ kind, amount: value, fundId: fund.id, description: desc, category: mode === 'deposit' ? 'versamento-manuale' : 'prelievo-manuale' });
+        showToast(mode === 'deposit' ? 'Fondi aggiunti' : 'Prelievo registrato', formatMoney(value));
+      }
+      closeModal();
+    });
+
+    renderFields();
   }
 
   /* ---------------------------- Fund edit modal ---------------------------- */
