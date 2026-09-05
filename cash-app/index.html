@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Contanti — Gestione Fondi</title>
+<meta name="description" content="Assistente personale per gestire i contanti fisici: stipendio, fondo lavoro e obiettivi di risparmio." />
+
+<link rel="manifest" href="manifest.webmanifest" />
+<meta name="theme-color" content="#f5f5f7" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
+
+<link rel="icon" href="favicon.ico" sizes="any" />
+<link rel="icon" href="icons/icon-192.png" type="image/png" />
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Contanti" />
+<meta name="mobile-web-app-capable" content="yes" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+<div id="app" class="app">
+
+  <header class="topbar">
+    <div class="topbar-brand">
+      <img src="icons/icon-96.png" alt="" class="brand-mark" />
+      <div>
+        <h1>Contanti</h1>
+        <p class="topbar-sub" id="syncIndicator">Solo su questo dispositivo</p>
+      </div>
+    </div>
+    <button class="icon-btn" id="installBtn" hidden aria-label="Installa app" title="Installa app">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M12 3a1 1 0 0 1 1 1v9.59l2.3-2.3a1 1 0 1 1 1.4 1.42l-4 4a1 1 0 0 1-1.4 0l-4-4a1 1 0 1 1 1.4-1.42l2.3 2.3V4a1 1 0 0 1 1-1Zm-7 15a1 1 0 0 1 1 1v1h12v-1a1 1 0 1 1 2 0v2a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1Z"/></svg>
+    </button>
+  </header>
+
+  <main class="content" id="content"></main>
+
+  <nav class="tabbar" id="tabbar">
+    <button class="tab-btn is-active" data-tab="dashboard" aria-label="Dashboard">
+      <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M4 13h6V4H4v9Zm0 7h6v-5H4v5Zm8 0h8V11h-8v9Zm0-16v5h8V4h-8Z"/></svg>
+      <span>Dashboard</span>
+    </button>
+    <button class="tab-btn" data-tab="history" aria-label="Cronologia">
+      <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M13 3a9 9 0 1 0 8.94 10H19.9A7 7 0 1 1 13 5v3l4-3.5L13 1v2Zm-1 4h1.5v5.2l4.4 2.6-.75 1.3L12 13.5V7Z"/></svg>
+      <span>Cronologia</span>
+    </button>
+    <button class="tab-btn tab-btn-fab" data-action="open-fab" aria-label="Aggiungi">
+      <svg viewBox="0 0 24 24" width="26" height="26"><path fill="currentColor" d="M11 5h2v6h6v2h-6v6h-2v-6H5v-2h6V5Z"/></svg>
+    </button>
+    <button class="tab-btn" data-tab="goals" aria-label="Obiettivi">
+      <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M12 2 9.2 8.6 2 9.3l5.5 4.7L5.8 21 12 17.3 18.2 21l-1.7-7 5.5-4.7-7.2-.7L12 2Z"/></svg>
+      <span>Obiettivi</span>
+    </button>
+    <button class="tab-btn" data-tab="settings" aria-label="Impostazioni">
+      <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm8.94 3-1.9-.32a7.4 7.4 0 0 0-.63-1.52l1.13-1.56-1.41-1.41-1.56 1.13a7.4 7.4 0 0 0-1.52-.63L14.73 3H9.27l-.32 1.9c-.53.16-1.04.37-1.52.63L5.87 4.4 4.46 5.81l1.13 1.56c-.26.48-.47.99-.63 1.52L3 9.27v5.46l1.9.32c.16.53.37 1.04.63 1.52l-1.13 1.56 1.41 1.41 1.56-1.13c.48.26.99.47 1.52.63l.32 1.9h5.46l.32-1.9c.53-.16 1.04-.37 1.52-.63l1.56 1.13 1.41-1.41-1.13-1.56c.26-.48.47-.99.63-1.52l1.9-.32V9.27Z"/></svg>
+      <span>Impostazioni</span>
+    </button>
+  </nav>
+</div>
+
+<div class="sheet-backdrop" id="sheetBackdrop"></div>
+<div class="action-sheet" id="fabSheet">
+  <button class="sheet-item" data-action="open-salary">
+    <span class="sheet-icon">💰</span> Ho ricevuto lo stipendio
+  </button>
+  <button class="sheet-item" data-action="open-income">
+    <span class="sheet-icon">➕</span> Altra entrata
+  </button>
+  <button class="sheet-item" data-action="open-expense">
+    <span class="sheet-icon">➖</span> Aggiungi spesa
+  </button>
+  <button class="sheet-item sheet-cancel" data-action="close-sheet">Annulla</button>
+</div>
+
+<div class="modal-backdrop" id="modalBackdrop"></div>
+<div id="modalRoot"></div>
+<div class="toast-stack" id="toastStack"></div>
+
+<script src="js/db.js"></script>
+<script src="js/state.js"></script>
+<script src="js/charts.js"></script>
+<script src="js/notifications.js"></script>
+<script src="js/sync.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
